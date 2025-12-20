@@ -220,6 +220,7 @@
             touch-action: none;
             max-width: 100%;
             max-height: 100%;
+            transform-origin: center center;
         }
         
         /* Canvas üzerindeki kontroller */
@@ -440,6 +441,17 @@
             background-color: #f5f5f5;
         }
         
+        .template-name {
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            background-color: #f8f9fa;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
         /* Gallery Modal */
         .gallery-grid {
             display: grid;
@@ -460,6 +472,11 @@
         .gallery-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-item.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
         }
         
         .gallery-img {
@@ -2137,6 +2154,8 @@
         const currentToolName = document.getElementById('currentToolName');
         const currentColorIndicator = document.getElementById('currentColorIndicator');
         const currentColorPreview = document.getElementById('currentColorPreview');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
         
         // Renk paleti
         const colors = [
@@ -2491,6 +2510,7 @@
                 
                 templateElement.innerHTML = `
                     <img class="template-img" src="${template.url}" alt="${template.name}" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"150\"><rect width=\"100%\" height=\"100%\" fill=\"%23f5f5f5\"/></svg>';">
+                    <div class="template-name">${template.name}</div>
                 `;
                 
                 templateElement.addEventListener('click', function() {
@@ -2903,6 +2923,30 @@
             saveToUndoStack();
         }
         
+        // Fare/touch pozisyonunu al (zoom düzeltmeli)
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            let x, y;
+            
+            if (e.type.includes('touch')) {
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else {
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+            
+            // Zoom seviyesine göre ayarla
+            x /= appState.zoomLevel;
+            y /= appState.zoomLevel;
+            
+            // Canvas boyutlarına göre normalize et
+            x = x * (canvas.width / (rect.width / appState.zoomLevel));
+            y = y * (canvas.height / (rect.height / appState.zoomLevel));
+            
+            return [x, y];
+        }
+        
         // Çizim fonksiyonları
         function startDrawing(e) {
             appState.isDrawing = true;
@@ -2986,13 +3030,6 @@
             
             appState.hasDrawing = true;
             updateCanvasPlaceholder();
-        }
-        
-        function stopDrawing() {
-            if (appState.isDrawing) {
-                appState.isDrawing = false;
-                saveToUndoStack();
-            }
         }
         
         // Fırça çizimi
@@ -3117,28 +3154,11 @@
             });
         }
         
-        // Fare/touch pozisyonunu al
-        function getMousePos(e) {
-            const rect = canvas.getBoundingClientRect();
-            let x, y;
-            
-            if (e.type.includes('touch')) {
-                x = e.touches[0].clientX - rect.left;
-                y = e.touches[0].clientY - rect.top;
-            } else {
-                x = e.clientX - rect.left;
-                y = e.clientY - rect.top;
+        function stopDrawing() {
+            if (appState.isDrawing) {
+                appState.isDrawing = false;
+                saveToUndoStack();
             }
-            
-            // Zoom seviyesine göre ayarla
-            x /= appState.zoomLevel;
-            y /= appState.zoomLevel;
-            
-            // Canvas boyutlarına göre normalize et
-            x = x * (canvas.width / rect.width);
-            y = y * (canvas.height / rect.height);
-            
-            return [x, y];
         }
         
         // İmleç boyutunu güncelle
@@ -3525,13 +3545,22 @@
             
             if (savedDrawings.length === 0) {
                 galleryGrid.innerHTML = `<p style="text-align: center; padding: 40px; color: #666;">${translations[appState.currentLanguage].emptyGallery}</p>`;
+                // "Tümünü seç" ve "Seçilenleri sil" butonlarını devre dışı bırak
+                selectAllBtn.disabled = true;
+                deleteSelectedBtn.disabled = true;
             } else {
                 savedDrawings.forEach((drawing, index) => {
                     const galleryItem = document.createElement('div');
                     galleryItem.className = 'gallery-item';
+                    galleryItem.dataset.index = index;
+                    
+                    // Eğer seçiliyse selected class'ını ekle
+                    if (appState.selectedDrawings.has(index)) {
+                        galleryItem.classList.add('selected');
+                    }
                     
                     galleryItem.innerHTML = `
-                        <div class="gallery-img" style="background-image: url(${drawing.data});"></div>
+                        <div class="gallery-img" style="background-image: url(${drawing.data}); background-size: cover; background-position: center;"></div>
                         <div class="gallery-name">${drawing.name}</div>
                         <div class="gallery-actions">
                             <button class="action-btn action-btn-download" data-index="${index}">
@@ -3543,13 +3572,25 @@
                         </div>
                     `;
                     
-                    // Çizim resmine tıklama
-                    galleryItem.querySelector('.gallery-img').addEventListener('click', function() {
+                    // Galeri öğesine tıklama (seçim için)
+                    galleryItem.addEventListener('click', function(e) {
+                        // Eğer butonlara tıklanmışsa, galeri öğesinin tıklanmasını engelle
+                        if (e.target.closest('.action-btn')) {
+                            return;
+                        }
+                        
+                        const index = parseInt(this.dataset.index);
+                        
+                        // Çizimi görüntüle
                         openDrawingView(drawing.data, drawing.name, drawing.date);
                     });
                     
                     galleryGrid.appendChild(galleryItem);
                 });
+                
+                // "Tümünü seç" ve "Seçilenleri sil" butonlarını aktif et
+                selectAllBtn.disabled = false;
+                deleteSelectedBtn.disabled = appState.selectedDrawings.size === 0;
                 
                 // Galeri butonlarına event listener ekle
                 setTimeout(() => {
@@ -3577,6 +3618,9 @@
                                     savedDrawings.splice(index, 1);
                                     localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
                                     
+                                    // Seçimleri temizle
+                                    appState.selectedDrawings.clear();
+                                    
                                     // Modal'ı kapat ve yeniden aç
                                     closeModal(galleryModal);
                                     setTimeout(() => {
@@ -3591,6 +3635,62 @@
             }
             
             openModal(galleryModal);
+        }
+        
+        // Tüm çizimleri seç
+        function selectAllDrawings() {
+            const savedDrawings = JSON.parse(localStorage.getItem('artcanvas_drawings')) || [];
+            if (savedDrawings.length === 0) return;
+            
+            // Tüm indeksleri seç
+            appState.selectedDrawings.clear();
+            for (let i = 0; i < savedDrawings.length; i++) {
+                appState.selectedDrawings.add(i);
+            }
+            
+            // Galeriyi yenile
+            openGalleryModal();
+            
+            // "Seçilenleri sil" butonunu aktif et
+            deleteSelectedBtn.disabled = false;
+        }
+        
+        // Seçili çizimleri sil
+        function deleteSelectedDrawings() {
+            if (appState.selectedDrawings.size === 0) {
+                showMessage('Uyarı', translations[appState.currentLanguage].noDrawingsSelected, 'warning');
+                return;
+            }
+            
+            const savedDrawings = JSON.parse(localStorage.getItem('artcanvas_drawings')) || [];
+            if (savedDrawings.length === 0) return;
+            
+            const count = appState.selectedDrawings.size;
+            
+            showConfirm(
+                'Çizimleri Sil',
+                translations[appState.currentLanguage].confirmDeleteMultiple.replace('{count}', count),
+                function() {
+                    // Seçili çizimleri tersten sil (indeks kaymasını önlemek için)
+                    const indicesToDelete = Array.from(appState.selectedDrawings).sort((a, b) => b - a);
+                    
+                    indicesToDelete.forEach(index => {
+                        savedDrawings.splice(index, 1);
+                    });
+                    
+                    localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
+                    
+                    // Seçimleri temizle
+                    appState.selectedDrawings.clear();
+                    
+                    // Modal'ı kapat ve yeniden aç
+                    closeModal(galleryModal);
+                    setTimeout(() => {
+                        openGalleryModal();
+                        showMessage('Başarılı', `${count} çizim silindi!`);
+                    }, 300);
+                }
+            );
         }
         
         // Event listeners
@@ -3758,6 +3858,10 @@
             messageModalOkBtn.addEventListener('click', () => closeModal(messageModal));
             
             // Confirm modal butonları zaten ayarlandı
+            
+            // Galeri toplu işlem butonları
+            selectAllBtn.addEventListener('click', selectAllDrawings);
+            deleteSelectedBtn.addEventListener('click', deleteSelectedDrawings);
             
             // Dış tıklamada modal'ı kapat
             window.addEventListener('click', function(e) {
