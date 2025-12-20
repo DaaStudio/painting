@@ -15,7 +15,6 @@
             --success-color: #00b894;
             --warning-color: #fdcb6e;
             --danger-color: #d63031;
-            --sidebar-width: 280px;
             --header-height: 60px;
         }
         
@@ -167,179 +166,6 @@
             overflow: hidden;
             width: 100%;
             position: relative;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: white;
-            padding: 20px 15px;
-            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.08);
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            z-index: 90;
-            flex-shrink: 0;
-        }
-        
-        .sidebar-section {
-            margin-bottom: 25px;
-        }
-        
-        .sidebar-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .sidebar-title i {
-            font-size: 1.1rem;
-        }
-        
-        .tool-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-        
-        .tool-btn {
-            background-color: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            height: 55px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 5px;
-        }
-        
-        .tool-btn:hover {
-            background-color: #e9ecef;
-            transform: translateY(-2px);
-        }
-        
-        .tool-btn.active {
-            border-color: var(--primary-color);
-            background-color: rgba(108, 92, 231, 0.1);
-        }
-        
-        .tool-btn i {
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-            color: var(--dark-color);
-        }
-        
-        .tool-btn span {
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-align: center;
-            line-height: 1.1;
-        }
-        
-        .canvas-background-options {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .canvas-bg-btn {
-            flex: 1;
-            padding: 8px;
-            border-radius: 8px;
-            border: 2px solid #e9ecef;
-            background-color: #f8f9fa;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .canvas-bg-btn:hover {
-            background-color: #e9ecef;
-        }
-        
-        .canvas-bg-btn.active {
-            border-color: var(--primary-color);
-            background-color: rgba(108, 92, 231, 0.1);
-        }
-        
-        .color-palette {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-        
-        .color-option {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            border: 3px solid transparent;
-        }
-        
-        .color-option:hover {
-            transform: scale(1.1);
-        }
-        
-        .color-option.active {
-            border-color: var(--dark-color);
-            transform: scale(1.1);
-        }
-        
-        .custom-color {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        
-        #colorPicker {
-            width: 45px;
-            height: 45px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            min-width: 45px;
-        }
-        
-        .custom-color span {
-            font-size: 0.9rem;
-        }
-        
-        .slider-container {
-            margin-top: 12px;
-        }
-        
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-        
-        .slider-label span {
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-        
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            border-radius: 5px;
-            background: #dfe6e9;
-            outline: none;
         }
         
         /* Canvas Area */
@@ -534,7 +360,7 @@
             text-align: center;
         }
         
-        /* Templates Modal */
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -586,6 +412,7 @@
             color: var(--danger-color);
         }
         
+        /* Templates Modal */
         .templates-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -678,11 +505,6 @@
         
         .action-btn-download {
             background-color: var(--success-color);
-            color: white;
-        }
-        
-        .action-btn-share {
-            background-color: var(--primary-color);
             color: white;
         }
         
@@ -853,53 +675,284 @@
             font-weight: 600;
         }
         
-        /* Share Modal */
-        .share-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .color-modal-slider {
             margin-top: 20px;
         }
         
-        .share-option {
+        .color-modal-slider-label {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        
+        .color-modal-slider-label span {
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        
+        /* New Canvas Modal */
+        .canvas-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
+        }
+        
+        .canvas-option {
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 15px;
+        }
+        
+        .canvas-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .canvas-option.active {
+            border-color: var(--primary-color);
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        .canvas-option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .canvas-option-name {
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .canvas-option-desc {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+        }
+        
+        /* Download Modal */
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .download-option {
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .download-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .download-option.active {
+            border-color: var(--primary-color);
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        .download-option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .download-option-name {
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .download-option-desc {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+        }
+        
+        /* Tools Modal */
+        .tools-modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .tools-modal-option {
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+        }
+        
+        .tools-modal-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .tools-modal-option.active {
+            border-color: var(--primary-color);
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        .tools-modal-option-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .tools-modal-option-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Text Tool Modal */
+        .text-tool-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .text-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .text-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .text-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .text-option {
+            padding: 10px;
             border: 2px solid #eee;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .text-option-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        /* Shape Tool Modal */
+        .shape-tool-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .shape-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .shape-option {
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .share-option:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(108, 92, 231, 0.05);
-        }
-        
-        .share-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background-color: #f8f9fa;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            font-size: 1.5rem;
-            color: white;
+            padding: 15px;
         }
         
-        .share-text {
-            flex-grow: 1;
+        .shape-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
         }
         
-        .share-title {
-            font-weight: 700;
-            margin-bottom: 5px;
+        .shape-option.active {
+            border-color: var(--primary-color);
+            background-color: rgba(108, 92, 231, 0.1);
         }
         
-        .share-description {
+        .shape-option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .shape-option-name {
+            font-weight: 600;
             font-size: 0.9rem;
-            color: #666;
+            text-align: center;
+        }
+        
+        /* Drawing View Modal */
+        .drawing-view-modal {
+            max-width: 800px;
+        }
+        
+        .drawing-view-content {
+            text-align: center;
+        }
+        
+        .drawing-view-img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .drawing-view-info {
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .drawing-view-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .drawing-view-info p {
+            margin-bottom: 5px;
         }
         
         /* Notification */
@@ -980,6 +1033,48 @@
             color: var(--primary-color);
         }
         
+        /* Current Tool Indicator */
+        .current-tool-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .current-tool-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* Current Color Indicator */
+        .current-color-indicator {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .color-preview {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+        
         /* Responsive Tasarım */
         @media (max-width: 1200px) {
             .templates-grid, .gallery-grid {
@@ -988,47 +1083,6 @@
         }
         
         @media (max-width: 992px) {
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: var(--header-height);
-                height: calc(100vh - var(--header-height));
-                transform: translateX(-100%);
-                z-index: 200;
-                width: 280px;
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            
-            .sidebar-toggle {
-                display: flex;
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                color: var(--primary-color);
-                cursor: pointer;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                border-radius: 8px;
-                transition: all 0.3s ease;
-            }
-            
-            .sidebar-toggle:hover {
-                background-color: rgba(108, 92, 231, 0.1);
-            }
-            
-            .main-content {
-                position: relative;
-            }
-            
-            .tool-options {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
             .canvas-overlay-controls {
                 top: 8px;
                 left: 8px;
@@ -1059,6 +1113,11 @@
             
             .canvas-placeholder {
                 font-size: 2rem;
+            }
+            
+            .current-tool-indicator,
+            .current-color-indicator {
+                display: none;
             }
         }
         
@@ -1124,10 +1183,6 @@
                 padding: 15px;
             }
             
-            .tool-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .canvas-placeholder {
                 font-size: 1.8rem;
             }
@@ -1145,34 +1200,6 @@
             .language-selector select {
                 padding: 4px 6px;
                 font-size: 0.75rem;
-            }
-            
-            .sidebar {
-                width: 260px;
-                padding: 15px 10px;
-            }
-            
-            .tool-btn {
-                height: 50px;
-            }
-            
-            .tool-btn i {
-                font-size: 1.2rem;
-            }
-            
-            .tool-btn span {
-                font-size: 0.7rem;
-            }
-            
-            .color-option {
-                width: 30px;
-                height: 30px;
-            }
-            
-            #colorPicker {
-                width: 40px;
-                height: 40px;
-                min-width: 40px;
             }
             
             .canvas-container {
@@ -1297,38 +1324,6 @@
                 font-size: 0.8rem;
             }
             
-            .sidebar {
-                width: 240px;
-            }
-            
-            .tool-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .tool-btn {
-                height: 45px;
-            }
-            
-            .canvas-bg-btn {
-                padding: 6px;
-                font-size: 0.7rem;
-            }
-            
-            .color-palette {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .color-option {
-                width: 28px;
-                height: 28px;
-            }
-            
-            #colorPicker {
-                width: 35px;
-                height: 35px;
-                min-width: 35px;
-            }
-            
             .templates-grid, .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             }
@@ -1376,14 +1371,6 @@
         }
         
         @media (max-width: 320px) {
-            .sidebar {
-                width: 220px;
-            }
-            
-            .tool-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .templates-grid, .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             }
@@ -1418,11 +1405,6 @@
                 height: 50px;
             }
             
-            .sidebar {
-                top: 50px;
-                height: calc(100vh - 50px);
-            }
-            
             .canvas-wrapper {
                 min-height: 200px;
             }
@@ -1434,10 +1416,9 @@
         <!-- Header -->
         <header class="header">
             <div class="header-left">
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-cog"></i>
-                </button>
+                <i class="logo-icon fas fa-palette"></i>
                 <div class="language-selector">
+                    <i class="fas fa-globe"></i>
                     <select id="languageSelect">
                         <option value="tr">Türkçe</option>
                         <option value="en">English</option>
@@ -1448,6 +1429,14 @@
             </div>
             
             <div class="user-actions">
+                <button class="btn btn-outline" id="uploadImageHeaderBtn" title="Resim Yükle">
+                    <i class="fas fa-upload"></i>
+                    <span>Resim Yükle</span>
+                </button>
+                <button class="btn btn-outline" id="newCanvasHeaderBtn" title="Yeni Tuval">
+                    <i class="fas fa-plus"></i>
+                    <span>Yeni Tuval</span>
+                </button>
                 <button class="btn btn-primary" id="saveBtn" title="Kaydet">
                     <i class="fas fa-save"></i>
                     <span>Kaydet</span>
@@ -1460,122 +1449,21 @@
                     <i class="fas fa-images"></i>
                     <span>Galeri</span>
                 </button>
+                <button class="btn btn-primary" id="downloadHeaderBtn">
+                    <i class="fas fa-download"></i>
+                    <span>İndir</span>
+                </button>
             </div>
         </header>
         
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Sidebar -->
-            <aside class="sidebar" id="sidebar">
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-layer-group"></i>
-                        <span>Tuval Arka Planı</span>
-                    </h3>
-                    <div class="canvas-background-options">
-                        <div class="canvas-bg-btn active" data-bg="blank" title="Boş Tuval">
-                            <i class="fas fa-square"></i>
-                            <span>Boş</span>
-                        </div>
-                        <div class="canvas-bg-btn" data-bg="grid" title="Kareli Tuval">
-                            <i class="fas fa-th"></i>
-                            <span>Kareli</span>
-                        </div>
-                        <div class="canvas-bg-btn" data-bg="lined" title="Çizgili Tuval">
-                            <i class="fas fa-border-all"></i>
-                            <span>Çizgili</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-paint-brush"></i>
-                        <span>Boyama Araçları</span>
-                    </h3>
-                    <div class="tool-options">
-                        <div class="tool-btn active" data-tool="brush" title="Fırça">
-                            <i class="fas fa-paint-brush"></i>
-                            <span>Fırça</span>
-                        </div>
-                        <div class="tool-btn" data-tool="pencil" title="Kalem">
-                            <i class="fas fa-pencil-alt"></i>
-                            <span>Kalem</span>
-                        </div>
-                        <div class="tool-btn" data-tool="watercolor" title="Sulu Boya">
-                            <i class="fas fa-tint"></i>
-                            <span>Sulu Boya</span>
-                        </div>
-                        <div class="tool-btn" data-tool="pastel" title="Pastel">
-                            <i class="fas fa-star"></i>
-                            <span>Pastel</span>
-                        </div>
-                        <div class="tool-btn" data-tool="spray" title="Spray">
-                            <i class="fas fa-spray-can"></i>
-                            <span>Spray</span>
-                        </div>
-                        <div class="tool-btn" data-tool="fill" title="Dolgu">
-                            <i class="fas fa-fill-drip"></i>
-                            <span>Dolgu</span>
-                        </div>
-                        <div class="tool-btn" data-tool="shape" title="Şekil">
-                            <i class="fas fa-square"></i>
-                            <span>Şekil</span>
-                        </div>
-                        <div class="tool-btn" data-tool="text" title="Metin">
-                            <i class="fas fa-font"></i>
-                            <span>Metin</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-sliders-h"></i>
-                        <span>Ayarlar</span>
-                    </h3>
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Fırça Boyutu</span>
-                            <span id="brushSizeValue">10px</span>
-                        </div>
-                        <input type="range" id="brushSize" min="1" max="50" value="10">
-                    </div>
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Şeffaflık</span>
-                            <span id="opacityValue">100%</span>
-                        </div>
-                        <input type="range" id="opacity" min="1" max="100" value="100">
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-image"></i>
-                        <span>Resim Yükle</span>
-                    </h3>
-                    <div class="tool-options">
-                        <div class="tool-btn" id="uploadImageBtn" title="Resim Yükle">
-                            <i class="fas fa-upload"></i>
-                            <span>Resim Yükle</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            
             <!-- Canvas Area -->
             <main class="canvas-container">
                 <div class="canvas-header">
+                    <h2 class="canvas-title">ArtCanvas - Dijital Boyama</h2>
                     <div class="canvas-controls">
-                        <button class="btn btn-secondary" id="newCanvasBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Yeni Tuval</span>
-                        </button>
-                        <button class="btn btn-primary" id="downloadBtn">
-                            <i class="fas fa-download"></i>
-                            <span>İndir</span>
-                        </button>
+                        <!-- Boş alan, daha önce indir butonu buradaydı -->
                     </div>
                 </div>
                 
@@ -1604,6 +1492,21 @@
                         <button class="overlay-btn" id="colorOverlayBtn" title="Renk Seç">
                             <i class="fas fa-palette"></i>
                         </button>
+                        <button class="overlay-btn" id="brushOverlayBtn" title="Araçlar">
+                            <i class="fas fa-paint-brush"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Mevcut araç göstergesi -->
+                    <div class="current-tool-indicator" id="currentToolIndicator">
+                        <i class="fas fa-paint-brush"></i>
+                        <span class="current-tool-name" id="currentToolName">Fırça</span>
+                    </div>
+                    
+                    <!-- Mevcut renk göstergesi -->
+                    <div class="current-color-indicator" id="currentColorIndicator">
+                        <div class="color-preview" id="currentColorPreview" style="background-color: #6c5ce7;"></div>
+                        <span class="current-tool-name">Renk</span>
                     </div>
                     
                     <!-- Tuval üzerinde fırça boyutu kontrolü -->
@@ -1702,56 +1605,172 @@
                 <input type="color" id="colorModalPicker" value="#6c5ce7">
                 <span>Özel Renk</span>
             </div>
+            <div class="color-modal-slider">
+                <div class="color-modal-slider-label">
+                    <span>Şeffaflık</span>
+                    <span id="colorModalOpacityValue">100%</span>
+                </div>
+                <input type="range" id="colorModalOpacity" min="1" max="100" value="100">
+            </div>
             <div style="text-align: center; margin-top: 25px;">
                 <button class="btn btn-primary" id="colorModalOkBtn">Tamam</button>
             </div>
         </div>
     </div>
     
-    <!-- Share Modal -->
-    <div class="modal" id="shareModal">
+    <!-- New Canvas Modal -->
+    <div class="modal" id="newCanvasModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Çizimi Paylaş</h3>
-                <button class="close-modal" id="closeShareModal">&times;</button>
+                <h3 class="modal-title">Yeni Tuval Seç</h3>
+                <button class="close-modal" id="closeNewCanvasModal">&times;</button>
             </div>
-            <div class="share-options" id="shareOptions">
-                <div class="share-option" id="shareDownload">
-                    <div class="share-icon" style="background-color: var(--primary-color);">
-                        <i class="fas fa-download"></i>
+            <div class="canvas-options-grid" id="canvasOptionsGrid">
+                <!-- Canvas options will be added by JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-primary" id="newCanvasModalOkBtn">Oluştur</button>
+                <button class="btn btn-outline" id="newCanvasModalCancelBtn">İptal</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">İndirme Formatı Seç</h3>
+                <button class="close-modal" id="closeDownloadModal">&times;</button>
+            </div>
+            <div class="download-options" id="downloadOptions">
+                <!-- Download options will be added by JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-primary" id="downloadModalOkBtn">İndir</button>
+                <button class="btn btn-outline" id="downloadModalCancelBtn">İptal</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tools Modal -->
+    <div class="modal" id="toolsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Boyama Araçları</h3>
+                <button class="close-modal" id="closeToolsModal">&times;</button>
+            </div>
+            <div class="tools-modal-grid" id="toolsModalGrid">
+                <!-- Tool options will be added by JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-primary" id="toolsModalOkBtn">Tamam</button>
+                <button class="btn btn-outline" id="toolsModalCancelBtn">İptal</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Text Tool Modal -->
+    <div class="modal" id="textToolModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Metin Ekle</h3>
+                <button class="close-modal" id="closeTextToolModal">&times;</button>
+            </div>
+            <div class="text-tool-container">
+                <div class="text-input-container">
+                    <input type="text" id="textInput" class="text-input" placeholder="Metin girin...">
+                    <button class="btn btn-primary" id="addTextBtn">Ekle</button>
+                </div>
+                <div class="text-options">
+                    <div class="text-option">
+                        <span class="text-option-label">Yazı Tipi</span>
+                        <select id="textFont" class="text-input">
+                            <option value="Arial">Arial</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                        </select>
                     </div>
-                    <div class="share-text">
-                        <div class="share-title">Cihaza İndir</div>
-                        <div class="share-description">Çizimi cihazınıza indirin</div>
+                    <div class="text-option">
+                        <span class="text-option-label">Boyut</span>
+                        <input type="range" id="textSize" min="10" max="72" value="24">
+                        <span id="textSizeValue">24px</span>
                     </div>
                 </div>
-                <div class="share-option" id="shareEmail">
-                    <div class="share-icon" style="background-color: var(--accent-color);">
-                        <i class="fas fa-envelope"></i>
+            </div>
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-outline" id="textToolCancelBtn">İptal</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Shape Tool Modal -->
+    <div class="modal" id="shapeToolModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Şekil Ekle</h3>
+                <button class="close-modal" id="closeShapeToolModal">&times;</button>
+            </div>
+            <div class="shape-tool-container">
+                <div class="shape-options" id="shapeOptions">
+                    <!-- Shape options will be added by JavaScript -->
+                </div>
+                <div class="text-options">
+                    <div class="text-option">
+                        <span class="text-option-label">Dolgu Rengi</span>
+                        <input type="color" id="shapeFillColor" value="#6c5ce7">
                     </div>
-                    <div class="share-text">
-                        <div class="share-title">E-posta ile Paylaş</div>
-                        <div class="share-description">Çizimi e-posta olarak gönderin</div>
+                    <div class="text-option">
+                        <span class="text-option-label">Kenar Rengi</span>
+                        <input type="color" id="shapeStrokeColor" value="#000000">
                     </div>
                 </div>
-                <div class="share-option" id="shareWhatsApp">
-                    <div class="share-icon" style="background-color: #25D366;">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <div class="share-text">
-                        <div class="share-title">WhatsApp ile Paylaş</div>
-                        <div class="share-description">Çizimi WhatsApp'ta paylaşın</div>
-                    </div>
-                </div>
-                <div class="share-option" id="shareCopyLink">
-                    <div class="share-icon" style="background-color: var(--secondary-color);">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <div class="share-text">
-                        <div class="share-title">Bağlantıyı Kopyala</div>
-                        <div class="share-description">Çizim bağlantısını panonuza kopyalayın</div>
-                    </div>
-                </div>
+            </div>
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-outline" id="shapeToolCancelBtn">İptal</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Drawing View Modal -->
+    <div class="modal drawing-view-modal" id="drawingViewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Çizim Detayları</h3>
+                <button class="close-modal" id="closeDrawingViewModal">&times;</button>
+            </div>
+            <div class="drawing-view-content" id="drawingViewContent">
+                <!-- Drawing view content will be added by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message Modal (Genel Mesajlar) -->
+    <div class="message-modal" id="messageModal">
+        <div class="message-modal-content">
+            <div class="message-modal-icon" id="messageModalIcon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <h3 class="message-modal-title" id="messageModalTitle">Başlık</h3>
+            <p class="message-modal-text" id="messageModalText">Mesaj içeriği...</p>
+            <div class="message-modal-buttons">
+                <button class="btn btn-primary" id="messageModalOkBtn">Tamam</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Modal -->
+    <div class="message-modal" id="confirmModal">
+        <div class="message-modal-content">
+            <div class="message-modal-icon" id="confirmModalIcon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h3 class="message-modal-title" id="confirmModalTitle">Başlık</h3>
+            <p class="message-modal-text" id="confirmModalText">Mesaj içeriği...</p>
+            <div class="message-modal-buttons">
+                <button class="btn btn-primary" id="confirmModalYesBtn">Evet</button>
+                <button class="btn btn-outline" id="confirmModalNoBtn">Hayır</button>
             </div>
         </div>
     </div>
@@ -1810,27 +1829,81 @@
                 clearCanvasConfirm: "Tuvali temizlemek istediğinize emin misiniz?",
                 helpTitle: "ArtCanvas Kullanım Kılavuzu",
                 helpContent: `
-                    <h3>Hoş Geldiniz!</h3>
-                    <p>ArtCanvas ile dijital boyama yapmanın keyfini çıkarın. İşte bazı ipuçları:</p>
+                    <h3>ArtCanvas'a Hoş Geldiniz!</h3>
+                    <p>ArtCanvas ile dijital boyama yapmanın keyfini çıkarın. Tüm kontroller tuval üzerinde ve üst menüdedir.</p>
                     <ul>
-                        <li><strong>Çizim Araçları:</strong> Sol menüden fırça, kalem, sulu boya gibi araçları seçebilirsiniz.</li>
-                        <li><strong>Renk Seçimi:</strong> Renk paletinden bir renk seçebilir veya özel renk seçiciyi kullanabilirsiniz.</li>
-                        <li><strong>Fırça Boyutu:</strong> Kaydırıcı ile fırça boyutunu ayarlayabilirsiniz.</li>
+                        <li><strong>Tuval Üzerindeki Kontroller (Sol Üst Köşe):</strong>
+                            <ul>
+                                <li><i class="fas fa-undo"></i> Geri Al: Son işlemi geri alır</li>
+                                <li><i class="fas fa-redo"></i> İleri Al: Geri alınan işlemi tekrar uygular</li>
+                                <li><i class="fas fa-eraser"></i> Silgi: Çizimi siler (şeffaf yapar)</li>
+                                <li><i class="fas fa-trash-alt"></i> Temizle: Tüm tuvali temizler</li>
+                                <li><i class="fas fa-palette"></i> Renk Seç: Renk paletini açar</li>
+                                <li><i class="fas fa-paint-brush"></i> Araçlar: Çizim araçlarını açar</li>
+                            </ul>
+                        </li>
+                        <li><strong>Üst Menü:</strong>
+                            <ul>
+                                <li>Resim Yükle: Bilgisayarınızdan resim yükleyin</li>
+                                <li>Yeni Tuval: Yeni boş tuval oluşturun</li>
+                                <li>Kaydet: Çiziminizi kaydedin</li>
+                                <li>Şablon: Hazır şablonlardan seçin</li>
+                                <li>Galeri: Kayıtlı çizimlerinizi görüntüleyin</li>
+                                <li>İndir: Çiziminizi PNG/JPG/PDF olarak indirin</li>
+                            </ul>
+                        </li>
+                        <li><strong>Tuval Üzerindeki Diğer Kontroller:</strong>
+                            <ul>
+                                <li>Sol Alt Köşe: Fırça boyutu ayarı</li>
+                                <li>Sağ Alt Köşe: Yakınlaştırma/Uzaklaştırma</li>
+                                <li>Sağ Üst Köşe: Mevcut araç ve renk bilgisi</li>
+                            </ul>
+                        </li>
+                        <li><strong>Çizim Araçları:</strong> Araçlar butonuna tıklayarak fırça, kalem, sulu boya, pastel, spray, dolgu, metin ve şekil araçlarına erişebilirsiniz.</li>
+                        <li><strong>Renk Seçimi:</strong> Renk seç butonuna tıklayarak renk paletini açabilir, özel renk seçebilir ve şeffaflık ayarı yapabilirsiniz.</li>
+                        <li><strong>Fırça Boyutu:</strong> Sol alt köşedeki kaydırıcı ile fırça boyutunu ayarlayabilirsiniz.</li>
                         <li><strong>Yakınlaştırma/Uzaklaştırma:</strong> Sağ alt köşedeki düğmelerle tuvali yakınlaştırıp uzaklaştırabilirsiniz.</li>
-                        <li><strong>Kaydetme:</strong> Çiziminizi yerel depolamaya kaydedebilir, daha sonra devam edebilirsiniz.</li>
                         <li><strong>Şablonlar:</strong> Önceden hazırlanmış şablonlardan birini seçerek hızlıca başlayabilirsiniz.</li>
-                        <li><strong>Paylaşım:</strong> Bitmiş çiziminizi paylaşabilirsiniz.</li>
                         <li><strong>Geri Al/İleri Al:</strong> Tuvalin sol üst köşesindeki düğmelerle işlemlerinizi geri alabilir veya ileri alabilirsiniz.</li>
-                        <li><strong>Tuval Arka Planı:</strong> Boş, kareli veya çizgili tuval arka planlarından birini seçebilirsiniz.</li>
                     </ul>
-                    <p>İyi eğlenceler!</p>
+                    <p>İyi eğlenceler ve sanat dolu anlar!</p>
                 `,
                 selectAll: "Tümünü Seç",
                 deleteSelected: "Seçilenleri Sil",
                 noDrawingsSelected: "Hiç çizim seçilmedi.",
                 templateLoadError: "Şablon yüklenirken bir hata oluştu. Lütfen başka bir şablon seçin.",
                 brushSize: "Fırça Boyutu",
-                colorPicker: "Renk Seç"
+                colorPicker: "Renk Seç",
+                transparency: "Şeffaflık",
+                tools: "Araçlar",
+                ok: "Tamam",
+                cancel: "İptal",
+                create: "Oluştur",
+                blankCanvas: "Boş Tuval",
+                gridCanvas: "Kareli Tuval",
+                linedCanvas: "Çizgili Tuval",
+                coloredCanvas: "Renkli Tuval",
+                canvasBlankDesc: "Beyaz boş tuval",
+                canvasGridDesc: "Kareli kağıt görünümü",
+                canvasLinedDesc: "Çizgili kağıt görünümü",
+                canvasColoredDesc: "Seçtiğiniz renkte tuval",
+                formatPNG: "PNG Formatı",
+                formatJPG: "JPG Formatı",
+                formatPDF: "PDF Formatı",
+                formatPNGDesc: "Yüksek kaliteli görüntü",
+                formatJPGDesc: "Daha küçük dosya boyutu",
+                formatPDFDesc: "Vektörel çizim",
+                shapeCircle: "Daire",
+                shapeSquare: "Kare",
+                shapeTriangle: "Üçgen",
+                shapeRectangle: "Dikdörtgen",
+                shapeStar: "Yıldız",
+                shapeHeart: "Kalp",
+                drawingName: "Çizim Adı",
+                drawingDate: "Kayıt Tarihi",
+                viewDrawing: "Çizimi Görüntüle",
+                welcomeTitle: "ArtCanvas'a Hoş Geldiniz!",
+                welcomeMessage: "ArtCanvas ile dijital boyama yapmanın keyfini çıkarın. Tüm kontroller tuval üzerindedir. Sol üst köşedeki araçları kullanarak çizim yapmaya başlayın. Üst menüden yeni tuval oluşturabilir, resim yükleyebilir, şablonları kullanabilir, çizimlerinizi kaydedip galeriden görüntüleyebilirsiniz. İyi eğlenceler!"
             },
             en: {
                 canvasTitle: "New Canvas",
@@ -1866,27 +1939,81 @@
                 clearCanvasConfirm: "Are you sure you want to clear the canvas?",
                 helpTitle: "ArtCanvas User Guide",
                 helpContent: `
-                    <h3>Welcome!</h3>
-                    <p>Enjoy digital painting with ArtCanvas. Here are some tips:</p>
+                    <h3>Welcome to ArtCanvas!</h3>
+                    <p>Enjoy digital painting with ArtCanvas. All controls are on the canvas and top menu.</p>
                     <ul>
-                        <li><strong>Drawing Tools:</strong> Select brush, pencil, watercolor etc. from the left menu.</li>
-                        <li><strong>Color Selection:</strong> Choose a color from the palette or use the custom color picker.</li>
-                        <li><strong>Brush Size:</strong> Adjust brush size with the slider.</li>
-                        <li><strong>Zoom In/Out:</strong> Use buttons at the bottom right to zoom the canvas.</li>
-                        <li><strong>Saving:</strong> Save your drawing to local storage to continue later.</li>
+                        <li><strong>Canvas Controls (Top Left Corner):</strong>
+                            <ul>
+                                <li><i class="fas fa-undo"></i> Undo: Undo last action</li>
+                                <li><i class="fas fa-redo"></i> Redo: Redo undone action</li>
+                                <li><i class="fas fa-eraser"></i> Eraser: Erase drawing (makes transparent)</li>
+                                <li><i class="fas fa-trash-alt"></i> Clear: Clear entire canvas</li>
+                                <li><i class="fas fa-palette"></i> Color Select: Open color palette</li>
+                                <li><i class="fas fa-paint-brush"></i> Tools: Open drawing tools</li>
+                            </ul>
+                        </li>
+                        <li><strong>Top Menu:</strong>
+                            <ul>
+                                <li>Upload Image: Upload image from your computer</li>
+                                <li>New Canvas: Create new blank canvas</li>
+                                <li>Save: Save your drawing</li>
+                                <li>Templates: Choose from ready templates</li>
+                                <li>Gallery: View your saved drawings</li>
+                                <li>Download: Download your drawing as PNG/JPG/PDF</li>
+                            </ul>
+                        </li>
+                        <li><strong>Other Canvas Controls:</strong>
+                            <ul>
+                                <li>Bottom Left Corner: Brush size adjustment</li>
+                                <li>Bottom Right Corner: Zoom in/out</li>
+                                <li>Top Right Corner: Current tool and color information</li>
+                            </ul>
+                        </li>
+                        <li><strong>Drawing Tools:</strong> Click the tools button to access brush, pencil, watercolor, pastel, spray, fill, text and shape tools.</li>
+                        <li><strong>Color Selection:</strong> Click the color select button to open the color palette, choose custom colors and adjust transparency.</li>
+                        <li><strong>Brush Size:</strong> Adjust brush size with the slider at bottom left corner.</li>
+                        <li><strong>Zoom In/Out:</strong> Use buttons at bottom right corner to zoom the canvas.</li>
                         <li><strong>Templates:</strong> Select from pre-made templates to start quickly.</li>
-                        <li><strong>Sharing:</strong> Share your finished drawing.</li>
-                        <li><strong>Undo/Redo:</strong> Use buttons at the top left of the canvas to undo or redo your actions.</li>
-                        <li><strong>Canvas Background:</strong> Choose from blank, grid, or lined canvas backgrounds.</li>
+                        <li><strong>Undo/Redo:</strong> Use buttons at top left corner of the canvas to undo or redo your actions.</li>
                     </ul>
-                    <p>Have fun!</p>
+                    <p>Have fun and enjoy artistic moments!</p>
                 `,
                 selectAll: "Select All",
                 deleteSelected: "Delete Selected",
                 noDrawingsSelected: "No drawings selected.",
                 templateLoadError: "Error loading template. Please select another template.",
                 brushSize: "Brush Size",
-                colorPicker: "Color Picker"
+                colorPicker: "Color Picker",
+                transparency: "Transparency",
+                tools: "Tools",
+                ok: "OK",
+                cancel: "Cancel",
+                create: "Create",
+                blankCanvas: "Blank Canvas",
+                gridCanvas: "Grid Canvas",
+                linedCanvas: "Lined Canvas",
+                coloredCanvas: "Colored Canvas",
+                canvasBlankDesc: "White blank canvas",
+                canvasGridDesc: "Grid paper view",
+                canvasLinedDesc: "Lined paper view",
+                canvasColoredDesc: "Canvas in selected color",
+                formatPNG: "PNG Format",
+                formatJPG: "JPG Format",
+                formatPDF: "PDF Format",
+                formatPNGDesc: "High quality image",
+                formatJPGDesc: "Smaller file size",
+                formatPDFDesc: "Vector drawing",
+                shapeCircle: "Circle",
+                shapeSquare: "Square",
+                shapeTriangle: "Triangle",
+                shapeRectangle: "Rectangle",
+                shapeStar: "Star",
+                shapeHeart: "Heart",
+                drawingName: "Drawing Name",
+                drawingDate: "Save Date",
+                viewDrawing: "View Drawing",
+                welcomeTitle: "Welcome to ArtCanvas!",
+                welcomeMessage: "Enjoy digital painting with ArtCanvas. All controls are on the canvas. Start drawing using the tools at the top left corner. From the top menu, you can create a new canvas, upload images, use templates, save your drawings and view them from the gallery. Have fun!"
             }
         };
         
@@ -1907,23 +2034,25 @@
             canvasBackground: 'blank',
             selectedDrawings: new Set(),
             isSelecting: false,
-            hasDrawing: false
+            hasDrawing: false,
+            newCanvasSelected: 'blank',
+            downloadFormat: 'png',
+            selectedShape: 'circle',
+            textToolActive: false,
+            shapeToolActive: false,
+            // Çizim katmanları için
+            layers: {
+                background: null,
+                drawing: null
+            }
         };
         
         // DOM elementleri
         const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
         const languageSelect = document.getElementById('languageSelect');
-        const colorPalette = document.getElementById('colorPalette');
-        const colorPicker = document.getElementById('colorPicker');
-        const brushSizeSlider = document.getElementById('brushSize');
-        const opacitySlider = document.getElementById('opacity');
-        const brushSizeValue = document.getElementById('brushSizeValue');
-        const opacityValue = document.getElementById('opacityValue');
-        const toolButtons = document.querySelectorAll('.tool-btn');
-        const canvasBgButtons = document.querySelectorAll('.canvas-bg-btn');
+        const brushSizeSlider = document.getElementById('canvasBrushSize');
+        const brushSizeValue = document.getElementById('canvasBrushSizeValue');
         const templatesModal = document.getElementById('templatesModal');
         const templatesBtn = document.getElementById('templatesBtn');
         const closeTemplatesModal = document.getElementById('closeTemplatesModal');
@@ -1931,16 +2060,15 @@
         const galleryBtn = document.getElementById('galleryBtn');
         const closeGalleryModal = document.getElementById('closeGalleryModal');
         const saveBtn = document.getElementById('saveBtn');
-        const newCanvasBtn = document.getElementById('newCanvasBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const uploadImageBtn = document.getElementById('uploadImageBtn');
+        const downloadHeaderBtn = document.getElementById('downloadHeaderBtn');
+        const uploadImageHeaderBtn = document.getElementById('uploadImageHeaderBtn');
+        const newCanvasHeaderBtn = document.getElementById('newCanvasHeaderBtn');
         const undoOverlayBtn = document.getElementById('undoOverlayBtn');
         const redoOverlayBtn = document.getElementById('redoOverlayBtn');
         const eraserOverlayBtn = document.getElementById('eraserOverlayBtn');
         const clearOverlayBtn = document.getElementById('clearOverlayBtn');
         const colorOverlayBtn = document.getElementById('colorOverlayBtn');
-        const canvasBrushSizeSlider = document.getElementById('canvasBrushSize');
-        const canvasBrushSizeValue = document.getElementById('canvasBrushSizeValue');
+        const brushOverlayBtn = document.getElementById('brushOverlayBtn');
         const zoomInBtn = document.getElementById('zoomInBtn');
         const zoomOutBtn = document.getElementById('zoomOutBtn');
         const resetZoomBtn = document.getElementById('resetZoomBtn');
@@ -1959,9 +2087,56 @@
         const closeColorModal = document.getElementById('closeColorModal');
         const colorModalPalette = document.getElementById('colorModalPalette');
         const colorModalPicker = document.getElementById('colorModalPicker');
+        const colorModalOpacity = document.getElementById('colorModalOpacity');
+        const colorModalOpacityValue = document.getElementById('colorModalOpacityValue');
         const colorModalOkBtn = document.getElementById('colorModalOkBtn');
-        const selectAllBtn = document.getElementById('selectAllBtn');
-        const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+        const newCanvasModal = document.getElementById('newCanvasModal');
+        const closeNewCanvasModal = document.getElementById('closeNewCanvasModal');
+        const canvasOptionsGrid = document.getElementById('canvasOptionsGrid');
+        const newCanvasModalOkBtn = document.getElementById('newCanvasModalOkBtn');
+        const newCanvasModalCancelBtn = document.getElementById('newCanvasModalCancelBtn');
+        const downloadModal = document.getElementById('downloadModal');
+        const closeDownloadModal = document.getElementById('closeDownloadModal');
+        const downloadOptions = document.getElementById('downloadOptions');
+        const downloadModalOkBtn = document.getElementById('downloadModalOkBtn');
+        const downloadModalCancelBtn = document.getElementById('downloadModalCancelBtn');
+        const toolsModal = document.getElementById('toolsModal');
+        const closeToolsModal = document.getElementById('closeToolsModal');
+        const toolsModalGrid = document.getElementById('toolsModalGrid');
+        const toolsModalOkBtn = document.getElementById('toolsModalOkBtn');
+        const toolsModalCancelBtn = document.getElementById('toolsModalCancelBtn');
+        const textToolModal = document.getElementById('textToolModal');
+        const closeTextToolModal = document.getElementById('closeTextToolModal');
+        const textInput = document.getElementById('textInput');
+        const addTextBtn = document.getElementById('addTextBtn');
+        const textFont = document.getElementById('textFont');
+        const textSize = document.getElementById('textSize');
+        const textSizeValue = document.getElementById('textSizeValue');
+        const textToolCancelBtn = document.getElementById('textToolCancelBtn');
+        const shapeToolModal = document.getElementById('shapeToolModal');
+        const closeShapeToolModal = document.getElementById('closeShapeToolModal');
+        const shapeOptions = document.getElementById('shapeOptions');
+        const shapeFillColor = document.getElementById('shapeFillColor');
+        const shapeStrokeColor = document.getElementById('shapeStrokeColor');
+        const shapeToolCancelBtn = document.getElementById('shapeToolCancelBtn');
+        const drawingViewModal = document.getElementById('drawingViewModal');
+        const closeDrawingViewModal = document.getElementById('closeDrawingViewModal');
+        const drawingViewContent = document.getElementById('drawingViewContent');
+        const messageModal = document.getElementById('messageModal');
+        const messageModalIcon = document.getElementById('messageModalIcon');
+        const messageModalTitle = document.getElementById('messageModalTitle');
+        const messageModalText = document.getElementById('messageModalText');
+        const messageModalOkBtn = document.getElementById('messageModalOkBtn');
+        const confirmModal = document.getElementById('confirmModal');
+        const confirmModalIcon = document.getElementById('confirmModalIcon');
+        const confirmModalTitle = document.getElementById('confirmModalTitle');
+        const confirmModalText = document.getElementById('confirmModalText');
+        const confirmModalYesBtn = document.getElementById('confirmModalYesBtn');
+        const confirmModalNoBtn = document.getElementById('confirmModalNoBtn');
+        const currentToolIndicator = document.getElementById('currentToolIndicator');
+        const currentToolName = document.getElementById('currentToolName');
+        const currentColorIndicator = document.getElementById('currentColorIndicator');
+        const currentColorPreview = document.getElementById('currentColorPreview');
         
         // Renk paleti
         const colors = [
@@ -1973,28 +2148,73 @@
             '#e17055', '#d63031', '#0984e3', '#00b894', '#6c5ce7'
         ];
         
-        // Şablonlar - Sağlanan tüm resim linkleri
+        // Şablonlar - Verilen tüm resim linkleri
         const templates = [
-            { id: 1, name: 'Hayvan 1', url: 'https://i.hizliresim.com/553goyq.png' },
-            { id: 2, name: 'Çiçek 1', url: 'https://i.hizliresim.com/hlpy6l1.png' },
-            { id: 3, name: 'Araba', url: 'https://i.hizliresim.com/2e14bw2.png' },
-            { id: 4, name: 'Manzara 1', url: 'https://i.hizliresim.com/7om8r73.png' },
-            { id: 5, name: 'Uçak', url: 'https://i.hizliresim.com/jr8gesf.png' },
-            { id: 6, name: 'Deniz', url: 'https://i.hizliresim.com/tg8e66j.png' },
-            { id: 7, name: 'Meyve', url: 'https://i.hizliresim.com/4ubuk33.png' },
-            { id: 8, name: 'Panda', url: 'https://i.hizliresim.com/hqt1zcd.png' },
-            { id: 9, name: 'Kelebek', url: 'https://i.hizliresim.com/46263k5.png' },
-            { id: 10, name: 'Aslan', url: 'https://i.hizliresim.com/hli4z19.png' },
-            { id: 11, name: 'Şehir', url: 'https://i.hizliresim.com/m06z3qo.png' },
-            { id: 12, name: 'Balık', url: 'https://i.hizliresim.com/b2jodaw.png' },
-            { id: 13, name: 'Çiçek 2', url: 'https://i.hizliresim.com/gmmzm61.png' },
-            { id: 14, name: 'Uzay', url: 'https://i.hizliresim.com/h7oj6z3.jpg' },
-            { id: 15, name: 'Dinazor', url: 'https://i.hizliresim.com/kylgqm7.png' },
-            { id: 16, name: 'Kalp', url: 'https://i.hizliresim.com/bvbzewm.png' },
-            { id: 17, name: 'Kuş', url: 'https://i.hizliresim.com/azxnfsd.png' },
-            { id: 18, name: 'Ejderha', url: 'https://i.hizliresim.com/o2yu4mh.png' },
-            { id: 19, name: 'Manzara 2', url: 'https://i.hizliresim.com/kqfn8x8.png' },
-            { id: 20, name: 'Robot', url: 'https://i.hizliresim.com/8kxpuvu.png' }
+            { id: 1, name: 'Resim 1', url: 'https://i.hizliresim.com/553goyq.png' },
+            { id: 2, name: 'Resim 2', url: 'https://i.hizliresim.com/hlpy6l1.png' },
+            { id: 3, name: 'Resim 3', url: 'https://i.hizliresim.com/2e14bw2.png' },
+            { id: 4, name: 'Resim 4', url: 'https://i.hizliresim.com/7om8r73.png' },
+            { id: 5, name: 'Resim 5', url: 'https://i.hizliresim.com/jr8gesf.png' },
+            { id: 6, name: 'Resim 6', url: 'https://i.hizliresim.com/tg8e66j.png' },
+            { id: 7, name: 'Resim 7', url: 'https://i.hizliresim.com/4ubuk33.png' },
+            { id: 8, name: 'Resim 8', url: 'https://i.hizliresim.com/hqt1zcd.png' },
+            { id: 9, name: 'Resim 9', url: 'https://i.hizliresim.com/46263k5.png' },
+            { id: 10, name: 'Resim 10', url: 'https://i.hizliresim.com/hli4z19.png' },
+            { id: 11, name: 'Resim 11', url: 'https://i.hizliresim.com/m06z3qo.png' },
+            { id: 12, name: 'Resim 12', url: 'https://i.hizliresim.com/b2jodaw.png' },
+            { id: 13, name: 'Resim 13', url: 'https://i.hizliresim.com/gmmzm61.png' },
+            { id: 14, name: 'Resim 14', url: 'https://i.hizliresim.com/h7oj6z3.jpg' },
+            { id: 15, name: 'Resim 15', url: 'https://i.hizliresim.com/kylgqm7.png' },
+            { id: 16, name: 'Resim 16', url: 'https://i.hizliresim.com/bvbzewm.png' },
+            { id: 17, name: 'Resim 17', url: 'https://i.hizliresim.com/azxnfsd.png' },
+            { id: 18, name: 'Resim 18', url: 'https://i.hizliresim.com/o2yu4mh.png' },
+            { id: 19, name: 'Resim 19', url: 'https://i.hizliresim.com/kqfn8x8.png' },
+            { id: 20, name: 'Resim 20', url: 'https://i.hizliresim.com/8kxpuvu.png' },
+            { id: 21, name: 'Resim 21', url: 'https://i.hizliresim.com/r98yfe3.jpg' },
+            { id: 22, name: 'Resim 22', url: 'https://i.hizliresim.com/k8adqvj.png' },
+            { id: 23, name: 'Resim 23', url: 'https://i.hizliresim.com/gn0p8p8.png' },
+            { id: 24, name: 'Resim 24', url: 'https://i.hizliresim.com/5qvcb1v.png' },
+            { id: 25, name: 'Resim 25', url: 'https://i.hizliresim.com/1lj0j7u.png' },
+            { id: 26, name: 'Resim 26', url: 'https://i.hizliresim.com/gp1tkan.png' },
+            { id: 27, name: 'Resim 27', url: 'https://i.hizliresim.com/mm8dwsw.png' },
+            { id: 28, name: 'Resim 28', url: 'https://i.hizliresim.com/l0lvwbn.jpg' },
+            { id: 29, name: 'Resim 29', url: 'https://i.hizliresim.com/qdfwqv0.png' },
+            { id: 30, name: 'Resim 30', url: 'https://i.hizliresim.com/iisk7ba.png' },
+            { id: 31, name: 'Resim 31', url: 'https://i.hizliresim.com/lkoytni.png' },
+            { id: 32, name: 'Resim 32', url: 'https://i.hizliresim.com/7vn90ip.png' },
+            { id: 33, name: 'Resim 33', url: 'https://i.hizliresim.com/rc84qso.png' },
+            { id: 34, name: 'Resim 34', url: 'https://i.hizliresim.com/df5hx0l.png' },
+            { id: 35, name: 'Resim 35', url: 'https://i.hizliresim.com/6n041ap.png' },
+            { id: 36, name: 'Resim 36', url: 'https://i.hizliresim.com/i8eevnf.png' },
+            { id: 37, name: 'Resim 37', url: 'https://i.hizliresim.com/ll3hr7s.png' },
+            { id: 38, name: 'Resim 38', url: 'https://i.hizliresim.com/jx4wesq.png' },
+            { id: 39, name: 'Resim 39', url: 'https://i.hizliresim.com/a053li8.png' },
+            { id: 40, name: 'Resim 40', url: 'https://i.hizliresim.com/aoqryfb.png' },
+            { id: 41, name: 'Resim 41', url: 'https://i.hizliresim.com/okqpgp0.png' },
+            { id: 42, name: 'Resim 42', url: 'https://i.hizliresim.com/1u6r2jh.jpg' },
+            { id: 43, name: 'Resim 43', url: 'https://i.hizliresim.com/7wle4f4.png' },
+            { id: 44, name: 'Resim 44', url: 'https://i.hizliresim.com/ge30qcm.png' },
+            { id: 45, name: 'Resim 45', url: 'https://i.hizliresim.com/9xwa92a.png' },
+            { id: 46, name: 'Resim 46', url: 'https://i.hizliresim.com/1dgkfir.png' },
+            { id: 47, name: 'Resim 47', url: 'https://i.hizliresim.com/g8j4esl.png' },
+            { id: 48, name: 'Resim 48', url: 'https://i.hizliresim.com/3c1metf.png' },
+            { id: 49, name: 'Resim 49', url: 'https://i.hizliresim.com/r5jnyjy.png' },
+            { id: 50, name: 'Resim 50', url: 'https://i.hizliresim.com/s6y8z8v.png' },
+            { id: 51, name: 'Resim 51', url: 'https://i.hizliresim.com/7s8uv5n.png' },
+            { id: 52, name: 'Resim 52', url: 'https://i.hizliresim.com/a9x3d98.png' },
+            { id: 53, name: 'Resim 53', url: 'https://i.hizliresim.com/ihmhd68.png' },
+            { id: 54, name: 'Resim 54', url: 'https://i.hizliresim.com/3c0k2up.png' },
+            { id: 55, name: 'Resim 55', url: 'https://i.hizliresim.com/lhmerga.png' },
+            { id: 56, name: 'Resim 56', url: 'https://i.hizliresim.com/itisvof.png' },
+            { id: 57, name: 'Resim 57', url: 'https://i.hizliresim.com/nf25827.jpg' },
+            { id: 58, name: 'Resim 58', url: 'https://i.hizliresim.com/rxbdaso.png' },
+            { id: 59, name: 'Resim 59', url: 'https://i.hizliresim.com/1b54adu.png' },
+            { id: 60, name: 'Resim 60', url: 'https://i.hizliresim.com/q63g7uu.png' },
+            { id: 61, name: 'Resim 61', url: 'https://i.hizliresim.com/fvo1gjt.png' },
+            { id: 62, name: 'Resim 62', url: 'https://i.hizliresim.com/hxlddgp.png' },
+            { id: 63, name: 'Resim 63', url: 'https://i.hizliresim.com/n4xg2ro.png' },
+            { id: 64, name: 'Resim 64', url: 'https://i.hizliresim.com/pdkdrqt.png' },
+            { id: 65, name: 'Resim 65', url: 'https://i.hizliresim.com/glnc1bb.jpg' }
         ];
         
         // Canvas boyutlarını dinamik ayarla
@@ -2023,6 +2243,9 @@
             canvas.style.width = `${canvasWidth}px`;
             canvas.style.height = `${canvasHeight}px`;
             
+            // Katmanları başlat
+            initLayers();
+            
             // Canvas'ı temizle ve seçili arka planı uygula
             applyCanvasBackground();
             
@@ -2030,7 +2253,9 @@
             if (appState.canvasData) {
                 const img = new Image();
                 img.onload = function() {
-                    ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+                    drawToDrawingLayer(() => {
+                        ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+                    });
                     appState.hasDrawing = true;
                     updateCanvasPlaceholder();
                 };
@@ -2047,31 +2272,78 @@
             updateCursor();
         }
         
+        // Katmanları başlat
+        function initLayers() {
+            // Arka plan katmanı
+            appState.layers.background = document.createElement('canvas');
+            appState.layers.background.width = canvas.width;
+            appState.layers.background.height = canvas.height;
+            
+            // Çizim katmanı
+            appState.layers.drawing = document.createElement('canvas');
+            appState.layers.drawing.width = canvas.width;
+            appState.layers.drawing.height = canvas.height;
+        }
+        
+        // Çizim katmanına çiz
+        function drawToDrawingLayer(drawFunction) {
+            const drawingCtx = appState.layers.drawing.getContext('2d');
+            drawFunction(drawingCtx);
+            renderCanvas();
+        }
+        
+        // Canvas'ı render et (tüm katmanları birleştir)
+        function renderCanvas() {
+            // Temizle
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Arka plan katmanını çiz
+            if (appState.layers.background) {
+                ctx.drawImage(appState.layers.background, 0, 0);
+            }
+            
+            // Çizim katmanını çiz
+            if (appState.layers.drawing) {
+                ctx.drawImage(appState.layers.drawing, 0, 0);
+            }
+        }
+        
         // Canvas arka planını uygula
         function applyCanvasBackground() {
+            if (!appState.layers.background) return;
+            
+            const bgCtx = appState.layers.background.getContext('2d');
+            
             // Önce tamamen beyaz yap
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            bgCtx.fillStyle = '#ffffff';
+            bgCtx.fillRect(0, 0, canvas.width, canvas.height);
             
             // Seçili arka plana göre desen çiz
             switch(appState.canvasBackground) {
                 case 'grid':
-                    drawGrid();
+                    drawGrid(bgCtx);
                     break;
                 case 'lined':
-                    drawLined();
+                    drawLined(bgCtx);
+                    break;
+                case 'colored':
+                    // Renkli tuval
+                    bgCtx.fillStyle = appState.currentColor;
+                    bgCtx.fillRect(0, 0, canvas.width, canvas.height);
                     break;
                 case 'blank':
                 default:
                     // Sadece beyaz kalır
                     break;
             }
+            
+            renderCanvas();
         }
         
         // Kareli desen çiz
-        function drawGrid() {
-            ctx.strokeStyle = '#f0f0f0';
-            ctx.lineWidth = 1;
+        function drawGrid(context) {
+            context.strokeStyle = '#f0f0f0';
+            context.lineWidth = 1;
             
             const gridSize = 20;
             const width = canvas.width;
@@ -2079,50 +2351,50 @@
             
             // Dikey çizgiler
             for (let x = 0; x <= width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
+                context.beginPath();
+                context.moveTo(x, 0);
+                context.lineTo(x, height);
+                context.stroke();
             }
             
             // Yatay çizgiler
             for (let y = 0; y <= height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
+                context.beginPath();
+                context.moveTo(0, y);
+                context.lineTo(width, y);
+                context.stroke();
             }
         }
         
         // Çizgili desen çiz
-        function drawLined() {
-            ctx.strokeStyle = '#f0f0f0';
-            ctx.lineWidth = 1;
+        function drawLined(context) {
+            context.strokeStyle = '#f0f0f0';
+            context.lineWidth = 1;
             
             const lineSpacing = 25;
             const height = canvas.height;
             
             // Yatay çizgiler
             for (let y = 0; y <= height; y += lineSpacing) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
+                context.beginPath();
+                context.moveTo(0, y);
+                context.lineTo(canvas.width, y);
+                context.stroke();
             }
             
             // Kenar çizgileri (daha kalın)
-            ctx.strokeStyle = '#e0e0e0';
-            ctx.lineWidth = 2;
+            context.strokeStyle = '#e0e0e0';
+            context.lineWidth = 2;
             
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(canvas.width, 0);
-            ctx.stroke();
+            context.beginPath();
+            context.moveTo(0, 0);
+            context.lineTo(canvas.width, 0);
+            context.stroke();
             
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height);
-            ctx.lineTo(canvas.width, canvas.height);
-            ctx.stroke();
+            context.beginPath();
+            context.moveTo(0, canvas.height);
+            context.lineTo(canvas.width, canvas.height);
+            context.stroke();
         }
         
         // Yeni tuval yazısını güncelle
@@ -2135,34 +2407,45 @@
             }
         }
         
-        // Renk paletini oluştur
-        function createColorPalette() {
-            colorPalette.innerHTML = '';
-            colors.forEach(color => {
-                const colorElement = document.createElement('div');
-                colorElement.className = 'color-option';
-                if (color === appState.currentColor) {
-                    colorElement.classList.add('active');
-                }
-                colorElement.style.backgroundColor = color;
-                colorElement.dataset.color = color;
-                
-                colorElement.addEventListener('click', function() {
-                    document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    appState.currentColor = this.dataset.color;
-                    colorPicker.value = appState.currentColor;
-                    colorModalPicker.value = appState.currentColor;
-                    
-                    // Silgi modundaysa fırça moduna geç
-                    if (appState.currentTool === 'eraser') {
-                        appState.currentTool = 'brush';
-                        updateToolButtons();
-                    }
-                });
-                
-                colorPalette.appendChild(colorElement);
-            });
+        // Mevcut araç göstergesini güncelle
+        function updateToolIndicator() {
+            const toolNames = {
+                'brush': translations[appState.currentLanguage].brush,
+                'pencil': translations[appState.currentLanguage].pencil,
+                'eraser': translations[appState.currentLanguage].eraser,
+                'watercolor': translations[appState.currentLanguage].watercolor,
+                'pastel': translations[appState.currentLanguage].pastel,
+                'spray': translations[appState.currentLanguage].spray,
+                'fill': translations[appState.currentLanguage].fill,
+                'shape': translations[appState.currentLanguage].shape,
+                'text': translations[appState.currentLanguage].text
+            };
+            
+            const toolIcons = {
+                'brush': 'fas fa-paint-brush',
+                'pencil': 'fas fa-pencil-alt',
+                'eraser': 'fas fa-eraser',
+                'watercolor': 'fas fa-tint',
+                'pastel': 'fas fa-star',
+                'spray': 'fas fa-spray-can',
+                'fill': 'fas fa-fill-drip',
+                'shape': 'fas fa-shapes',
+                'text': 'fas fa-font'
+            };
+            
+            const toolName = toolNames[appState.currentTool] || translations[appState.currentLanguage].brush;
+            const toolIcon = toolIcons[appState.currentTool] || 'fas fa-paint-brush';
+            
+            currentToolName.textContent = toolName;
+            currentToolIndicator.querySelector('i').className = toolIcon;
+            
+            // Renk göstergesini güncelle
+            currentColorPreview.style.backgroundColor = appState.currentColor;
+            
+            // Silgi modundaysa renk göstergesini gri yap
+            if (appState.currentTool === 'eraser') {
+                currentColorPreview.style.backgroundColor = '#cccccc';
+            }
         }
         
         // Renk modal paletini oluştur
@@ -2181,22 +2464,15 @@
                     document.querySelectorAll('.color-modal-option').forEach(opt => opt.classList.remove('active'));
                     this.classList.add('active');
                     appState.currentColor = this.dataset.color;
-                    colorPicker.value = appState.currentColor;
                     colorModalPicker.value = appState.currentColor;
-                    
-                    // Sidebar'daki paleti güncelle
-                    document.querySelectorAll('.color-option').forEach(opt => {
-                        opt.classList.remove('active');
-                        if (opt.dataset.color === appState.currentColor) {
-                            opt.classList.add('active');
-                        }
-                    });
                     
                     // Silgi modundaysa fırça moduna geç
                     if (appState.currentTool === 'eraser') {
                         appState.currentTool = 'brush';
-                        updateToolButtons();
                     }
+                    
+                    updateCursor();
+                    updateToolIndicator();
                 });
                 
                 colorModalPalette.appendChild(colorElement);
@@ -2248,17 +2524,17 @@
                 const x = (canvas.width - width) / 2;
                 const y = (canvas.height - height) / 2;
                 
-                // Önce arka planı uygula
-                applyCanvasBackground();
-                // Sonra template resmini çiz
-                ctx.drawImage(img, x, y, width, height);
+                // Çizim katmanına template resmini çiz
+                drawToDrawingLayer((drawingCtx) => {
+                    drawingCtx.drawImage(img, x, y, width, height);
+                });
                 
                 appState.hasDrawing = true;
                 updateCanvasPlaceholder();
                 saveToUndoStack();
                 loading.style.display = 'none';
                 closeModal(templatesModal);
-                showNotification(translations[appState.currentLanguage].loadedNotification);
+                showMessage('Başarılı', translations[appState.currentLanguage].loadedNotification);
             };
             
             img.onerror = function() {
@@ -2269,10 +2545,381 @@
             img.src = template.url + '?t=' + new Date().getTime(); // Cache önlemek için timestamp ekle
         }
         
+        // Yeni tuval modal'ını oluştur
+        function createNewCanvasModal() {
+            canvasOptionsGrid.innerHTML = '';
+            
+            const canvasOptions = [
+                { id: 'blank', name: translations[appState.currentLanguage].blankCanvas, icon: 'fas fa-square', desc: translations[appState.currentLanguage].canvasBlankDesc },
+                { id: 'grid', name: translations[appState.currentLanguage].gridCanvas, icon: 'fas fa-th', desc: translations[appState.currentLanguage].canvasGridDesc },
+                { id: 'lined', name: translations[appState.currentLanguage].linedCanvas, icon: 'fas fa-border-all', desc: translations[appState.currentLanguage].canvasLinedDesc },
+                { id: 'colored', name: translations[appState.currentLanguage].coloredCanvas, icon: 'fas fa-fill-drip', desc: translations[appState.currentLanguage].canvasColoredDesc }
+            ];
+            
+            canvasOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'canvas-option';
+                if (option.id === appState.newCanvasSelected) {
+                    optionElement.classList.add('active');
+                }
+                optionElement.dataset.id = option.id;
+                
+                optionElement.innerHTML = `
+                    <div class="canvas-option-icon">
+                        <i class="${option.icon}"></i>
+                    </div>
+                    <div class="canvas-option-name">${option.name}</div>
+                    <div class="canvas-option-desc">${option.desc}</div>
+                `;
+                
+                optionElement.addEventListener('click', function() {
+                    document.querySelectorAll('.canvas-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    appState.newCanvasSelected = this.dataset.id;
+                });
+                
+                canvasOptionsGrid.appendChild(optionElement);
+            });
+        }
+        
+        // Yeni tuval oluştur
+        function createNewCanvas() {
+            if (appState.hasDrawing) {
+                showConfirm(
+                    translations[appState.currentLanguage].newCanvas,
+                    translations[appState.currentLanguage].newCanvasConfirm,
+                    function() {
+                        appState.canvasBackground = appState.newCanvasSelected;
+                        
+                        // Çizim katmanını temizle
+                        if (appState.layers.drawing) {
+                            const drawingCtx = appState.layers.drawing.getContext('2d');
+                            drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                        }
+                        
+                        applyCanvasBackground();
+                        saveToUndoStack();
+                        appState.canvasData = null;
+                        appState.hasDrawing = false;
+                        updateCanvasPlaceholder();
+                        closeModal(newCanvasModal);
+                    }
+                );
+            } else {
+                appState.canvasBackground = appState.newCanvasSelected;
+                
+                // Çizim katmanını temizle
+                if (appState.layers.drawing) {
+                    const drawingCtx = appState.layers.drawing.getContext('2d');
+                    drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                }
+                
+                applyCanvasBackground();
+                saveToUndoStack();
+                appState.canvasData = null;
+                appState.hasDrawing = false;
+                updateCanvasPlaceholder();
+                closeModal(newCanvasModal);
+            }
+        }
+        
+        // İndirme modal'ını oluştur
+        function createDownloadModal() {
+            downloadOptions.innerHTML = '';
+            
+            const downloadOptionsList = [
+                { id: 'png', name: translations[appState.currentLanguage].formatPNG, icon: 'fas fa-file-image', desc: translations[appState.currentLanguage].formatPNGDesc },
+                { id: 'jpg', name: translations[appState.currentLanguage].formatJPG, icon: 'fas fa-file-image', desc: translations[appState.currentLanguage].formatJPGDesc },
+                { id: 'pdf', name: translations[appState.currentLanguage].formatPDF, icon: 'fas fa-file-pdf', desc: translations[appState.currentLanguage].formatPDFDesc }
+            ];
+            
+            downloadOptionsList.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'download-option';
+                if (option.id === appState.downloadFormat) {
+                    optionElement.classList.add('active');
+                }
+                optionElement.dataset.id = option.id;
+                
+                optionElement.innerHTML = `
+                    <div class="download-option-icon">
+                        <i class="${option.icon}"></i>
+                    </div>
+                    <div class="download-option-name">${option.name}</div>
+                    <div class="download-option-desc">${option.desc}</div>
+                `;
+                
+                optionElement.addEventListener('click', function() {
+                    document.querySelectorAll('.download-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    appState.downloadFormat = this.dataset.id;
+                });
+                
+                downloadOptions.appendChild(optionElement);
+            });
+        }
+        
+        // Çizimi indir
+        function downloadCanvas() {
+            // Geçici canvas oluştur
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Tüm katmanları geçici canvasa çiz
+            if (appState.layers.background) {
+                tempCtx.drawImage(appState.layers.background, 0, 0);
+            }
+            if (appState.layers.drawing) {
+                tempCtx.drawImage(appState.layers.drawing, 0, 0);
+            }
+            
+            const dataUrl = tempCanvas.toDataURL(`image/${appState.downloadFormat}`);
+            const link = document.createElement('a');
+            link.download = `artcanvas_${new Date().getTime()}.${appState.downloadFormat}`;
+            link.href = dataUrl;
+            link.click();
+            
+            closeModal(downloadModal);
+            showMessage('Başarılı', translations[appState.currentLanguage].exportedNotification);
+        }
+        
+        // Araçlar modal'ını oluştur
+        function createToolsModal() {
+            toolsModalGrid.innerHTML = '';
+            
+            const tools = [
+                { id: 'brush', name: translations[appState.currentLanguage].brush, icon: 'fas fa-paint-brush' },
+                { id: 'pencil', name: translations[appState.currentLanguage].pencil, icon: 'fas fa-pencil-alt' },
+                { id: 'watercolor', name: translations[appState.currentLanguage].watercolor, icon: 'fas fa-tint' },
+                { id: 'pastel', name: translations[appState.currentLanguage].pastel, icon: 'fas fa-star' },
+                { id: 'spray', name: translations[appState.currentLanguage].spray, icon: 'fas fa-spray-can' },
+                { id: 'fill', name: translations[appState.currentLanguage].fill, icon: 'fas fa-fill-drip' },
+                { id: 'text', name: translations[appState.currentLanguage].text, icon: 'fas fa-font' },
+                { id: 'shape', name: translations[appState.currentLanguage].shape, icon: 'fas fa-shapes' }
+            ];
+            
+            tools.forEach(tool => {
+                const toolElement = document.createElement('div');
+                toolElement.className = 'tools-modal-option';
+                if (tool.id === appState.currentTool) {
+                    toolElement.classList.add('active');
+                }
+                toolElement.dataset.id = tool.id;
+                
+                toolElement.innerHTML = `
+                    <div class="tools-modal-option-icon">
+                        <i class="${tool.icon}"></i>
+                    </div>
+                    <div class="tools-modal-option-name">${tool.name}</div>
+                `;
+                
+                toolElement.addEventListener('click', function() {
+                    document.querySelectorAll('.tools-modal-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    appState.currentTool = this.dataset.id;
+                    
+                    // Özel araçlar için modal aç
+                    if (appState.currentTool === 'text') {
+                        closeModal(toolsModal);
+                        openModal(textToolModal);
+                        textInput.focus();
+                    } else if (appState.currentTool === 'shape') {
+                        closeModal(toolsModal);
+                        openModal(shapeToolModal);
+                    }
+                    
+                    updateToolIndicator();
+                    closeModal(toolsModal);
+                });
+                
+                toolsModalGrid.appendChild(toolElement);
+            });
+        }
+        
+        // Şekil seçeneklerini oluştur
+        function createShapeOptions() {
+            shapeOptions.innerHTML = '';
+            
+            const shapes = [
+                { id: 'circle', name: translations[appState.currentLanguage].shapeCircle, icon: 'fas fa-circle' },
+                { id: 'square', name: translations[appState.currentLanguage].shapeSquare, icon: 'fas fa-square' },
+                { id: 'triangle', name: translations[appState.currentLanguage].shapeTriangle, icon: 'fas fa-play fa-rotate-270' },
+                { id: 'rectangle', name: translations[appState.currentLanguage].shapeRectangle, icon: 'fas fa-square' },
+                { id: 'star', name: translations[appState.currentLanguage].shapeStar, icon: 'fas fa-star' },
+                { id: 'heart', name: translations[appState.currentLanguage].shapeHeart, icon: 'fas fa-heart' }
+            ];
+            
+            shapes.forEach(shape => {
+                const shapeElement = document.createElement('div');
+                shapeElement.className = 'shape-option';
+                if (shape.id === appState.selectedShape) {
+                    shapeElement.classList.add('active');
+                }
+                shapeElement.dataset.id = shape.id;
+                
+                shapeElement.innerHTML = `
+                    <div class="shape-option-icon">
+                        <i class="${shape.icon}"></i>
+                    </div>
+                    <div class="shape-option-name">${shape.name}</div>
+                `;
+                
+                shapeElement.addEventListener('click', function() {
+                    document.querySelectorAll('.shape-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    appState.selectedShape = this.dataset.id;
+                });
+                
+                shapeOptions.appendChild(shapeElement);
+            });
+        }
+        
+        // Şekil çiz
+        function drawShape(x, y) {
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.beginPath();
+                drawingCtx.globalAlpha = appState.opacity;
+                
+                const size = appState.brushSize * 5;
+                
+                switch(appState.selectedShape) {
+                    case 'circle':
+                        drawingCtx.arc(x, y, size / 2, 0, Math.PI * 2);
+                        break;
+                    case 'square':
+                        drawingCtx.rect(x - size/2, y - size/2, size, size);
+                        break;
+                    case 'triangle':
+                        drawingCtx.moveTo(x, y - size/2);
+                        drawingCtx.lineTo(x - size/2, y + size/2);
+                        drawingCtx.lineTo(x + size/2, y + size/2);
+                        drawingCtx.closePath();
+                        break;
+                    case 'rectangle':
+                        drawingCtx.rect(x - size/2, y - size/4, size, size/2);
+                        break;
+                    case 'star':
+                        drawStar(drawingCtx, x, y, 5, size/2, size/4);
+                        break;
+                    case 'heart':
+                        drawHeart(drawingCtx, x, y, size/2);
+                        break;
+                }
+                
+                drawingCtx.fillStyle = shapeFillColor.value;
+                drawingCtx.strokeStyle = shapeStrokeColor.value;
+                drawingCtx.lineWidth = 2;
+                drawingCtx.fill();
+                drawingCtx.stroke();
+            });
+            
+            appState.hasDrawing = true;
+            updateCanvasPlaceholder();
+            saveToUndoStack();
+        }
+        
+        // Yıldız çiz
+        function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx;
+            let y = cy;
+            let step = Math.PI / spikes;
+            
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius);
+            
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+                
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+            }
+            
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+        }
+        
+        // Kalp çiz
+        function drawHeart(ctx, x, y, size) {
+            const topCurveHeight = size * 0.3;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y + size/2);
+            
+            // Sol üst eğri
+            ctx.bezierCurveTo(
+                x, y + size/2 - topCurveHeight,
+                x - size/2, y,
+                x, y - size/2
+            );
+            
+            // Sağ üst eğri
+            ctx.bezierCurveTo(
+                x + size/2, y,
+                x, y + size/2 - topCurveHeight,
+                x, y + size/2
+            );
+            
+            ctx.closePath();
+        }
+        
+        // Metin ekle
+        function addText() {
+            const text = textInput.value.trim();
+            if (!text) return;
+            
+            appState.textToolActive = true;
+            canvas.style.cursor = 'text';
+            
+            closeModal(textToolModal);
+            showMessage('Bilgi', 'Tuvalde metni eklemek istediğiniz yere tıklayın.');
+        }
+        
+        // Metin çiz
+        function drawText(x, y) {
+            if (!appState.textToolActive) return;
+            
+            const text = textInput.value.trim();
+            if (!text) return;
+            
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.font = `${textSize.value}px ${textFont.value}`;
+                drawingCtx.fillStyle = appState.currentColor;
+                drawingCtx.globalAlpha = appState.opacity;
+                drawingCtx.fillText(text, x, y);
+            });
+            
+            appState.textToolActive = false;
+            canvas.style.cursor = 'crosshair';
+            appState.hasDrawing = true;
+            updateCanvasPlaceholder();
+            saveToUndoStack();
+        }
+        
         // Çizim fonksiyonları
         function startDrawing(e) {
             appState.isDrawing = true;
             [appState.lastX, appState.lastY] = getMousePos(e);
+            
+            // Şekil veya metin aracıysa
+            if (appState.currentTool === 'shape') {
+                drawShape(appState.lastX, appState.lastY);
+                appState.isDrawing = false;
+                return;
+            }
+            
+            if (appState.textToolActive) {
+                drawText(appState.lastX, appState.lastY);
+                appState.isDrawing = false;
+                return;
+            }
             
             // İlk noktayı çiz
             drawPoint(appState.lastX, appState.lastY);
@@ -2284,9 +2931,6 @@
             e.preventDefault();
             
             const [x, y] = getMousePos(e);
-            
-            ctx.beginPath();
-            ctx.globalAlpha = appState.opacity;
             
             // Seçili araca göre çizim yap
             switch(appState.currentTool) {
@@ -2323,18 +2967,22 @@
         }
         
         function drawPoint(x, y) {
-            ctx.beginPath();
-            ctx.globalAlpha = appState.opacity;
-            
-            if (appState.currentTool === 'eraser') {
-                ctx.fillStyle = '#ffffff';
-                ctx.arc(x, y, appState.brushSize / 2, 0, Math.PI * 2);
-                ctx.fill();
-            } else {
-                ctx.fillStyle = appState.currentColor;
-                ctx.arc(x, y, appState.brushSize / 2, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.beginPath();
+                drawingCtx.globalAlpha = appState.opacity;
+                
+                if (appState.currentTool === 'eraser') {
+                    // Silgi: Şeffaf yap
+                    drawingCtx.globalCompositeOperation = 'destination-out';
+                    drawingCtx.arc(x, y, appState.brushSize / 2, 0, Math.PI * 2);
+                    drawingCtx.fill();
+                    drawingCtx.globalCompositeOperation = 'source-over';
+                } else {
+                    drawingCtx.fillStyle = appState.currentColor;
+                    drawingCtx.arc(x, y, appState.brushSize / 2, 0, Math.PI * 2);
+                    drawingCtx.fill();
+                }
+            });
             
             appState.hasDrawing = true;
             updateCanvasPlaceholder();
@@ -2349,106 +2997,124 @@
         
         // Fırça çizimi
         function drawBrush(x, y) {
-            ctx.strokeStyle = appState.currentColor;
-            ctx.lineWidth = appState.brushSize;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            
-            ctx.beginPath();
-            ctx.moveTo(appState.lastX, appState.lastY);
-            ctx.lineTo(x, y);
-            ctx.stroke();
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.strokeStyle = appState.currentColor;
+                drawingCtx.lineWidth = appState.brushSize;
+                drawingCtx.lineCap = 'round';
+                drawingCtx.lineJoin = 'round';
+                drawingCtx.globalAlpha = appState.opacity;
+                
+                drawingCtx.beginPath();
+                drawingCtx.moveTo(appState.lastX, appState.lastY);
+                drawingCtx.lineTo(x, y);
+                drawingCtx.stroke();
+            });
         }
         
         // Kalem çizimi
         function drawPencil(x, y) {
-            ctx.strokeStyle = appState.currentColor;
-            ctx.lineWidth = Math.max(1, appState.brushSize / 3);
-            ctx.lineCap = 'square';
-            ctx.lineJoin = 'miter';
-            
-            ctx.beginPath();
-            ctx.moveTo(appState.lastX, appState.lastY);
-            ctx.lineTo(x, y);
-            ctx.stroke();
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.strokeStyle = appState.currentColor;
+                drawingCtx.lineWidth = Math.max(1, appState.brushSize / 3);
+                drawingCtx.lineCap = 'square';
+                drawingCtx.lineJoin = 'miter';
+                drawingCtx.globalAlpha = appState.opacity;
+                
+                drawingCtx.beginPath();
+                drawingCtx.moveTo(appState.lastX, appState.lastY);
+                drawingCtx.lineTo(x, y);
+                drawingCtx.stroke();
+            });
         }
         
         // Silgi çizimi
         function drawEraser(x, y) {
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = appState.brushSize;
-            ctx.lineCap = 'round';
-            
-            ctx.beginPath();
-            ctx.moveTo(appState.lastX, appState.lastY);
-            ctx.lineTo(x, y);
-            ctx.stroke();
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.globalAlpha = appState.opacity;
+                drawingCtx.globalCompositeOperation = 'destination-out';
+                drawingCtx.lineWidth = appState.brushSize;
+                drawingCtx.lineCap = 'round';
+                
+                drawingCtx.beginPath();
+                drawingCtx.moveTo(appState.lastX, appState.lastY);
+                drawingCtx.lineTo(x, y);
+                drawingCtx.stroke();
+                
+                drawingCtx.globalCompositeOperation = 'source-over';
+            });
         }
         
         // Sulu boya efekti
         function drawWatercolor(x, y) {
-            ctx.strokeStyle = appState.currentColor;
-            ctx.lineWidth = appState.brushSize;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.globalAlpha = appState.opacity * 0.5;
-            
-            // Sulu boya efekti için bulanık çizgi
-            ctx.beginPath();
-            ctx.moveTo(appState.lastX, appState.lastY);
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            
-            // Ek renk katmanları
-            ctx.globalAlpha = appState.opacity * 0.3;
-            ctx.lineWidth = appState.brushSize * 0.7;
-            
-            ctx.beginPath();
-            ctx.moveTo(appState.lastX + 2, appState.lastY + 2);
-            ctx.lineTo(x + 2, y + 2);
-            ctx.stroke();
-            
-            ctx.globalAlpha = appState.opacity;
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.strokeStyle = appState.currentColor;
+                drawingCtx.lineWidth = appState.brushSize;
+                drawingCtx.lineCap = 'round';
+                drawingCtx.lineJoin = 'round';
+                drawingCtx.globalAlpha = appState.opacity * 0.5;
+                
+                // Sulu boya efekti için bulanık çizgi
+                drawingCtx.beginPath();
+                drawingCtx.moveTo(appState.lastX, appState.lastY);
+                drawingCtx.lineTo(x, y);
+                drawingCtx.stroke();
+                
+                // Ek renk katmanları
+                drawingCtx.globalAlpha = appState.opacity * 0.3;
+                drawingCtx.lineWidth = appState.brushSize * 0.7;
+                
+                drawingCtx.beginPath();
+                drawingCtx.moveTo(appState.lastX + 2, appState.lastY + 2);
+                drawingCtx.lineTo(x + 2, y + 2);
+                drawingCtx.stroke();
+                
+                drawingCtx.globalAlpha = appState.opacity;
+            });
         }
         
         // Pastel efekti
         function drawPastel(x, y) {
-            ctx.strokeStyle = appState.currentColor;
-            ctx.lineWidth = appState.brushSize;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            
-            // Pastel efekti için hafif doku
-            ctx.shadowColor = appState.currentColor;
-            ctx.shadowBlur = 5;
-            
-            ctx.beginPath();
-            ctx.moveTo(appState.lastX, appState.lastY);
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            
-            ctx.shadowBlur = 0;
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.strokeStyle = appState.currentColor;
+                drawingCtx.lineWidth = appState.brushSize;
+                drawingCtx.lineCap = 'round';
+                drawingCtx.lineJoin = 'round';
+                drawingCtx.globalAlpha = appState.opacity;
+                
+                // Pastel efekti için hafif doku
+                drawingCtx.shadowColor = appState.currentColor;
+                drawingCtx.shadowBlur = 5;
+                
+                drawingCtx.beginPath();
+                drawingCtx.moveTo(appState.lastX, appState.lastY);
+                drawingCtx.lineTo(x, y);
+                drawingCtx.stroke();
+                
+                drawingCtx.shadowBlur = 0;
+            });
         }
         
         // Spray efekti
         function drawSpray(x, y) {
-            ctx.fillStyle = appState.currentColor;
-            ctx.globalAlpha = appState.opacity;
-            
-            const density = appState.brushSize * 2;
-            const radius = appState.brushSize;
-            
-            for (let i = 0; i < density; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const sprayRadius = Math.random() * radius;
-                const sprayX = x + Math.cos(angle) * sprayRadius;
-                const sprayY = y + Math.sin(angle) * sprayRadius;
-                const dotSize = Math.random() * 3 + 1;
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.fillStyle = appState.currentColor;
+                drawingCtx.globalAlpha = appState.opacity;
                 
-                ctx.beginPath();
-                ctx.arc(sprayX, sprayY, dotSize, 0, Math.PI * 2);
-                ctx.fill();
-            }
+                const density = appState.brushSize * 2;
+                const radius = appState.brushSize;
+                
+                for (let i = 0; i < density; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const sprayRadius = Math.random() * radius;
+                    const sprayX = x + Math.cos(angle) * sprayRadius;
+                    const sprayY = y + Math.sin(angle) * sprayRadius;
+                    const dotSize = Math.random() * 3 + 1;
+                    
+                    drawingCtx.beginPath();
+                    drawingCtx.arc(sprayX, sprayY, dotSize, 0, Math.PI * 2);
+                    drawingCtx.fill();
+                }
+            });
         }
         
         // Fare/touch pozisyonunu al
@@ -2479,7 +3145,11 @@
         function updateCursor() {
             // Canvas imlecini güncelle
             if (appState.currentTool === 'eraser') {
-                canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${appState.brushSize * 2}" height="${appState.brushSize * 2}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="white" stroke="%23666" stroke-width="5"/></svg>') ${appState.brushSize} ${appState.brushSize}, auto`;
+                canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${appState.brushSize * 2}" height="${appState.brushSize * 2}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.5)" stroke="%23666" stroke-width="5"/></svg>') ${appState.brushSize} ${appState.brushSize}, auto`;
+            } else if (appState.textToolActive) {
+                canvas.style.cursor = 'text';
+            } else if (appState.currentTool === 'shape') {
+                canvas.style.cursor = 'crosshair';
             } else {
                 canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${appState.brushSize * 2}" height="${appState.brushSize * 2}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="${appState.currentColor.replace('#', '%23')}" stroke="%23666" stroke-width="5"/></svg>') ${appState.brushSize} ${appState.brushSize}, crosshair`;
             }
@@ -2512,10 +3182,13 @@
             // Önceki durumu yükle
             const img = new Image();
             img.onload = function() {
-                // Önce arka planı uygula
-                applyCanvasBackground();
-                // Sonra resmi çiz
-                ctx.drawImage(img, 0, 0);
+                // Çizim katmanını temizle
+                const drawingCtx = appState.layers.drawing.getContext('2d');
+                drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                
+                // Resmi çizim katmanına çiz
+                drawingCtx.drawImage(img, 0, 0);
+                renderCanvas();
                 
                 // Çizim durumunu güncelle
                 appState.hasDrawing = appState.undoStack.length > 1;
@@ -2537,10 +3210,13 @@
             // Sonraki durumu yükle
             const img = new Image();
             img.onload = function() {
-                // Önce arka planı uygula
-                applyCanvasBackground();
-                // Sonra resmi çiz
-                ctx.drawImage(img, 0, 0);
+                // Çizim katmanını temizle
+                const drawingCtx = appState.layers.drawing.getContext('2d');
+                drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                
+                // Resmi çizim katmanına çiz
+                drawingCtx.drawImage(img, 0, 0);
+                renderCanvas();
                 
                 // Çizim durumunu güncelle
                 appState.hasDrawing = true;
@@ -2560,13 +3236,6 @@
         
         // Araç butonlarını güncelle
         function updateToolButtons() {
-            toolButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.tool === appState.currentTool) {
-                    btn.classList.add('active');
-                }
-            });
-            
             // Silgi butonunu güncelle
             if (appState.currentTool === 'eraser') {
                 eraserOverlayBtn.style.backgroundColor = 'var(--primary-color)';
@@ -2578,30 +3247,9 @@
             
             // İmleci güncelle
             updateCursor();
-        }
-        
-        // Yeni tuval oluştur
-        function createNewCanvas() {
-            if (!appState.hasDrawing) {
-                applyCanvasBackground();
-                saveToUndoStack();
-                appState.canvasData = null;
-                appState.hasDrawing = false;
-                updateCanvasPlaceholder();
-                return;
-            }
             
-            showConfirm(
-                'Yeni Tuval',
-                translations[appState.currentLanguage].newCanvasConfirm,
-                function() {
-                    applyCanvasBackground();
-                    saveToUndoStack();
-                    appState.canvasData = null;
-                    appState.hasDrawing = false;
-                    updateCanvasPlaceholder();
-                }
-            );
+            // Araç göstergesini güncelle
+            updateToolIndicator();
         }
         
         // Canvas'ı temizle
@@ -2612,7 +3260,13 @@
                 'Tuvali Temizle',
                 translations[appState.currentLanguage].clearCanvasConfirm,
                 function() {
-                    applyCanvasBackground();
+                    // Çizim katmanını temizle
+                    if (appState.layers.drawing) {
+                        const drawingCtx = appState.layers.drawing.getContext('2d');
+                        drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                        renderCanvas();
+                    }
+                    
                     saveToUndoStack();
                     appState.hasDrawing = false;
                     updateCanvasPlaceholder();
@@ -2644,10 +3298,10 @@
                         const x = (canvas.width - width) / 2;
                         const y = (canvas.height - height) / 2;
                         
-                        // Önce arka planı uygula
-                        applyCanvasBackground();
-                        // Sonra resmi çiz
-                        ctx.drawImage(img, x, y, width, height);
+                        // Resmi çizim katmanına çiz
+                        drawToDrawingLayer((drawingCtx) => {
+                            drawingCtx.drawImage(img, x, y, width, height);
+                        });
                         
                         appState.hasDrawing = true;
                         updateCanvasPlaceholder();
@@ -2675,7 +3329,10 @@
         // Kaydetme işlemini gerçekleştir
         function performSave() {
             const drawingName = saveInput.value.trim();
-            if (!drawingName) return;
+            if (!drawingName) {
+                showMessage('Uyarı', 'Lütfen bir çizim adı girin.', 'warning');
+                return;
+            }
             
             const drawingData = canvas.toDataURL();
             const savedDrawings = JSON.parse(localStorage.getItem('artcanvas_drawings')) || [];
@@ -2687,7 +3344,7 @@
             });
             
             localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
-            showNotification(translations[appState.currentLanguage].savedNotification);
+            showMessage('Başarılı', translations[appState.currentLanguage].savedNotification);
             
             closeModal(saveModal);
         }
@@ -2696,6 +3353,8 @@
         function openColorModal() {
             createColorModalPalette();
             colorModalPicker.value = appState.currentColor;
+            colorModalOpacity.value = appState.opacity * 100;
+            colorModalOpacityValue.textContent = `${colorModalOpacity.value}%`;
             openModal(colorModal);
         }
         
@@ -2737,79 +3396,42 @@
         
         // Mesaj göster
         function showMessage(title, text, type = 'info') {
-            const modal = document.createElement('div');
-            modal.className = 'message-modal';
-            modal.innerHTML = `
-                <div class="message-modal-content">
-                    <div class="message-modal-icon">
-                        <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                    </div>
-                    <h3 class="message-modal-title">${title}</h3>
-                    <p class="message-modal-text">${text}</p>
-                    <div class="message-modal-buttons">
-                        <button class="btn btn-primary" id="tempOkBtn">Tamam</button>
-                    </div>
-                </div>
-            `;
+            const iconMap = {
+                'info': 'fas fa-info-circle',
+                'success': 'fas fa-check-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'error': 'fas fa-exclamation-circle'
+            };
             
-            document.body.appendChild(modal);
-            modal.style.display = 'flex';
+            const colorMap = {
+                'info': 'var(--primary-color)',
+                'success': 'var(--success-color)',
+                'warning': 'var(--warning-color)',
+                'error': 'var(--danger-color)'
+            };
             
-            document.getElementById('tempOkBtn').addEventListener('click', function() {
-                modal.style.display = 'none';
-                setTimeout(() => modal.remove(), 300);
-            });
+            messageModalIcon.innerHTML = `<i class="${iconMap[type]}" style="color: ${colorMap[type]}"></i>`;
+            messageModalTitle.textContent = title;
+            messageModalText.textContent = text;
             
-            // Dışarı tıklayınca kapat
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    setTimeout(() => modal.remove(), 300);
-                }
-            });
+            openModal(messageModal);
         }
         
         // Onay mesajı göster
         function showConfirm(title, text, onConfirm) {
-            const modal = document.createElement('div');
-            modal.className = 'message-modal';
-            modal.innerHTML = `
-                <div class="message-modal-content">
-                    <div class="message-modal-icon">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <h3 class="message-modal-title">${title}</h3>
-                    <p class="message-modal-text">${text}</p>
-                    <div class="message-modal-buttons">
-                        <button class="btn btn-primary" id="tempConfirmBtn">Evet</button>
-                        <button class="btn btn-outline" id="tempCancelBtn">Hayır</button>
-                    </div>
-                </div>
-            `;
+            confirmModalTitle.textContent = title;
+            confirmModalText.textContent = text;
             
-            document.body.appendChild(modal);
-            modal.style.display = 'flex';
+            confirmModalYesBtn.onclick = function() {
+                closeModal(confirmModal);
+                if (onConfirm) onConfirm();
+            };
             
-            document.getElementById('tempConfirmBtn').addEventListener('click', function() {
-                modal.style.display = 'none';
-                setTimeout(() => {
-                    modal.remove();
-                    if (onConfirm) onConfirm();
-                }, 300);
-            });
+            confirmModalNoBtn.onclick = function() {
+                closeModal(confirmModal);
+            };
             
-            document.getElementById('tempCancelBtn').addEventListener('click', function() {
-                modal.style.display = 'none';
-                setTimeout(() => modal.remove(), 300);
-            });
-            
-            // Dışarı tıklayınca kapat
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    setTimeout(() => modal.remove(), 300);
-                }
-            });
+            openModal(confirmModal);
         }
         
         // Bildirim göster
@@ -2837,36 +3459,138 @@
             document.getElementById('saveBtn').querySelector('span').textContent = translations[lang].save;
             document.getElementById('templatesBtn').querySelector('span').textContent = translations[lang].templates;
             document.getElementById('galleryBtn').querySelector('span').textContent = translations[lang].gallery;
-            document.getElementById('newCanvasBtn').querySelector('span').textContent = translations[lang].newCanvas;
-            document.getElementById('downloadBtn').querySelector('span').textContent = translations[lang].download;
+            document.getElementById('uploadImageHeaderBtn').querySelector('span').textContent = translations[lang].uploadImage;
+            document.getElementById('newCanvasHeaderBtn').querySelector('span').textContent = translations[lang].newCanvas;
+            document.getElementById('downloadHeaderBtn').querySelector('span').textContent = translations[lang].download;
             
-            // Tooltips güncelle
-            document.querySelectorAll('.tool-btn').forEach((btn, index) => {
-                const toolKeys = ['brush', 'pencil', 'watercolor', 'pastel', 'spray', 'fill', 'shape', 'text'];
-                if (btn.querySelector('span') && toolKeys[index]) {
-                    btn.querySelector('span').textContent = translations[lang][toolKeys[index]];
-                }
-            });
+            // Araç göstergesini güncelle
+            updateToolIndicator();
+        }
+        
+        // Çizim görüntüleme modal'ını aç
+        function openDrawingView(drawingData, drawingName, drawingDate) {
+            drawingViewContent.innerHTML = `
+                <img class="drawing-view-img" src="${drawingData}" alt="${drawingName}">
+                <div class="drawing-view-info">
+                    <h4>${translations[appState.currentLanguage].drawingName}: ${drawingName}</h4>
+                    <p>${translations[appState.currentLanguage].drawingDate}: ${new Date(drawingDate).toLocaleDateString()}</p>
+                </div>
+                <div class="message-modal-buttons">
+                    <button class="btn btn-primary" id="loadDrawingBtn">Çizimi Yükle</button>
+                    <button class="btn btn-secondary" id="downloadDrawingBtn">Çizimi İndir</button>
+                </div>
+            `;
             
-            // Tuval arka plan butonları
-            const bgKeys = ['blank', 'grid', 'lined'];
-            document.querySelectorAll('.canvas-bg-btn').forEach((btn, index) => {
-                if (index < 3) {
-                    btn.querySelector('span').textContent = translations[lang][bgKeys[index]];
-                }
-            });
+            openModal(drawingViewModal);
             
-            // Galeri toplu işlem butonları
-            selectAllBtn.querySelector('span').textContent = translations[lang].selectAll;
-            deleteSelectedBtn.querySelector('span').textContent = translations[lang].deleteSelected;
+            // Buton event listener'larını ekle
+            setTimeout(() => {
+                document.getElementById('loadDrawingBtn').addEventListener('click', function() {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Çizim katmanını temizle
+                        const drawingCtx = appState.layers.drawing.getContext('2d');
+                        drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                        
+                        // Resmi çizim katmanına çiz
+                        drawingCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        renderCanvas();
+                        
+                        appState.hasDrawing = true;
+                        updateCanvasPlaceholder();
+                        saveToUndoStack();
+                        
+                        closeModal(drawingViewModal);
+                        closeModal(galleryModal);
+                        showMessage('Başarılı', 'Çizim yüklendi!');
+                    };
+                    img.src = drawingData;
+                });
+                
+                document.getElementById('downloadDrawingBtn').addEventListener('click', function() {
+                    const link = document.createElement('a');
+                    link.download = `${drawingName}.png`;
+                    link.href = drawingData;
+                    link.click();
+                });
+            }, 100);
+        }
+        
+        // Galeri modal'ını aç
+        function openGalleryModal() {
+            const savedDrawings = JSON.parse(localStorage.getItem('artcanvas_drawings')) || [];
+            const galleryGrid = document.getElementById('galleryGrid');
             
-            // Sidebar başlıkları
-            document.querySelectorAll('.sidebar-title span').forEach((title, index) => {
-                const titles = ['Tuval Arka Planı', 'Boyama Araçları', 'Ayarlar', 'Resim Yükle'];
-                if (index < titles.length) {
-                    title.textContent = translations[lang][titles[index].replace(' ', '')] || titles[index];
-                }
-            });
+            galleryGrid.innerHTML = '';
+            
+            if (savedDrawings.length === 0) {
+                galleryGrid.innerHTML = `<p style="text-align: center; padding: 40px; color: #666;">${translations[appState.currentLanguage].emptyGallery}</p>`;
+            } else {
+                savedDrawings.forEach((drawing, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    galleryItem.innerHTML = `
+                        <div class="gallery-img" style="background-image: url(${drawing.data});"></div>
+                        <div class="gallery-name">${drawing.name}</div>
+                        <div class="gallery-actions">
+                            <button class="action-btn action-btn-download" data-index="${index}">
+                                <i class="fas fa-download"></i> İndir
+                            </button>
+                            <button class="action-btn action-btn-delete" data-index="${index}">
+                                <i class="fas fa-trash-alt"></i> Sil
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Çizim resmine tıklama
+                    galleryItem.querySelector('.gallery-img').addEventListener('click', function() {
+                        openDrawingView(drawing.data, drawing.name, drawing.date);
+                    });
+                    
+                    galleryGrid.appendChild(galleryItem);
+                });
+                
+                // Galeri butonlarına event listener ekle
+                setTimeout(() => {
+                    document.querySelectorAll('.action-btn-download').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const index = parseInt(this.dataset.index);
+                            const drawing = savedDrawings[index];
+                            const link = document.createElement('a');
+                            link.download = `${drawing.name}.png`;
+                            link.href = drawing.data;
+                            link.click();
+                            showMessage('Başarılı', 'Çizim indirildi!');
+                        });
+                    });
+                    
+                    document.querySelectorAll('.action-btn-delete').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const index = parseInt(this.dataset.index);
+                            showConfirm(
+                                'Çizimi Sil',
+                                translations[appState.currentLanguage].confirmDelete,
+                                function() {
+                                    savedDrawings.splice(index, 1);
+                                    localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
+                                    
+                                    // Modal'ı kapat ve yeniden aç
+                                    closeModal(galleryModal);
+                                    setTimeout(() => {
+                                        openGalleryModal();
+                                        showMessage('Başarılı', 'Çizim silindi!');
+                                    }, 300);
+                                }
+                            );
+                        });
+                    });
+                }, 100);
+            }
+            
+            openModal(galleryModal);
         }
         
         // Event listeners
@@ -2897,107 +3621,16 @@
                 stopDrawing();
             }, { passive: false });
             
-            // Sidebar toggle (mobil)
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-            });
-            
-            // Sidebar dışına tıklayınca kapat
-            document.addEventListener('click', function(e) {
-                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target) && sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-            
             // Dil değiştirme
             languageSelect.addEventListener('change', function() {
                 changeLanguage(this.value);
             });
             
-            // Renk seçici
-            colorPicker.addEventListener('change', function() {
-                appState.currentColor = this.value;
-                colorModalPicker.value = this.value;
-                document.querySelectorAll('.color-option').forEach(opt => {
-                    opt.classList.remove('active');
-                    if (opt.dataset.color === appState.currentColor) {
-                        opt.classList.add('active');
-                    }
-                });
-                
-                // Silgi modundaysa fırça moduna geç
-                if (appState.currentTool === 'eraser') {
-                    appState.currentTool = 'brush';
-                    updateToolButtons();
-                }
-                
-                updateCursor();
-            });
-            
-            // Fırça boyutu (sidebar)
+            // Fırça boyutu (canvas üzerinde)
             brushSizeSlider.addEventListener('input', function() {
                 appState.brushSize = parseInt(this.value);
                 brushSizeValue.textContent = `${appState.brushSize}px`;
-                canvasBrushSizeSlider.value = appState.brushSize;
-                canvasBrushSizeValue.textContent = `${appState.brushSize}px`;
                 updateCursor();
-            });
-            
-            // Fırça boyutu (canvas üzerinde)
-            canvasBrushSizeSlider.addEventListener('input', function() {
-                appState.brushSize = parseInt(this.value);
-                canvasBrushSizeValue.textContent = `${appState.brushSize}px`;
-                brushSizeSlider.value = appState.brushSize;
-                brushSizeValue.textContent = `${appState.brushSize}px`;
-                updateCursor();
-            });
-            
-            // Opacity
-            opacitySlider.addEventListener('input', function() {
-                appState.opacity = parseInt(this.value) / 100;
-                opacityValue.textContent = `${this.value}%`;
-            });
-            
-            // Araç seçimi (sidebar)
-            toolButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    toolButtons.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    appState.currentTool = this.dataset.tool;
-                    
-                    // Silgi modu için tuval üzerindeki butonu güncelle
-                    updateToolButtons();
-                    
-                    // Dolgu aracı seçildiğinde canvas'ı doldur
-                    if (appState.currentTool === 'fill') {
-                        ctx.fillStyle = appState.currentColor;
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        appState.hasDrawing = true;
-                        updateCanvasPlaceholder();
-                        saveToUndoStack();
-                    }
-                });
-            });
-            
-            // Tuval arka plan seçimi
-            canvasBgButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    canvasBgButtons.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    appState.canvasBackground = this.dataset.bg;
-                    
-                    // Arka planı uygula
-                    applyCanvasBackground();
-                    
-                    // Kayıtlı çizim varsa üzerine çiz
-                    if (appState.canvasData) {
-                        const img = new Image();
-                        img.onload = function() {
-                            ctx.drawImage(img, 0, 0);
-                        };
-                        img.src = appState.canvasData;
-                    }
-                });
             });
             
             // Modal butonları
@@ -3009,9 +3642,12 @@
             closeTemplatesModal.addEventListener('click', () => closeModal(templatesModal));
             
             galleryBtn.addEventListener('click', () => {
-                // Galeri modal'ı için ayrı bir fonksiyon gerekli
                 openGalleryModal();
             });
+            
+            closeGalleryModal.addEventListener('click', () => closeModal(galleryModal));
+            
+            closeDrawingViewModal.addEventListener('click', () => closeModal(drawingViewModal));
             
             // Save modal butonları
             closeSaveModal.addEventListener('click', () => closeModal(saveModal));
@@ -3027,16 +3663,13 @@
             
             // Color modal butonları
             closeColorModal.addEventListener('click', () => closeModal(colorModal));
-            colorModalOkBtn.addEventListener('click', () => closeModal(colorModal));
+            colorModalOkBtn.addEventListener('click', () => {
+                appState.opacity = colorModalOpacity.value / 100;
+                closeModal(colorModal);
+            });
             
             colorModalPicker.addEventListener('change', function() {
                 appState.currentColor = this.value;
-                colorPicker.value = this.value;
-                
-                // Paletleri güncelle
-                document.querySelectorAll('.color-option, .color-modal-option').forEach(opt => {
-                    opt.classList.remove('active');
-                });
                 
                 // Silgi modundaysa fırça moduna geç
                 if (appState.currentTool === 'eraser') {
@@ -3045,13 +3678,111 @@
                 }
                 
                 updateCursor();
+                updateToolIndicator();
             });
+            
+            colorModalOpacity.addEventListener('input', function() {
+                colorModalOpacityValue.textContent = `${this.value}%`;
+            });
+            
+            // New canvas modal butonları
+            newCanvasHeaderBtn.addEventListener('click', () => {
+                createNewCanvasModal();
+                openModal(newCanvasModal);
+            });
+            
+            closeNewCanvasModal.addEventListener('click', () => closeModal(newCanvasModal));
+            newCanvasModalOkBtn.addEventListener('click', createNewCanvas);
+            newCanvasModalCancelBtn.addEventListener('click', () => closeModal(newCanvasModal));
+            
+            // Download modal butonları
+            downloadHeaderBtn.addEventListener('click', () => {
+                createDownloadModal();
+                openModal(downloadModal);
+            });
+            
+            closeDownloadModal.addEventListener('click', () => closeModal(downloadModal));
+            downloadModalOkBtn.addEventListener('click', downloadCanvas);
+            downloadModalCancelBtn.addEventListener('click', () => closeModal(downloadModal));
+            
+            // Tools modal butonları
+            brushOverlayBtn.addEventListener('click', () => {
+                createToolsModal();
+                openModal(toolsModal);
+            });
+            
+            closeToolsModal.addEventListener('click', () => closeModal(toolsModal));
+            toolsModalOkBtn.addEventListener('click', () => {
+                closeModal(toolsModal);
+                updateToolButtons();
+            });
+            
+            toolsModalCancelBtn.addEventListener('click', () => closeModal(toolsModal));
+            
+            // Text tool modal butonları
+            closeTextToolModal.addEventListener('click', () => {
+                appState.currentTool = 'brush';
+                appState.textToolActive = false;
+                closeModal(textToolModal);
+                updateToolButtons();
+            });
+            
+            addTextBtn.addEventListener('click', addText);
+            textToolCancelBtn.addEventListener('click', () => {
+                appState.currentTool = 'brush';
+                appState.textToolActive = false;
+                closeModal(textToolModal);
+                updateToolButtons();
+            });
+            
+            textSize.addEventListener('input', function() {
+                textSizeValue.textContent = `${this.value}px`;
+            });
+            
+            // Shape tool modal butonları
+            closeShapeToolModal.addEventListener('click', () => {
+                appState.currentTool = 'brush';
+                appState.shapeToolActive = false;
+                closeModal(shapeToolModal);
+                updateToolButtons();
+            });
+            
+            shapeToolCancelBtn.addEventListener('click', () => {
+                appState.currentTool = 'brush';
+                appState.shapeToolActive = false;
+                closeModal(shapeToolModal);
+                updateToolButtons();
+            });
+            
+            // Message modal butonları
+            messageModalOkBtn.addEventListener('click', () => closeModal(messageModal));
+            
+            // Confirm modal butonları zaten ayarlandı
             
             // Dış tıklamada modal'ı kapat
             window.addEventListener('click', function(e) {
                 if (e.target === templatesModal) closeModal(templatesModal);
                 if (e.target === saveModal) closeModal(saveModal);
                 if (e.target === colorModal) closeModal(colorModal);
+                if (e.target === newCanvasModal) closeModal(newCanvasModal);
+                if (e.target === downloadModal) closeModal(downloadModal);
+                if (e.target === toolsModal) closeModal(toolsModal);
+                if (e.target === textToolModal) {
+                    appState.currentTool = 'brush';
+                    appState.textToolActive = false;
+                    closeModal(textToolModal);
+                    updateToolButtons();
+                }
+                if (e.target === shapeToolModal) {
+                    appState.currentTool = 'brush';
+                    appState.shapeToolActive = false;
+                    closeModal(shapeToolModal);
+                    updateToolButtons();
+                }
+                if (e.target === galleryModal) closeModal(galleryModal);
+                if (e.target === drawingViewModal) closeModal(drawingViewModal);
+                if (e.target === messageModal) closeModal(messageModal);
+                if (e.target === confirmModal) closeModal(confirmModal);
             });
             
             // Tuval üzerindeki butonlar
@@ -3072,17 +3803,7 @@
             
             // Diğer butonlar
             saveBtn.addEventListener('click', saveCanvas);
-            newCanvasBtn.addEventListener('click', createNewCanvas);
-            downloadBtn.addEventListener('click', () => {
-                const dataUrl = canvas.toDataURL();
-                const link = document.createElement('a');
-                link.download = `artcanvas_${new Date().getTime()}.png`;
-                link.href = dataUrl;
-                link.click();
-                showNotification(translations[appState.currentLanguage].exportedNotification);
-            });
-            
-            uploadImageBtn.addEventListener('click', uploadImage);
+            uploadImageHeaderBtn.addEventListener('click', uploadImage);
             
             zoomInBtn.addEventListener('click', zoomIn);
             zoomOutBtn.addEventListener('click', zoomOut);
@@ -3091,7 +3812,7 @@
             helpGuide.addEventListener('click', function() {
                 showMessage(
                     translations[appState.currentLanguage].helpTitle,
-                    translations[appState.currentLanguage].helpContent.replace(/<[^>]*>/g, ''),
+                    translations[appState.currentLanguage].helpContent,
                     'info'
                 );
             });
@@ -3105,110 +3826,13 @@
             });
         }
         
-        // Galeri modal'ını aç
-        function openGalleryModal() {
-            const galleryModal = document.createElement('div');
-            galleryModal.className = 'modal';
-            galleryModal.id = 'galleryModalInstance';
-            
-            const savedDrawings = JSON.parse(localStorage.getItem('artcanvas_drawings')) || [];
-            
-            let galleryContent = '';
-            if (savedDrawings.length === 0) {
-                galleryContent = `<p style="text-align: center; padding: 40px; color: #666;">${translations[appState.currentLanguage].emptyGallery}</p>`;
-            } else {
-                galleryContent = '<div class="gallery-grid">';
-                savedDrawings.forEach((drawing, index) => {
-                    galleryContent += `
-                        <div class="gallery-item">
-                            <div class="gallery-img" style="background-image: url(${drawing.data});"></div>
-                            <div class="gallery-name">${drawing.name}</div>
-                            <div class="gallery-actions">
-                                <button class="action-btn action-btn-download" data-index="${index}">
-                                    <i class="fas fa-download"></i> İndir
-                                </button>
-                                <button class="action-btn action-btn-delete" data-index="${index}">
-                                    <i class="fas fa-trash-alt"></i> Sil
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-                galleryContent += '</div>';
-            }
-            
-            galleryModal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Kayıtlı Çizimler</h3>
-                        <button class="close-modal" id="closeGalleryModalInstance">&times;</button>
-                    </div>
-                    ${galleryContent}
-                </div>
-            `;
-            
-            document.body.appendChild(galleryModal);
-            galleryModal.style.display = 'flex';
-            
-            // Kapatma butonu
-            document.getElementById('closeGalleryModalInstance').addEventListener('click', function() {
-                galleryModal.style.display = 'none';
-                setTimeout(() => galleryModal.remove(), 300);
-            });
-            
-            // Dışarı tıklayınca kapat
-            galleryModal.addEventListener('click', function(e) {
-                if (e.target === galleryModal) {
-                    galleryModal.style.display = 'none';
-                    setTimeout(() => galleryModal.remove(), 300);
-                }
-            });
-            
-            // Galeri butonlarına event listener ekle
-            setTimeout(() => {
-                document.querySelectorAll('.action-btn-download').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        const drawing = savedDrawings[index];
-                        const link = document.createElement('a');
-                        link.download = `${drawing.name}.png`;
-                        link.href = drawing.data;
-                        link.click();
-                        showNotification('Çizim indirildi!');
-                    });
-                });
-                
-                document.querySelectorAll('.action-btn-delete').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        showConfirm(
-                            'Çizimi Sil',
-                            translations[appState.currentLanguage].confirmDelete,
-                            function() {
-                                savedDrawings.splice(index, 1);
-                                localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
-                                
-                                // Modal'ı kapat ve yeniden aç
-                                galleryModal.style.display = 'none';
-                                setTimeout(() => {
-                                    galleryModal.remove();
-                                    openGalleryModal();
-                                    showNotification('Çizim silindi!');
-                                }, 300);
-                            }
-                        );
-                    });
-                });
-            }, 100);
-        }
-        
         // Uygulamayı başlat
         function initApp() {
             // Canvas'ı başlat
             resizeCanvas();
             
-            // Renk paletini oluştur
-            createColorPalette();
+            // Şekil seçeneklerini oluştur
+            createShapeOptions();
             
             // Event listener'ları başlat
             initEventListeners();
@@ -3219,6 +3843,7 @@
             // Buton durumlarını güncelle
             updateUndoRedoButtons();
             updateToolButtons();
+            updateZoom();
             
             // Loading ekranını kaldır
             setTimeout(() => {
@@ -3227,8 +3852,11 @@
             
             // Başlangıç bildirimi
             setTimeout(() => {
-                showNotification('ArtCanvas\'a hoş geldiniz! Sol üstteki araçları kullanarak çizim yapmaya başlayın.');
-            }, 1200);
+                showMessage(
+                    translations[appState.currentLanguage].welcomeTitle,
+                    translations[appState.currentLanguage].welcomeMessage
+                );
+            }, 1000);
         }
         
         // Uygulamayı yükle
