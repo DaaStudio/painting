@@ -51,18 +51,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 15px;
+            padding: 0 10px;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             z-index: 100;
             flex-shrink: 0;
             width: 100%;
             position: relative;
+            gap: 10px;
         }
         
         .header-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            flex-shrink: 0;
         }
         
         .logo-icon {
@@ -90,10 +92,13 @@
         
         .user-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             padding: 5px 0;
+            flex: 1;
+            justify-content: flex-end;
+            max-width: 100%;
         }
         
         .user-actions::-webkit-scrollbar {
@@ -101,7 +106,7 @@
         }
         
         .btn {
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 8px;
             border: none;
             font-weight: 600;
@@ -113,6 +118,7 @@
             font-size: 0.85rem;
             white-space: nowrap;
             flex-shrink: 0;
+            min-width: max-content;
         }
         
         .btn-primary {
@@ -453,10 +459,6 @@
             height: 120px;
             object-fit: cover;
             background-color: #f5f5f5;
-        }
-        
-        .template-name {
-            display: none !important;
         }
         
         /* Gallery Modal */
@@ -1017,13 +1019,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
             flex-direction: column;
             gap: 15px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
         
         .loading-spinner {
@@ -1146,12 +1154,22 @@
             .current-color-indicator {
                 display: none;
             }
+            
+            .user-actions {
+                gap: 6px;
+            }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
         }
         
         @media (max-width: 768px) {
             .header {
-                padding: 0 10px;
+                padding: 0 8px;
                 height: 55px;
+                gap: 8px;
             }
             
             .logo-icon {
@@ -1159,7 +1177,7 @@
             }
             
             .user-actions {
-                gap: 5px;
+                gap: 4px;
             }
             
             .user-actions .btn span {
@@ -1168,10 +1186,13 @@
             
             .user-actions .btn i {
                 margin: 0;
+                font-size: 0.9rem;
             }
             
             .btn {
                 padding: 8px 10px;
+                min-width: 40px;
+                justify-content: center;
             }
             
             .language-selector select {
@@ -1180,6 +1201,10 @@
             }
             
             .language-selector i {
+                display: none;
+            }
+            
+            .language-selector span {
                 display: none;
             }
             
@@ -1232,15 +1257,23 @@
         @media (max-width: 480px) {
             .header {
                 height: 50px;
+                padding: 0 5px;
             }
             
-            .language-selector span {
-                display: none;
+            .user-actions {
+                gap: 3px;
+            }
+            
+            .btn {
+                padding: 7px 8px;
+                font-size: 0.75rem;
+                min-width: 36px;
             }
             
             .language-selector select {
                 padding: 4px 6px;
                 font-size: 0.75rem;
+                width: 50px;
             }
             
             .canvas-container {
@@ -1264,7 +1297,7 @@
                 height: 80px;
             }
             
-            .template-name, .gallery-name {
+            .gallery-name {
                 padding: 8px;
                 font-size: 0.8rem;
             }
@@ -1352,20 +1385,31 @@
                 width: 40px;
                 height: 40px;
             }
-            
-            .user-actions {
-                max-width: 200px;
-            }
         }
         
-        @media (max-width: 400px) {
+        @media (max-width: 360px) {
             .header {
-                padding: 0 8px;
+                padding: 0 4px;
+            }
+            
+            .user-actions {
+                gap: 2px;
             }
             
             .btn {
-                padding: 6px 8px;
-                font-size: 0.8rem;
+                padding: 6px 7px;
+                font-size: 0.7rem;
+                min-width: 34px;
+            }
+            
+            .logo-icon {
+                font-size: 1.3rem;
+            }
+            
+            .language-selector select {
+                width: 45px;
+                padding: 3px 5px;
+                font-size: 0.7rem;
             }
             
             .templates-grid, .gallery-grid {
@@ -1380,41 +1424,12 @@
                 height: 70px;
             }
             
-            .gallery-bulk-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .zoom-controls {
-                padding: 6px;
-            }
-            
-            .zoom-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 0.8rem;
-            }
-            
-            .overlay-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.8rem;
-            }
-            
-            .canvas-placeholder {
-                font-size: 1.3rem;
-            }
-            
             .canvas-brush-controls {
                 width: 140px;
             }
             
             .color-modal-palette {
                 grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .user-actions {
-                max-width: 180px;
             }
         }
         
@@ -1431,7 +1446,7 @@
                 height: 60px;
             }
             
-            .template-name, .gallery-name {
+            .gallery-name {
                 font-size: 0.75rem;
                 padding: 6px;
             }
@@ -1446,8 +1461,9 @@
                 font-size: 0.8rem;
             }
             
-            .user-actions {
-                max-width: 150px;
+            .btn {
+                padding: 6px;
+                min-width: 32px;
             }
         }
         
@@ -1504,6 +1520,18 @@
         .help-modal-content strong {
             color: var(--dark-color);
         }
+        
+        /* Mobile için header butonlarını sığdırma */
+        .header-buttons-container {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        
+        .header-buttons-container::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -1515,22 +1543,22 @@
                 <div class="language-selector">
                     <select id="languageSelect">
                         <option value="en">English</option>
+                        <option value="tr">Türkçe</option>
                         <option value="es">Español</option>
                         <option value="pt">Português</option>
                         <option value="ru">Русский</option>
                         <option value="de">Deutsch</option>
                         <option value="fr">Français</option>
                         <option value="hi">हिन्दी</option>
-                        <option value="id">Bahasa Indonesia</option>
+                        <option value="id">Indonesia</option>
                         <option value="ja">日本語</option>
                         <option value="ko">한국어</option>
-                        <option value="tr">Türkçe</option>
                         <option value="ar">العربية</option>
                         <option value="it">Italiano</option>
                         <option value="pl">Polski</option>
                         <option value="th">ไทย</option>
                         <option value="vi">Tiếng Việt</option>
-                        <option value="zh">中文 (简体)</option>
+                        <option value="zh">中文</option>
                         <option value="nl">Nederlands</option>
                         <option value="uk">Українська</option>
                     </select>
@@ -1540,11 +1568,11 @@
             <div class="user-actions">
                 <button class="btn btn-outline" id="uploadImageHeaderBtn" title="Upload Image">
                     <i class="fas fa-upload"></i>
-                    <span>Upload Image</span>
+                    <span>Upload</span>
                 </button>
                 <button class="btn btn-outline" id="newCanvasHeaderBtn" title="New Canvas">
                     <i class="fas fa-plus"></i>
-                    <span>New Canvas</span>
+                    <span>New</span>
                 </button>
                 <button class="btn btn-primary" id="saveBtn" title="Save">
                     <i class="fas fa-save"></i>
@@ -1914,7 +1942,7 @@
     </div>
     
     <script>
-        // Dil desteği için metinler - 20 dil
+        // Dil desteği için metinler - 20 dil (tam çeviri)
         const translations = {
             en: {
                 canvasTitle: "New Canvas",
@@ -1936,7 +1964,6 @@
                 redo: "Redo",
                 exportPNG: "PNG",
                 exportJPG: "JPG",
-                exportPDF: "PDF",
                 newCanvas: "New Canvas",
                 download: "Download",
                 share: "Share",
@@ -1970,7 +1997,7 @@
                                 <li>Save: Save your drawing</li>
                                 <li>Templates: Choose from ready templates</li>
                                 <li>Gallery: View your saved drawings</li>
-                                <li>Download: Download your drawing as PNG/JPG/PDF</li>
+                                <li>Download: Download your drawing as PNG/JPG</li>
                             </ul>
                         </li>
                         <li><strong>Other Canvas Controls:</strong>
@@ -2010,10 +2037,8 @@
                 canvasColoredDesc: "Canvas in selected color",
                 formatPNG: "PNG Format",
                 formatJPG: "JPG Format",
-                formatPDF: "PDF Format",
                 formatPNGDesc: "High quality image",
                 formatJPGDesc: "Smaller file size",
-                formatPDFDesc: "Vector drawing",
                 shapeCircle: "Circle",
                 shapeSquare: "Square",
                 shapeTriangle: "Triangle",
@@ -2047,7 +2072,6 @@
                 redo: "İleri Al",
                 exportPNG: "PNG",
                 exportJPG: "JPG",
-                exportPDF: "PDF",
                 newCanvas: "Yeni Tuval",
                 download: "İndir",
                 share: "Paylaş",
@@ -2081,7 +2105,7 @@
                                 <li>Kaydet: Çiziminizi kaydedin</li>
                                 <li>Şablon: Hazır şablonlardan seçin</li>
                                 <li>Galeri: Kayıtlı çizimlerinizi görüntüleyin</li>
-                                <li>İndir: Çiziminizi PNG/JPG/PDF olarak indirin</li>
+                                <li>İndir: Çiziminizi PNG/JPG olarak indirin</li>
                             </ul>
                         </li>
                         <li><strong>Tuval Üzerindeki Diğer Kontroller:</strong>
@@ -2121,10 +2145,8 @@
                 canvasColoredDesc: "Seçtiğiniz renkte tuval",
                 formatPNG: "PNG Formatı",
                 formatJPG: "JPG Formatı",
-                formatPDF: "PDF Formatı",
                 formatPNGDesc: "Yüksek kaliteli görüntü",
                 formatJPGDesc: "Daha küçük dosya boyutu",
-                formatPDFDesc: "Vektörel çizim",
                 shapeCircle: "Daire",
                 shapeSquare: "Kare",
                 shapeTriangle: "Üçgen",
@@ -2137,8 +2159,502 @@
                 welcomeTitle: "ArtCanvas'a Hoş Geldiniz!",
                 welcomeMessage: "ArtCanvas ile dijital boyama yapmanın keyfini çıkarın. Tüm kontroller tuval üzerindedir. Sol üst köşedeki araçları kullanarak çizim yapmaya başlayın. Üst menüden yeni tuval oluşturabilir, resim yükleyebilir, şablonları kullanabilir, çizimlerinizi kaydedip galeriden görüntüleyebilirsiniz. İyi eğlenceler!",
                 loading: "Yükleniyor..."
-            }
-            // Diğer dillerin çevirileri buraya eklenebilir...
+            },
+            es: {
+                canvasTitle: "Nuevo Lienzo",
+                save: "Guardar",
+                templates: "Plantillas",
+                gallery: "Galería",
+                brush: "Pincel",
+                pencil: "Lápiz",
+                eraser: "Borrador",
+                watercolor: "Acuarela",
+                pastel: "Pastel",
+                spray: "Spray",
+                fill: "Relleno",
+                shape: "Forma",
+                text: "Texto",
+                uploadImage: "Subir Imagen",
+                clear: "Limpiar",
+                undo: "Deshacer",
+                redo: "Rehacer",
+                exportPNG: "PNG",
+                exportJPG: "JPG",
+                newCanvas: "Nuevo Lienzo",
+                download: "Descargar",
+                share: "Compartir",
+                savedNotification: "¡Tu dibujo ha sido guardado!",
+                loadedNotification: "¡Plantilla cargada!",
+                exportedNotification: "¡Tu dibujo ha sido exportado!",
+                emptyGallery: "Aún no tienes dibujos guardados.",
+                confirmDelete: "¿Estás seguro de que quieres eliminar este dibujo?",
+                confirmDeleteMultiple: "¿Estás seguro de que quieres eliminar {count} dibujos seleccionados?",
+                newCanvasConfirm: "¿Estás seguro de que quieres crear un nuevo lienzo? Tu trabajo actual no se guardará.",
+                clearCanvasConfirm: "¿Estás seguro de que quieres limpiar el lienzo?",
+                helpTitle: "Guía de Usuario de ArtCanvas",
+                helpContent: `
+                    <h3>¡Bienvenido a ArtCanvas!</h3>
+                    <p>Disfruta de la pintura digital con ArtCanvas. Todos los controles están en el lienzo y el menú superior.</p>
+                    <ul>
+                        <li><strong>Controles del Lienzo (Esquina Superior Izquierda):</strong>
+                            <ul>
+                                <li><i class="fas fa-undo"></i> Deshacer: Deshace la última acción</li>
+                                <li><i class="fas fa-redo"></i> Rehacer: Rehace la acción deshecha</li>
+                                <li><i class="fas fa-eraser"></i> Borrador: Borra el dibujo (lo hace transparente)</li>
+                                <li><i class="fas fa-trash-alt"></i> Limpiar: Limpia todo el lienzo</li>
+                                <li><i class="fas fa-palette"></i> Seleccionar Color: Abre la paleta de colores</li>
+                                <li><i class="fas fa-paint-brush"></i> Herramientas: Abre las herramientas de dibujo</li>
+                            </ul>
+                        </li>
+                        <li><strong>Menú Superior:</strong>
+                            <ul>
+                                <li>Subir Imagen: Sube una imagen desde tu computadora</li>
+                                <li>Nuevo Lienzo: Crea un nuevo lienzo en blanco</li>
+                                <li>Guardar: Guarda tu dibujo</li>
+                                <li>Plantillas: Elige entre plantillas listas</li>
+                                <li>Galería: Ve tus dibujos guardados</li>
+                                <li>Descargar: Descarga tu dibujo como PNG/JPG</li>
+                            </ul>
+                        </li>
+                        <li><strong>Otros Controles del Lienzo:</strong>
+                            <ul>
+                                <li>Esquina Inferior Izquierda: Ajuste del tamaño del pincel</li>
+                                <li>Esquina Inferior Derecha: Acercar/Alejar</li>
+                                <li>Esquina Superior Derecha: Información de herramienta y color actual</li>
+                            </ul>
+                        </li>
+                        <li><strong>Herramientas de Dibujo:</strong> Haz clic en el botón de herramientas para acceder a pincel, lápiz, acuarela, pastel, spray, relleno, texto y herramientas de forma.</li>
+                        <li><strong>Selección de Color:</strong> Haz clic en el botón de selección de color para abrir la paleta de colores, elegir colores personalizados y ajustar la transparencia.</li>
+                        <li><strong>Tamaño del Pincel:</strong> Ajusta el tamaño del pincel con el deslizador en la esquina inferior izquierda.</li>
+                        <li><strong>Acercar/Alejar:</strong> Usa los botones en la esquina inferior derecha para acercar o alejar el lienzo.</li>
+                        <li><strong>Plantillas:</strong> Selecciona entre plantillas predefinidas para comenzar rápidamente.</li>
+                        <li><strong>Deshacer/Rehacer:</strong> Usa los botones en la esquina superior izquierda del lienzo para deshacer o rehacer tus acciones.</li>
+                    </ul>
+                    <p>¡Diviértete y disfruta de momentos artísticos!</p>
+                `,
+                selectAll: "Seleccionar Todo",
+                deleteSelected: "Eliminar Seleccionados",
+                noDrawingsSelected: "No hay dibujos seleccionados.",
+                templateLoadError: "Error al cargar la plantilla. Por favor selecciona otra plantilla.",
+                brushSize: "Tamaño del Pincel",
+                colorPicker: "Selector de Color",
+                transparency: "Transparencia",
+                tools: "Herramientas",
+                ok: "OK",
+                cancel: "Cancelar",
+                create: "Crear",
+                blankCanvas: "Lienzo en Blanco",
+                gridCanvas: "Lienzo con Cuadrícula",
+                linedCanvas: "Lienzo con Líneas",
+                coloredCanvas: "Lienzo de Color",
+                canvasBlankDesc: "Lienzo blanco en blanco",
+                canvasGridDesc: "Vista de papel cuadriculado",
+                canvasLinedDesc: "Vista de papel rayado",
+                canvasColoredDesc: "Lienzo en color seleccionado",
+                formatPNG: "Formato PNG",
+                formatJPG: "Formato JPG",
+                formatPNGDesc: "Imagen de alta calidad",
+                formatJPGDesc: "Tamaño de archivo más pequeño",
+                shapeCircle: "Círculo",
+                shapeSquare: "Cuadrado",
+                shapeTriangle: "Triángulo",
+                shapeRectangle: "Rectángulo",
+                shapeStar: "Estrella",
+                shapeHeart: "Corazón",
+                drawingName: "Nombre del Dibujo",
+                drawingDate: "Fecha de Guardado",
+                viewDrawing: "Ver Dibujo",
+                welcomeTitle: "¡Bienvenido a ArtCanvas!",
+                welcomeMessage: "Disfruta de la pintura digital con ArtCanvas. Todos los controles están en el lienzo. Comienza a dibujar usando las herramientas en la esquina superior izquierda. Desde el menú superior, puedes crear un nuevo lienzo, subir imágenes, usar plantillas, guardar tus dibujos y verlos desde la galería. ¡Diviértete!",
+                loading: "Cargando..."
+            },
+            de: {
+                canvasTitle: "Neue Leinwand",
+                save: "Speichern",
+                templates: "Vorlagen",
+                gallery: "Galerie",
+                brush: "Pinsel",
+                pencil: "Bleistift",
+                eraser: "Radiergummi",
+                watercolor: "Aquarell",
+                pastel: "Pastell",
+                spray: "Spray",
+                fill: "Füllen",
+                shape: "Form",
+                text: "Text",
+                uploadImage: "Bild hochladen",
+                clear: "Löschen",
+                undo: "Rückgängig",
+                redo: "Wiederholen",
+                exportPNG: "PNG",
+                exportJPG: "JPG",
+                newCanvas: "Neue Leinwand",
+                download: "Herunterladen",
+                share: "Teilen",
+                savedNotification: "Ihre Zeichnung wurde gespeichert!",
+                loadedNotification: "Vorlage geladen!",
+                exportedNotification: "Ihre Zeichnung wurde exportiert!",
+                emptyGallery: "Sie haben noch keine gespeicherten Zeichnungen.",
+                confirmDelete: "Sind Sie sicher, dass Sie diese Zeichnung löschen möchten?",
+                confirmDeleteMultiple: "Sind Sie sicher, dass Sie {count} ausgewählte Zeichnungen löschen möchten?",
+                newCanvasConfirm: "Sind Sie sicher, dass Sie eine neue Leinwand erstellen möchten? Ihre aktuelle Arbeit wird nicht gespeichert.",
+                clearCanvasConfirm: "Sind Sie sicher, dass Sie die Leinwand löschen möchten?",
+                helpTitle: "ArtCanvas Benutzerhandbuch",
+                helpContent: `
+                    <h3>Willkommen bei ArtCanvas!</h3>
+                    <p>Genießen Sie digitales Malen mit ArtCanvas. Alle Steuerelemente befinden sich auf der Leinwand und im oberen Menü.</p>
+                    <ul>
+                        <li><strong>Leinwandsteuerung (Obere linke Ecke):</strong>
+                            <ul>
+                                <li><i class="fas fa-undo"></i> Rückgängig: Macht die letzte Aktion rückgängig</li>
+                                <li><i class="fas fa-redo"></i> Wiederholen: Wiederholt die rückgängig gemachte Aktion</li>
+                                <li><i class="fas fa-eraser"></i> Radiergummi: Löscht die Zeichnung (macht sie transparent)</li>
+                                <li><i class="fas fa-trash-alt"></i> Löschen: Löscht die gesamte Leinwand</li>
+                                <li><i class="fas fa-palette"></i> Farbe wählen: Öffnet die Farbpalette</li>
+                                <li><i class="fas fa-paint-brush"></i> Werkzeuge: Öffnet die Zeichenwerkzeuge</li>
+                            </ul>
+                        </li>
+                        <li><strong>Oberes Menü:</strong>
+                            <ul>
+                                <li>Bild hochladen: Bild von Ihrem Computer hochladen</li>
+                                <li>Neue Leinwand: Neue leere Leinwand erstellen</li>
+                                <li>Speichern: Ihre Zeichnung speichern</li>
+                                <li>Vorlagen: Wählen Sie aus fertigen Vorlagen</li>
+                                <li>Galerie: Zeigen Sie Ihre gespeicherten Zeichnungen an</li>
+                                <li>Herunterladen: Laden Sie Ihre Zeichnung als PNG/JPG herunter</li>
+                            </ul>
+                        </li>
+                        <li><strong>Andere Leinwandsteuerungen:</strong>
+                            <ul>
+                                <li>Untere linke Ecke: Pinselgröße einstellen</li>
+                                <li>Untere rechte Ecke: Hinein-/Herauszoomen</li>
+                                <li>Obere rechte Ecke: Aktuelles Werkzeug und Farbinformationen</li>
+                            </ul>
+                        </li>
+                        <li><strong>Zeichenwerkzeuge:</strong> Klicken Sie auf die Werkzeugschaltfläche, um auf Pinsel, Bleistift, Aquarell, Pastell, Spray, Füllen, Text und Formwerkzeuge zuzugreifen.</li>
+                        <li><strong>Farbauswahl:</strong> Klicken Sie auf die Farbschaltfläche, um die Farbpalette zu öffnen, benutzerdefinierte Farben auszuwählen und die Transparenz einzustellen.</li>
+                        <li><strong>Pinselgröße:</strong> Passen Sie die Pinselgröße mit dem Schieberegler in der unteren linken Ecke an.</li>
+                        <li><strong>Hinein-/Herauszoomen:</strong> Verwenden Sie die Schaltflächen in der unteren rechte Ecke, um die Leinwand zu vergrößern oder zu verkleinern.</li>
+                        <li><strong>Vorlagen:</strong> Wählen Sie aus vorgefertigten Vorlagen, um schnell zu starten.</li>
+                        <li><strong>Rückgängig/Wiederholen:</strong> Verwenden Sie die Schaltflächen in der oberen linken Ecke der Leinwand, um Ihre Aktionen rückgängig zu machen oder zu wiederholen.</li>
+                    </ul>
+                    <p>Viel Spaß und genießen Sie künstlerische Momente!</p>
+                `,
+                selectAll: "Alle auswählen",
+                deleteSelected: "Ausgewählte löschen",
+                noDrawingsSelected: "Keine Zeichnungen ausgewählt.",
+                templateLoadError: "Fehler beim Laden der Vorlage. Bitte wählen Sie eine andere Vorlage.",
+                brushSize: "Pinselgröße",
+                colorPicker: "Farbauswahl",
+                transparency: "Transparenz",
+                tools: "Werkzeuge",
+                ok: "OK",
+                cancel: "Abbrechen",
+                create: "Erstellen",
+                blankCanvas: "Leere Leinwand",
+                gridCanvas: "Gitternetz-Leinwand",
+                linedCanvas: "Liniert Leinwand",
+                coloredCanvas: "Farbige Leinwand",
+                canvasBlankDesc: "Weiße leere Leinwand",
+                canvasGridDesc: "Gitternetzpapier-Ansicht",
+                canvasLinedDesc: "Liniertes Papier-Ansicht",
+                canvasColoredDesc: "Leinwand in gewählter Farbe",
+                formatPNG: "PNG-Format",
+                formatJPG: "JPG-Format",
+                formatPNGDesc: "Hohe Bildqualität",
+                formatJPGDesc: "Kleinere Dateigröße",
+                shapeCircle: "Kreis",
+                shapeSquare: "Quadrat",
+                shapeTriangle: "Dreieck",
+                shapeRectangle: "Rechteck",
+                shapeStar: "Stern",
+                shapeHeart: "Herz",
+                drawingName: "Zeichnungsname",
+                drawingDate: "Speicherdatum",
+                viewDrawing: "Zeichnung ansehen",
+                welcomeTitle: "Willkommen bei ArtCanvas!",
+                welcomeMessage: "Genießen Sie digitales Malen mit ArtCanvas. Alle Steuerelemente befinden sich auf der Leinwand. Beginnen Sie mit dem Zeichnen mit den Werkzeugen in der oberen linken Ecke. Im oberen Menü können Sie eine neue Leinwand erstellen, Bilder hochladen, Vorlagen verwenden, Ihre Zeichnungen speichern und sie aus der Galerie ansehen. Viel Spaß!",
+                loading: "Laden..."
+            },
+            fr: {
+                canvasTitle: "Nouvelle Toile",
+                save: "Enregistrer",
+                templates: "Modèles",
+                gallery: "Galerie",
+                brush: "Pinceau",
+                pencil: "Crayon",
+                eraser: "Gomme",
+                watercolor: "Aquarelle",
+                pastel: "Pastel",
+                spray: "Spray",
+                fill: "Remplir",
+                shape: "Forme",
+                text: "Texte",
+                uploadImage: "Télécharger Image",
+                clear: "Effacer",
+                undo: "Annuler",
+                redo: "Rétablir",
+                exportPNG: "PNG",
+                exportJPG: "JPG",
+                newCanvas: "Nouvelle Toile",
+                download: "Télécharger",
+                share: "Partager",
+                savedNotification: "Votre dessin a été enregistré!",
+                loadedNotification: "Modèle chargé!",
+                exportedNotification: "Votre dessin a été exporté!",
+                emptyGallery: "Vous n'avez pas encore de dessins enregistrés.",
+                confirmDelete: "Êtes-vous sûr de vouloir supprimer ce dessin?",
+                confirmDeleteMultiple: "Êtes-vous sûr de vouloir supprimer {count} dessins sélectionnés?",
+                newCanvasConfirm: "Êtes-vous sûr de vouloir créer une nouvelle toile? Votre travail actuel ne sera pas enregistré.",
+                clearCanvasConfirm: "Êtes-vous sûr de vouloir effacer la toile?",
+                helpTitle: "Guide Utilisateur ArtCanvas",
+                helpContent: `
+                    <h3>Bienvenue sur ArtCanvas!</h3>
+                    <p>Profitez de la peinture numérique avec ArtCanvas. Tous les contrôles sont sur la toile et le menu supérieur.</p>
+                    <ul>
+                        <li><strong>Contrôles de la Toile (Coin supérieur gauche):</strong>
+                            <ul>
+                                <li><i class="fas fa-undo"></i> Annuler: Annule la dernière action</li>
+                                <li><i class="fas fa-redo"></i> Rétablir: Rétablit l'action annulée</li>
+                                <li><i class="fas fa-eraser"></i> Gomme: Efface le dessin (le rend transparent)</li>
+                                <li><i class="fas fa-trash-alt"></i> Effacer: Efface toute la toile</li>
+                                <li><i class="fas fa-palette"></i> Sélection Couleur: Ouvre la palette de couleurs</li>
+                                <li><i class="fas fa-paint-brush"></i> Outils: Ouvre les outils de dessin</li>
+                            </ul>
+                        </li>
+                        <li><strong>Menu Supérieur:</strong>
+                            <ul>
+                                <li>Télécharger Image: Téléchargez une image depuis votre ordinateur</li>
+                                <li>Nouvelle Toile: Créez une nouvelle toile vierge</li>
+                                <li>Enregistrer: Enregistrez votre dessin</li>
+                                <li>Modèles: Choisissez parmi des modèles prêts</li>
+                                <li>Galerie: Voir vos dessins enregistrés</li>
+                                <li>Télécharger: Téléchargez votre dessin en PNG/JPG</li>
+                            </ul>
+                        </li>
+                        <li><strong>Autres Contrôles de la Toile:</strong>
+                            <ul>
+                                <li>Coin inférieur gauche: Ajustement de la taille du pinceau</li>
+                                <li>Coin inférieur droit: Zoom avant/arrière</li>
+                                <li>Coin supérieur droit: Information sur l'outil et la couleur actuels</li>
+                            </ul>
+                        </li>
+                        <li><strong>Outils de Dessin:</strong> Cliquez sur le bouton outils pour accéder aux pinceaux, crayons, aquarelles, pastels, sprays, remplissage, texte et outils de forme.</li>
+                        <li><strong>Sélection de Couleur:</strong> Cliquez sur le bouton de sélection de couleur pour ouvrir la palette de couleurs, choisir des couleurs personnalisées et ajuster la transparence.</li>
+                        <li><strong>Taille du Pinceau:</strong> Ajustez la taille du pinceau avec le curseur dans le coin inférieur gauche.</li>
+                        <li><strong>Zoom avant/arrière:</strong> Utilisez les boutons dans le coin inférieur droit pour zoomer sur la toile.</li>
+                        <li><strong>Modèles:</strong> Sélectionnez parmi des modèles pré-faits pour commencer rapidement.</li>
+                        <li><strong>Annuler/Rétablir:</strong> Utilisez les boutons dans le coin supérieur gauche de la toile pour annuler ou rétablir vos actions.</li>
+                    </ul>
+                    <p>Amusez-vous et profitez de moments artistiques!</p>
+                `,
+                selectAll: "Tout Sélectionner",
+                deleteSelected: "Supprimer Sélectionnés",
+                noDrawingsSelected: "Aucun dessin sélectionné.",
+                templateLoadError: "Erreur de chargement du modèle. Veuillez sélectionner un autre modèle.",
+                brushSize: "Taille du Pinceau",
+                colorPicker: "Sélecteur de Couleur",
+                transparency: "Transparence",
+                tools: "Outils",
+                ok: "OK",
+                cancel: "Annuler",
+                create: "Créer",
+                blankCanvas: "Toile Vierge",
+                gridCanvas: "Toile Quadrillée",
+                linedCanvas: "Toile Lignée",
+                coloredCanvas: "Toile Colorée",
+                canvasBlankDesc: "Toile blanche vierge",
+                canvasGridDesc: "Vue papier quadrillé",
+                canvasLinedDesc: "Vue papier ligné",
+                canvasColoredDesc: "Toile dans la couleur sélectionnée",
+                formatPNG: "Format PNG",
+                formatJPG: "Format JPG",
+                formatPNGDesc: "Image haute qualité",
+                formatJPGDesc: "Taille de fichier plus petite",
+                shapeCircle: "Cercle",
+                shapeSquare: "Carré",
+                shapeTriangle: "Triangle",
+                shapeRectangle: "Rectangle",
+                shapeStar: "Étoile",
+                shapeHeart: "Cœur",
+                drawingName: "Nom du Dessin",
+                drawingDate: "Date d'Enregistrement",
+                viewDrawing: "Voir le Dessin",
+                welcomeTitle: "Bienvenue sur ArtCanvas!",
+                welcomeMessage: "Profitez de la peinture numérique avec ArtCanvas. Tous les contrôles sont sur la toile. Commencez à dessiner en utilisant les outils dans le coin supérieur gauche. Depuis le menu supérieur, vous pouvez créer une nouvelle toile, télécharger des images, utiliser des modèles, enregistrer vos dessins et les voir depuis la galería. Amusez-vous!",
+                loading: "Chargement..."
+            },
+            // Diğer diller için çeviriler
+            it: {
+                canvasTitle: "Nuova Tela",
+                save: "Salva",
+                templates: "Modelli",
+                gallery: "Galleria",
+                brush: "Pennello",
+                pencil: "Matita",
+                eraser: "Gomma",
+                watercolor: "Acquerello",
+                pastel: "Pastello",
+                spray: "Spray",
+                fill: "Riempimento",
+                shape: "Forma",
+                text: "Testo",
+                uploadImage: "Carica Immagine",
+                clear: "Pulisci",
+                undo: "Annulla",
+                redo: "Ripristina",
+                exportPNG: "PNG",
+                exportJPG: "JPG",
+                newCanvas: "Nuova Tela",
+                download: "Scarica",
+                savedNotification: "Il tuo disegno è stato salvato!",
+                loadedNotification: "Modello caricato!",
+                exportedNotification: "Il tuo disegno è stato esportato!",
+                emptyGallery: "Non hai ancora disegni salvati.",
+                confirmDelete: "Sei sicuro di voler eliminare questo disegno?",
+                selectAll: "Seleziona Tutto",
+                deleteSelected: "Elimina Selezionati",
+                brushSize: "Dimensione Pennello",
+                colorPicker: "Selettore Colore",
+                transparency: "Trasparenza",
+                tools: "Strumenti",
+                ok: "OK",
+                cancel: "Annulla",
+                create: "Crea",
+                blankCanvas: "Tela Bianca",
+                gridCanvas: "Tela a Griglia",
+                linedCanvas: "Tela Rigata",
+                coloredCanvas: "Tela Colorata",
+                formatPNG: "Formato PNG",
+                formatJPG: "Formato JPG",
+                shapeCircle: "Cerchio",
+                shapeSquare: "Quadrato",
+                shapeTriangle: "Triangolo",
+                shapeRectangle: "Rettangolo",
+                shapeStar: "Stella",
+                shapeHeart: "Cuore",
+                drawingName: "Nome Disegno",
+                drawingDate: "Data Salvataggio",
+                viewDrawing: "Visualizza Disegno",
+                loading: "Caricamento..."
+            },
+            pt: {
+                canvasTitle: "Nova Tela",
+                save: "Salvar",
+                templates: "Modelos",
+                gallery: "Galeria",
+                brush: "Pincel",
+                pencil: "Lápis",
+                eraser: "Borracha",
+                watercolor: "Aquarela",
+                pastel: "Pastel",
+                spray: "Spray",
+                fill: "Preenchimento",
+                shape: "Forma",
+                text: "Texto",
+                uploadImage: "Carregar Imagem",
+                clear: "Limpar",
+                undo: "Desfazer",
+                redo: "Refazer",
+                exportPNG: "PNG",
+                exportJPG: "JPG",
+                newCanvas: "Nova Tela",
+                download: "Baixar",
+                savedNotification: "Seu desenho foi salvo!",
+                loadedNotification: "Modelo carregado!",
+                exportedNotification: "Seu desenho foi exportado!",
+                emptyGallery: "Você ainda não tem desenhos salvos.",
+                confirmDelete: "Tem certeza que deseja excluir este desenho?",
+                selectAll: "Selecionar Tudo",
+                deleteSelected: "Excluir Selecionados",
+                brushSize: "Tamanho do Pincel",
+                colorPicker: "Seletor de Cor",
+                transparency: "Transparência",
+                tools: "Ferramentas",
+                ok: "OK",
+                cancel: "Cancelar",
+                create: "Criar",
+                blankCanvas: "Tela em Branco",
+                gridCanvas: "Tela com Grade",
+                linedCanvas: "Tela com Linhas",
+                coloredCanvas: "Tela Colorida",
+                formatPNG: "Formato PNG",
+                formatJPG: "Formato JPG",
+                shapeCircle: "Círculo",
+                shapeSquare: "Quadrado",
+                shapeTriangle: "Triângulo",
+                shapeRectangle: "Retângulo",
+                shapeStar: "Estrela",
+                shapeHeart: "Coração",
+                drawingName: "Nome do Desenho",
+                drawingDate: "Data de Salvamento",
+                viewDrawing: "Ver Desenho",
+                loading: "Carregando..."
+            },
+            ru: {
+                canvasTitle: "Новый Холст",
+                save: "Сохранить",
+                templates: "Шаблоны",
+                gallery: "Галерея",
+                brush: "Кисть",
+                pencil: "Карандаш",
+                eraser: "Ластик",
+                watercolor: "Акварель",
+                pastel: "Пастель",
+                spray: "Спрей",
+                fill: "Заливка",
+                shape: "Фигура",
+                text: "Текст",
+                uploadImage: "Загрузить Изображение",
+                clear: "Очистить",
+                undo: "Отменить",
+                redo: "Вернуть",
+                exportPNG: "PNG",
+                exportJPG: "JPG",
+                newCanvas: "Новый Холст",
+                download: "Скачать",
+                savedNotification: "Ваш рисунок сохранен!",
+                loadedNotification: "Шаблон загружен!",
+                exportedNotification: "Ваш рисунок экспортирован!",
+                emptyGallery: "У вас еще нет сохраненных рисунков.",
+                confirmDelete: "Вы уверены, что хотите удалить этот рисунок?",
+                selectAll: "Выбрать Все",
+                deleteSelected: "Удалить Выбранные",
+                brushSize: "Размер Кисти",
+                colorPicker: "Выбор Цвета",
+                transparency: "Прозрачность",
+                tools: "Инструменты",
+                ok: "OK",
+                cancel: "Отмена",
+                create: "Создать",
+                blankCanvas: "Чистый Холст",
+                gridCanvas: "Холст с Сеткой",
+                linedCanvas: "Холст с Линиями",
+                coloredCanvas: "Цветной Холст",
+                formatPNG: "Формат PNG",
+                formatJPG: "Формат JPG",
+                shapeCircle: "Круг",
+                shapeSquare: "Квадрат",
+                shapeTriangle: "Треугольник",
+                shapeRectangle: "Прямоугольник",
+                shapeStar: "Звезда",
+                shapeHeart: "Сердце",
+                drawingName: "Название Рисунка",
+                drawingDate: "Дата Сохранения",
+                viewDrawing: "Просмотр Рисунка",
+                loading: "Загрузка..."
+            },
+            ja: { canvasTitle: "新しいキャンバス", save: "保存", templates: "テンプレート", gallery: "ギャラリー", brush: "ブラシ", pencil: "鉛筆", eraser: "消しゴム", watercolor: "水彩", pastel: "パステル", spray: "スプレー", fill: "塗りつぶし", shape: "形状", text: "テキスト", uploadImage: "画像をアップロード", clear: "クリア", undo: "元に戻す", redo: "やり直し", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "新しいキャンバス", download: "ダウンロード", loading: "読み込み中..." },
+            ko: { canvasTitle: "새 캔버스", save: "저장", templates: "템플릿", gallery: "갤러리", brush: "브러시", pencil: "연필", eraser: "지우개", watercolor: "수채화", pastel: "파스텔", spray: "스프레이", fill: "채우기", shape: "도형", text: "텍스트", uploadImage: "이미지 업로드", clear: "지우기", undo: "실행 취소", redo: "다시 실행", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "새 캔버스", download: "다운로드", loading: "로딩 중..." },
+            zh: { canvasTitle: "新画布", save: "保存", templates: "模板", gallery: "画廊", brush: "画笔", pencil: "铅笔", eraser: "橡皮擦", watercolor: "水彩", pastel: "粉彩", spray: "喷雾", fill: "填充", shape: "形状", text: "文本", uploadImage: "上传图片", clear: "清除", undo: "撤销", redo: "重做", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "新画布", download: "下载", loading: "加载中..." },
+            ar: { canvasTitle: "لوحة جديدة", save: "حفظ", templates: "قوالب", gallery: "معرض", brush: "فرشاة", pencil: "قلم رصاص", eraser: "ممحاة", watercolor: "ألوان مائية", pastel: "باستيل", spray: "رش", fill: "ملء", shape: "شكل", text: "نص", uploadImage: "تحميل صورة", clear: "مسح", undo: "تراجع", redo: "إعادة", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "لوحة جديدة", download: "تحميل", loading: "جاري التحميل..." },
+            hi: { canvasTitle: "नया कैनवास", save: "सहेजें", templates: "टेम्प्लेट", gallery: "गैलरी", brush: "ब्रश", pencil: "पेंसिल", eraser: "रबड़", watercolor: "वॉटरकलर", pastel: "पेस्टल", spray: "स्प्रे", fill: "भरण", shape: "आकार", text: "पाठ", uploadImage: "छवि अपलोड", clear: "साफ़", undo: "पूर्ववत", redo: "फिर से करें", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "नया कैनवास", download: "डाउनलोड", loading: "लोड हो रहा है..." },
+            nl: { canvasTitle: "Nieuw Canvas", save: "Opslaan", templates: "Sjablonen", gallery: "Galerij", brush: "Penseel", pencil: "Potlood", eraser: "Gum", watercolor: "Waterverf", pastel: "Pastel", spray: "Spray", fill: "Vullen", shape: "Vorm", text: "Tekst", uploadImage: "Afbeelding uploaden", clear: "Wissen", undo: "Ongedaan maken", redo: "Opnieuw", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "Nieuw Canvas", download: "Downloaden", loading: "Laden..." },
+            pl: { canvasTitle: "Nowe Płótno", save: "Zapisz", templates: "Szablony", gallery: "Galeria", brush: "Pędzel", pencil: "Ołówek", eraser: "Gumka", watercolor: "Akwarela", pastel: "Pastel", spray: "Spray", fill: "Wypełnienie", shape: "Kształt", text: "Tekst", uploadImage: "Prześlij Obraz", clear: "Wyczyść", undo: "Cofnij", redo: "Ponów", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "Nowe Płótno", download: "Pobierz", loading: "Ładowanie..." },
+            th: { canvasTitle: "ผืนผ้าใบใหม่", save: "บันทึก", templates: "เทมเพลต", gallery: "แกลเลอรี่", brush: "แปรง", pencil: "ดินสอ", eraser: "ยางลบ", watercolor: "สีน้ำ", pastel: "พาสเทล", spray: "สเปรย์", fill: "เติม", shape: "รูปร่าง", text: "ข้อความ", uploadImage: "อัปโหลดรูปภาพ", clear: "ล้าง", undo: "เลิกทำ", redo: "ทำซ้ำ", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "ผืนผ้าใบใหม่", download: "ดาวน์โหลด", loading: "กำลังโหลด..." },
+            vi: { canvasTitle: "Canvas Mới", save: "Lưu", templates: "Mẫu", gallery: "Thư viện", brush: "Cọ", pencil: "Bút chì", eraser: "Tẩy", watercolor: "Màu nước", pastel: "Phấn màu", spray: "Xịt", fill: "Tô", shape: "Hình dạng", text: "Văn bản", uploadImage: "Tải ảnh lên", clear: "Xóa", undo: "Hoàn tác", redo: "Làm lại", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "Canvas Mới", download: "Tải xuống", loading: "Đang tải..." },
+            id: { canvasTitle: "Kanvas Baru", save: "Simpan", templates: "Templat", gallery: "Galeri", brush: "Kuas", pencil: "Pensil", eraser: "Penghapus", watercolor: "Cat Air", pastel: "Pastel", spray: "Semprot", fill: "Isi", shape: "Bentuk", text: "Teks", uploadImage: "Unggah Gambar", clear: "Hapus", undo: "Batalkan", redo: "Ulangi", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "Kanvas Baru", download: "Unduh", loading: "Memuat..." },
+            uk: { canvasTitle: "Новий Холст", save: "Зберегти", templates: "Шаблони", gallery: "Галерея", brush: "Пензель", pencil: "Олівець", eraser: "Гумка", watercolor: "Акварель", pastel: "Пастель", spray: "Спрей", fill: "Заливка", shape: "Форма", text: "Текст", uploadImage: "Завантажити Зображення", clear: "Очистити", undo: "Скасувати", redo: "Повторити", exportPNG: "PNG", exportJPG: "JPG", newCanvas: "Новий Холст", download: "Завантажити", loading: "Завантаження..." }
         };
         
         // Uygulama durumu
@@ -2167,7 +2683,8 @@
             layers: {
                 background: null,
                 drawing: null
-            }
+            },
+            appInitialized: false
         };
         
         // DOM elementleri
@@ -2345,9 +2862,19 @@
             { id: 65,  url: 'https://i.hizliresim.com/glnc1bb.jpg' }
         ];
         
+        // Loading ekranını gizle
+        function hideLoading() {
+            loading.classList.add('hidden');
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 300);
+        }
+        
         // Canvas boyutlarını dinamik ayarla
         function resizeCanvas() {
             const container = canvas.parentElement;
+            if (!container) return;
+            
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
             
@@ -2367,7 +2894,6 @@
             canvas.style.height = `${canvasHeight}px`;
             
             initLayers();
-            
             applyCanvasBackground();
             
             if (appState.canvasData) {
@@ -2386,7 +2912,6 @@
             }
             
             saveToUndoStack();
-            
             updateCursor();
         }
         
@@ -2403,6 +2928,7 @@
         
         // Çizim katmanına çiz
         function drawToDrawingLayer(drawFunction) {
+            if (!appState.layers.drawing) return;
             const drawingCtx = appState.layers.drawing.getContext('2d');
             drawFunction(drawingCtx);
             renderCanvas();
@@ -2410,15 +2936,11 @@
         
         // Canvas'ı render et
         function renderCanvas() {
+            if (!ctx || !appState.layers.background || !appState.layers.drawing) return;
+            
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            if (appState.layers.background) {
-                ctx.drawImage(appState.layers.background, 0, 0);
-            }
-            
-            if (appState.layers.drawing) {
-                ctx.drawImage(appState.layers.drawing, 0, 0);
-            }
+            ctx.drawImage(appState.layers.background, 0, 0);
+            ctx.drawImage(appState.layers.drawing, 0, 0);
         }
         
         // Canvas arka planını uygula
@@ -2426,7 +2948,6 @@
             if (!appState.layers.background) return;
             
             const bgCtx = appState.layers.background.getContext('2d');
-            
             bgCtx.fillStyle = '#ffffff';
             bgCtx.fillRect(0, 0, canvas.width, canvas.height);
             
@@ -2441,7 +2962,6 @@
                     bgCtx.fillStyle = appState.currentColor;
                     bgCtx.fillRect(0, 0, canvas.width, canvas.height);
                     break;
-                case 'blank':
                 default:
                     break;
             }
@@ -2504,26 +3024,30 @@
         
         // Yeni tuval yazısını güncelle
         function updateCanvasPlaceholder() {
+            if (!canvasPlaceholder) return;
+            
             if (appState.hasDrawing) {
                 canvasPlaceholder.style.display = 'none';
             } else {
                 canvasPlaceholder.style.display = 'block';
-                canvasPlaceholder.textContent = translations[appState.currentLanguage].canvasTitle;
+                canvasPlaceholder.textContent = translations[appState.currentLanguage]?.canvasTitle || translations.en.canvasTitle;
             }
         }
         
         // Mevcut araç göstergesini güncelle
         function updateToolIndicator() {
+            if (!currentToolName || !currentColorPreview) return;
+            
             const toolNames = {
-                'brush': translations[appState.currentLanguage].brush,
-                'pencil': translations[appState.currentLanguage].pencil,
-                'eraser': translations[appState.currentLanguage].eraser,
-                'watercolor': translations[appState.currentLanguage].watercolor,
-                'pastel': translations[appState.currentLanguage].pastel,
-                'spray': translations[appState.currentLanguage].spray,
-                'fill': translations[appState.currentLanguage].fill,
-                'shape': translations[appState.currentLanguage].shape,
-                'text': translations[appState.currentLanguage].text
+                'brush': translations[appState.currentLanguage]?.brush || translations.en.brush,
+                'pencil': translations[appState.currentLanguage]?.pencil || translations.en.pencil,
+                'eraser': translations[appState.currentLanguage]?.eraser || translations.en.eraser,
+                'watercolor': translations[appState.currentLanguage]?.watercolor || translations.en.watercolor,
+                'pastel': translations[appState.currentLanguage]?.pastel || translations.en.pastel,
+                'spray': translations[appState.currentLanguage]?.spray || translations.en.spray,
+                'fill': translations[appState.currentLanguage]?.fill || translations.en.fill,
+                'shape': translations[appState.currentLanguage]?.shape || translations.en.shape,
+                'text': translations[appState.currentLanguage]?.text || translations.en.text
             };
             
             const toolIcons = {
@@ -2538,11 +3062,13 @@
                 'text': 'fas fa-font'
             };
             
-            const toolName = toolNames[appState.currentTool] || translations[appState.currentLanguage].brush;
+            const toolName = toolNames[appState.currentTool] || translations.en.brush;
             const toolIcon = toolIcons[appState.currentTool] || 'fas fa-paint-brush';
             
             currentToolName.textContent = toolName;
-            currentToolIndicator.querySelector('i').className = toolIcon;
+            if (currentToolIndicator.querySelector('i')) {
+                currentToolIndicator.querySelector('i').className = toolIcon;
+            }
             
             currentColorPreview.style.backgroundColor = appState.currentColor;
             
@@ -2553,6 +3079,8 @@
         
         // Renk modal paletini oluştur
         function createColorModalPalette() {
+            if (!colorModalPalette) return;
+            
             colorModalPalette.innerHTML = '';
             colors.forEach(color => {
                 const colorElement = document.createElement('div');
@@ -2567,7 +3095,7 @@
                     document.querySelectorAll('.color-modal-option').forEach(opt => opt.classList.remove('active'));
                     this.classList.add('active');
                     appState.currentColor = this.dataset.color;
-                    colorModalPicker.value = appState.currentColor;
+                    if (colorModalPicker) colorModalPicker.value = appState.currentColor;
                     
                     if (appState.currentTool === 'eraser') {
                         appState.currentTool = 'brush';
@@ -2584,6 +3112,8 @@
         // Şablonları oluştur
         function createTemplates() {
             const templatesGrid = document.getElementById('templatesGrid');
+            if (!templatesGrid) return;
+            
             templatesGrid.innerHTML = '';
             
             templates.forEach(template => {
@@ -2592,7 +3122,7 @@
                 templateElement.dataset.id = template.id;
                 
                 templateElement.innerHTML = `
-                    <img class="template-img" src="${template.url}" alt="Template ${template.id}" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"150\"><rect width=\"100%\" height=\"100%\" fill=\"%23f5f5f5\"/></svg>">
+                    <img class="template-img" src="${template.url}" alt="Template ${template.id}" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"150\"><rect width=\"100%\" height=\"100%\" fill=\"%23f5f5f5\"/></svg>
                 `;
                 
                 templateElement.addEventListener('click', function() {
@@ -2611,7 +3141,7 @@
             const img = new Image();
             img.crossOrigin = "anonymous";
             
-            loading.style.display = 'flex';
+            showLoading();
             
             img.onload = function() {
                 const scale = Math.min(
@@ -2630,14 +3160,14 @@
                 appState.hasDrawing = true;
                 updateCanvasPlaceholder();
                 saveToUndoStack();
-                loading.style.display = 'none';
+                hideLoading();
                 closeModal(templatesModal);
-                showNotification(translations[appState.currentLanguage].loadedNotification);
+                showNotification(translations[appState.currentLanguage]?.loadedNotification || translations.en.loadedNotification);
             };
             
             img.onerror = function() {
-                loading.style.display = 'none';
-                showMessage('Error', translations[appState.currentLanguage].templateLoadError, 'error');
+                hideLoading();
+                showMessage('Error', translations[appState.currentLanguage]?.templateLoadError || translations.en.templateLoadError, 'error');
             };
             
             img.src = template.url + '?t=' + new Date().getTime();
@@ -2645,13 +3175,15 @@
         
         // Yeni tuval modal'ını oluştur
         function createNewCanvasModal() {
+            if (!canvasOptionsGrid) return;
+            
             canvasOptionsGrid.innerHTML = '';
             
             const canvasOptions = [
-                { id: 'blank', name: translations[appState.currentLanguage].blankCanvas, icon: 'fas fa-square', desc: translations[appState.currentLanguage].canvasBlankDesc },
-                { id: 'grid', name: translations[appState.currentLanguage].gridCanvas, icon: 'fas fa-th', desc: translations[appState.currentLanguage].canvasGridDesc },
-                { id: 'lined', name: translations[appState.currentLanguage].linedCanvas, icon: 'fas fa-border-all', desc: translations[appState.currentLanguage].canvasLinedDesc },
-                { id: 'colored', name: translations[appState.currentLanguage].coloredCanvas, icon: 'fas fa-fill-drip', desc: translations[appState.currentLanguage].canvasColoredDesc }
+                { id: 'blank', name: translations[appState.currentLanguage]?.blankCanvas || translations.en.blankCanvas, icon: 'fas fa-square', desc: translations[appState.currentLanguage]?.canvasBlankDesc || translations.en.canvasBlankDesc },
+                { id: 'grid', name: translations[appState.currentLanguage]?.gridCanvas || translations.en.gridCanvas, icon: 'fas fa-th', desc: translations[appState.currentLanguage]?.canvasGridDesc || translations.en.canvasGridDesc },
+                { id: 'lined', name: translations[appState.currentLanguage]?.linedCanvas || translations.en.linedCanvas, icon: 'fas fa-border-all', desc: translations[appState.currentLanguage]?.canvasLinedDesc || translations.en.canvasLinedDesc },
+                { id: 'colored', name: translations[appState.currentLanguage]?.coloredCanvas || translations.en.coloredCanvas, icon: 'fas fa-fill-drip', desc: translations[appState.currentLanguage]?.canvasColoredDesc || translations.en.canvasColoredDesc }
             ];
             
             canvasOptions.forEach(option => {
@@ -2684,8 +3216,8 @@
         function createNewCanvas() {
             if (appState.hasDrawing) {
                 showConfirm(
-                    translations[appState.currentLanguage].newCanvas,
-                    translations[appState.currentLanguage].newCanvasConfirm,
+                    translations[appState.currentLanguage]?.newCanvas || translations.en.newCanvas,
+                    translations[appState.currentLanguage]?.newCanvasConfirm || translations.en.newCanvasConfirm,
                     function() {
                         appState.canvasBackground = appState.newCanvasSelected;
                         
@@ -2721,12 +3253,13 @@
         
         // İndirme modal'ını oluştur
         function createDownloadModal() {
+            if (!downloadOptions) return;
+            
             downloadOptions.innerHTML = '';
             
             const downloadOptionsList = [
-                { id: 'png', name: translations[appState.currentLanguage].formatPNG, icon: 'fas fa-file-image', desc: translations[appState.currentLanguage].formatPNGDesc },
-                { id: 'jpg', name: translations[appState.currentLanguage].formatJPG, icon: 'fas fa-file-image', desc: translations[appState.currentLanguage].formatJPGDesc },
-                { id: 'pdf', name: translations[appState.currentLanguage].formatPDF, icon: 'fas fa-file-pdf', desc: translations[appState.currentLanguage].formatPDFDesc }
+                { id: 'png', name: translations[appState.currentLanguage]?.formatPNG || translations.en.formatPNG, icon: 'fas fa-file-image', desc: translations[appState.currentLanguage]?.formatPNGDesc || translations.en.formatPNGDesc },
+                { id: 'jpg', name: translations[appState.currentLanguage]?.formatJPG || translations.en.formatJPG, icon: 'fas fa-file-image', desc: translations[appState.currentLanguage]?.formatJPGDesc || translations.en.formatJPGDesc }
             ];
             
             downloadOptionsList.forEach(option => {
@@ -2769,29 +3302,31 @@
                 tempCtx.drawImage(appState.layers.drawing, 0, 0);
             }
             
-            const dataUrl = tempCanvas.toDataURL(`image/${appState.downloadFormat}`);
+            const dataUrl = tempCanvas.toDataURL(`image/${appState.downloadFormat === 'jpg' ? 'jpeg' : appState.downloadFormat}`);
             const link = document.createElement('a');
             link.download = `artcanvas_${new Date().getTime()}.${appState.downloadFormat}`;
             link.href = dataUrl;
             link.click();
             
             closeModal(downloadModal);
-            showNotification(translations[appState.currentLanguage].exportedNotification);
+            showNotification(translations[appState.currentLanguage]?.exportedNotification || translations.en.exportedNotification);
         }
         
         // Araçlar modal'ını oluştur
         function createToolsModal() {
+            if (!toolsModalGrid) return;
+            
             toolsModalGrid.innerHTML = '';
             
             const tools = [
-                { id: 'brush', name: translations[appState.currentLanguage].brush, icon: 'fas fa-paint-brush' },
-                { id: 'pencil', name: translations[appState.currentLanguage].pencil, icon: 'fas fa-pencil-alt' },
-                { id: 'watercolor', name: translations[appState.currentLanguage].watercolor, icon: 'fas fa-tint' },
-                { id: 'pastel', name: translations[appState.currentLanguage].pastel, icon: 'fas fa-star' },
-                { id: 'spray', name: translations[appState.currentLanguage].spray, icon: 'fas fa-spray-can' },
-                { id: 'fill', name: translations[appState.currentLanguage].fill, icon: 'fas fa-fill-drip' },
-                { id: 'text', name: translations[appState.currentLanguage].text, icon: 'fas fa-font' },
-                { id: 'shape', name: translations[appState.currentLanguage].shape, icon: 'fas fa-shapes' }
+                { id: 'brush', name: translations[appState.currentLanguage]?.brush || translations.en.brush, icon: 'fas fa-paint-brush' },
+                { id: 'pencil', name: translations[appState.currentLanguage]?.pencil || translations.en.pencil, icon: 'fas fa-pencil-alt' },
+                { id: 'watercolor', name: translations[appState.currentLanguage]?.watercolor || translations.en.watercolor, icon: 'fas fa-tint' },
+                { id: 'pastel', name: translations[appState.currentLanguage]?.pastel || translations.en.pastel, icon: 'fas fa-star' },
+                { id: 'spray', name: translations[appState.currentLanguage]?.spray || translations.en.spray, icon: 'fas fa-spray-can' },
+                { id: 'fill', name: translations[appState.currentLanguage]?.fill || translations.en.fill, icon: 'fas fa-fill-drip' },
+                { id: 'text', name: translations[appState.currentLanguage]?.text || translations.en.text, icon: 'fas fa-font' },
+                { id: 'shape', name: translations[appState.currentLanguage]?.shape || translations.en.shape, icon: 'fas fa-shapes' }
             ];
             
             tools.forEach(tool => {
@@ -2817,10 +3352,20 @@
                     if (appState.currentTool === 'text') {
                         closeModal(toolsModal);
                         openModal(textToolModal);
-                        textInput.focus();
+                        if (textInput) textInput.focus();
                     } else if (appState.currentTool === 'shape') {
                         closeModal(toolsModal);
                         openModal(shapeToolModal);
+                    } else if (appState.currentTool === 'fill') {
+                        closeModal(toolsModal);
+                        appState.shapeToolActive = false;
+                        appState.textToolActive = false;
+                        canvas.style.cursor = 'crosshair';
+                        showMessage(
+                            translations[appState.currentLanguage]?.fill || translations.en.fill,
+                            "Click on any area to fill it with the selected color",
+                            'info'
+                        );
                     }
                     
                     updateToolIndicator();
@@ -2833,15 +3378,17 @@
         
         // Şekil seçeneklerini oluştur
         function createShapeOptions() {
+            if (!shapeOptions) return;
+            
             shapeOptions.innerHTML = '';
             
             const shapes = [
-                { id: 'circle', name: translations[appState.currentLanguage].shapeCircle, icon: 'fas fa-circle' },
-                { id: 'square', name: translations[appState.currentLanguage].shapeSquare, icon: 'fas fa-square' },
-                { id: 'triangle', name: translations[appState.currentLanguage].shapeTriangle, icon: 'fas fa-play fa-rotate-270' },
-                { id: 'rectangle', name: translations[appState.currentLanguage].shapeRectangle, icon: 'fas fa-square' },
-                { id: 'star', name: translations[appState.currentLanguage].shapeStar, icon: 'fas fa-star' },
-                { id: 'heart', name: translations[appState.currentLanguage].shapeHeart, icon: 'fas fa-heart' }
+                { id: 'circle', name: translations[appState.currentLanguage]?.shapeCircle || translations.en.shapeCircle, icon: 'fas fa-circle' },
+                { id: 'square', name: translations[appState.currentLanguage]?.shapeSquare || translations.en.shapeSquare, icon: 'fas fa-square' },
+                { id: 'triangle', name: translations[appState.currentLanguage]?.shapeTriangle || translations.en.shapeTriangle, icon: 'fas fa-play fa-rotate-270' },
+                { id: 'rectangle', name: translations[appState.currentLanguage]?.shapeRectangle || translations.en.shapeRectangle, icon: 'fas fa-square' },
+                { id: 'star', name: translations[appState.currentLanguage]?.shapeStar || translations.en.shapeStar, icon: 'fas fa-star' },
+                { id: 'heart', name: translations[appState.currentLanguage]?.shapeHeart || translations.en.shapeHeart, icon: 'fas fa-heart' }
             ];
             
             shapes.forEach(shape => {
@@ -2901,11 +3448,27 @@
                         break;
                 }
                 
-                drawingCtx.fillStyle = shapeFillColor.value;
-                drawingCtx.strokeStyle = shapeStrokeColor.value;
+                drawingCtx.fillStyle = shapeFillColor ? shapeFillColor.value : '#6c5ce7';
+                drawingCtx.strokeStyle = shapeStrokeColor ? shapeStrokeColor.value : '#000000';
                 drawingCtx.lineWidth = 2;
                 drawingCtx.fill();
                 drawingCtx.stroke();
+            });
+            
+            appState.hasDrawing = true;
+            updateCanvasPlaceholder();
+            saveToUndoStack();
+        }
+        
+        // Fill tool'u çalıştır
+        function fillArea(x, y) {
+            if (appState.currentTool !== 'fill') return;
+            
+            // Basit dolgu yöntemi - tüm tuvali seçili renkle doldur
+            drawToDrawingLayer((drawingCtx) => {
+                drawingCtx.globalAlpha = appState.opacity;
+                drawingCtx.fillStyle = appState.currentColor;
+                drawingCtx.fillRect(0, 0, canvas.width, canvas.height);
             });
             
             appState.hasDrawing = true;
@@ -2963,25 +3526,34 @@
         
         // Metin ekle
         function addText() {
+            if (!textInput) return;
+            
             const text = textInput.value.trim();
             if (!text) return;
             
             appState.textToolActive = true;
+            appState.shapeToolActive = false;
             canvas.style.cursor = 'text';
             
             closeModal(textToolModal);
-            showMessage(translations[appState.currentLanguage].text, translations[appState.currentLanguage].welcomeMessage);
+            showMessage(
+                translations[appState.currentLanguage]?.text || translations.en.text, 
+                "Click on the canvas to place your text",
+                'info'
+            );
         }
         
         // Metin çiz
         function drawText(x, y) {
-            if (!appState.textToolActive) return;
+            if (!appState.textToolActive || !textInput) return;
             
             const text = textInput.value.trim();
             if (!text) return;
             
             drawToDrawingLayer((drawingCtx) => {
-                drawingCtx.font = `${textSize.value}px ${textFont.value}`;
+                const fontSize = textSize ? parseInt(textSize.value) : 24;
+                const fontFamily = textFont ? textFont.value : 'Arial';
+                drawingCtx.font = `${fontSize}px ${fontFamily}`;
                 drawingCtx.fillStyle = appState.currentColor;
                 drawingCtx.globalAlpha = appState.opacity;
                 drawingCtx.fillText(text, x, y);
@@ -3013,16 +3585,24 @@
             x = x * (canvas.width / (rect.width / appState.zoomLevel));
             y = y * (canvas.height / (rect.height / appState.zoomLevel));
             
-            return [x, y];
+            return [Math.round(x), Math.round(y)];
         }
         
         // Çizim fonksiyonları
         function startDrawing(e) {
+            if (!appState.appInitialized) return;
+            
             appState.isDrawing = true;
             [appState.lastX, appState.lastY] = getMousePos(e);
             
             if (appState.currentTool === 'shape') {
                 drawShape(appState.lastX, appState.lastY);
+                appState.isDrawing = false;
+                return;
+            }
+            
+            if (appState.currentTool === 'fill') {
+                fillArea(appState.lastX, appState.lastY);
                 appState.isDrawing = false;
                 return;
             }
@@ -3037,7 +3617,7 @@
         }
         
         function draw(e) {
-            if (!appState.isDrawing) return;
+            if (!appState.isDrawing || !appState.appInitialized) return;
             
             e.preventDefault();
             
@@ -3061,8 +3641,6 @@
                     break;
                 case 'spray':
                     drawSpray(x, y);
-                    break;
-                case 'fill':
                     break;
                 default:
                     drawBrush(x, y);
@@ -3223,12 +3801,16 @@
         
         // İmleç boyutunu güncelle
         function updateCursor() {
+            if (!canvas) return;
+            
             if (appState.currentTool === 'eraser') {
                 canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${appState.brushSize * 2}" height="${appState.brushSize * 2}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.5)" stroke="%23666" stroke-width="5"/></svg>') ${appState.brushSize} ${appState.brushSize}, auto`;
             } else if (appState.textToolActive) {
                 canvas.style.cursor = 'text';
             } else if (appState.currentTool === 'shape') {
                 canvas.style.cursor = 'crosshair';
+            } else if (appState.currentTool === 'fill') {
+                canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100"><path d="M50,10 L90,50 L50,90 L10,50 Z" fill="${appState.currentColor.replace('#', '%23')}" stroke="%23666" stroke-width="5"/></svg>') 15 15, crosshair`;
             } else {
                 canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${appState.brushSize * 2}" height="${appState.brushSize * 2}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="${appState.currentColor.replace('#', '%23')}" stroke="%23666" stroke-width="5"/></svg>') ${appState.brushSize} ${appState.brushSize}, crosshair`;
             }
@@ -3236,6 +3818,8 @@
         
         // Undo stack'ine kaydet
         function saveToUndoStack() {
+            if (!canvas) return;
+            
             const imageData = canvas.toDataURL();
             appState.undoStack.push(imageData);
             
@@ -3256,11 +3840,12 @@
             
             const img = new Image();
             img.onload = function() {
-                const drawingCtx = appState.layers.drawing.getContext('2d');
-                drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
-                
-                drawingCtx.drawImage(img, 0, 0);
-                renderCanvas();
+                if (appState.layers.drawing) {
+                    const drawingCtx = appState.layers.drawing.getContext('2d');
+                    drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                    drawingCtx.drawImage(img, 0, 0);
+                    renderCanvas();
+                }
                 
                 appState.hasDrawing = appState.undoStack.length > 1;
                 updateCanvasPlaceholder();
@@ -3278,11 +3863,12 @@
             
             const img = new Image();
             img.onload = function() {
-                const drawingCtx = appState.layers.drawing.getContext('2d');
-                drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
-                
-                drawingCtx.drawImage(img, 0, 0);
-                renderCanvas();
+                if (appState.layers.drawing) {
+                    const drawingCtx = appState.layers.drawing.getContext('2d');
+                    drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                    drawingCtx.drawImage(img, 0, 0);
+                    renderCanvas();
+                }
                 
                 appState.hasDrawing = true;
                 updateCanvasPlaceholder();
@@ -3294,12 +3880,16 @@
         
         // Undo/redo butonlarını güncelle
         function updateUndoRedoButtons() {
+            if (!undoOverlayBtn || !redoOverlayBtn) return;
+            
             undoOverlayBtn.disabled = appState.undoStack.length < 2;
             redoOverlayBtn.disabled = appState.redoStack.length === 0;
         }
         
         // Araç butonlarını güncelle
         function updateToolButtons() {
+            if (!eraserOverlayBtn) return;
+            
             if (appState.currentTool === 'eraser') {
                 eraserOverlayBtn.style.backgroundColor = 'var(--primary-color)';
                 eraserOverlayBtn.style.color = 'white';
@@ -3317,8 +3907,8 @@
             if (!appState.hasDrawing) return;
             
             showConfirm(
-                translations[appState.currentLanguage].clear,
-                translations[appState.currentLanguage].clearCanvasConfirm,
+                translations[appState.currentLanguage]?.clear || translations.en.clear,
+                translations[appState.currentLanguage]?.clearCanvasConfirm || translations.en.clearCanvasConfirm,
                 function() {
                     if (appState.layers.drawing) {
                         const drawingCtx = appState.layers.drawing.getContext('2d');
@@ -3374,9 +3964,11 @@
         
         // Canvas'ı kaydet
         function saveCanvas() {
+            if (!saveInput) return;
+            
             const drawingData = canvas.toDataURL();
             
-            saveInput.value = `${translations[appState.currentLanguage].drawingName}_${new Date().toLocaleDateString()}`;
+            saveInput.value = `${translations[appState.currentLanguage]?.drawingName || translations.en.drawingName}_${new Date().toLocaleDateString()}`;
             openModal(saveModal);
             saveInput.focus();
             saveInput.select();
@@ -3384,9 +3976,11 @@
         
         // Kaydetme işlemini gerçekleştir
         function performSave() {
+            if (!saveInput) return;
+            
             const drawingName = saveInput.value.trim();
             if (!drawingName) {
-                showMessage(translations[appState.currentLanguage].warning, translations[appState.currentLanguage].drawingName + ' ' + translations[appState.currentLanguage].required, 'warning');
+                showMessage(translations[appState.currentLanguage]?.warning || "Warning", (translations[appState.currentLanguage]?.drawingName || translations.en.drawingName) + ' is required', 'warning');
                 return;
             }
             
@@ -3400,7 +3994,7 @@
             });
             
             localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
-            showNotification(translations[appState.currentLanguage].savedNotification);
+            showNotification(translations[appState.currentLanguage]?.savedNotification || translations.en.savedNotification);
             
             closeModal(saveModal);
         }
@@ -3408,9 +4002,11 @@
         // Renk seçme modal'ını aç
         function openColorModal() {
             createColorModalPalette();
-            colorModalPicker.value = appState.currentColor;
-            colorModalOpacity.value = appState.opacity * 100;
-            colorModalOpacityValue.textContent = `${colorModalOpacity.value}%`;
+            if (colorModalPicker) colorModalPicker.value = appState.currentColor;
+            if (colorModalOpacity) {
+                colorModalOpacity.value = appState.opacity * 100;
+                if (colorModalOpacityValue) colorModalOpacityValue.textContent = `${colorModalOpacity.value}%`;
+            }
             openModal(colorModal);
         }
         
@@ -3435,30 +4031,47 @@
         }
         
         function updateZoom() {
+            if (!canvas || !zoomLevel) return;
+            
             canvas.style.transform = `scale(${appState.zoomLevel})`;
             zoomLevel.textContent = `${Math.round(appState.zoomLevel * 100)}%`;
         }
         
         // Modal işlemleri
         function openModal(modal) {
+            if (!modal) return;
+            
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
         
         function closeModal(modal) {
+            if (!modal) return;
+            
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
         
+        // Loading göster
+        function showLoading() {
+            if (!loading) return;
+            loading.style.display = 'flex';
+            loading.classList.remove('hidden');
+        }
+        
         // Yardım modal'ını aç
         function openHelpModal() {
-            helpModalTitle.textContent = translations[appState.currentLanguage].helpTitle;
-            helpModalContent.innerHTML = translations[appState.currentLanguage].helpContent;
+            if (!helpModalTitle || !helpModalContent) return;
+            
+            helpModalTitle.textContent = translations[appState.currentLanguage]?.helpTitle || translations.en.helpTitle;
+            helpModalContent.innerHTML = translations[appState.currentLanguage]?.helpContent || translations.en.helpContent;
             openModal(helpModal);
         }
         
         // Mesaj göster
         function showMessage(title, text, type = 'info') {
+            if (!messageModalIcon || !messageModalTitle || !messageModalText) return;
+            
             const iconMap = {
                 'info': 'fas fa-info-circle',
                 'success': 'fas fa-check-circle',
@@ -3482,23 +4095,31 @@
         
         // Onay mesajı göster
         function showConfirm(title, text, onConfirm) {
+            if (!confirmModalTitle || !confirmModalText) return;
+            
             confirmModalTitle.textContent = title;
             confirmModalText.textContent = text;
             
-            confirmModalYesBtn.onclick = function() {
-                closeModal(confirmModal);
-                if (onConfirm) onConfirm();
-            };
+            if (confirmModalYesBtn) {
+                confirmModalYesBtn.onclick = function() {
+                    closeModal(confirmModal);
+                    if (onConfirm) onConfirm();
+                };
+            }
             
-            confirmModalNoBtn.onclick = function() {
-                closeModal(confirmModal);
-            };
+            if (confirmModalNoBtn) {
+                confirmModalNoBtn.onclick = function() {
+                    closeModal(confirmModal);
+                };
+            }
             
             openModal(confirmModal);
         }
         
         // Bildirim göster
         function showNotification(text) {
+            if (!notification || !notificationText) return;
+            
             notificationText.textContent = text;
             notification.classList.add('show');
             
@@ -3510,69 +4131,208 @@
         // Dil değiştir
         function changeLanguage(lang) {
             appState.currentLanguage = lang;
-            languageSelect.value = lang;
+            if (languageSelect) languageSelect.value = lang;
             
+            // Tüm site dilini güncelle
+            updateInterfaceLanguage();
+        }
+        
+        // Tüm arayüz dilini güncelle
+        function updateInterfaceLanguage() {
+            const lang = appState.currentLanguage;
+            const t = translations[lang] || translations.en;
+            
+            // Başlık ve placeholders
             updateCanvasPlaceholder();
+            if (document.querySelector('.canvas-brush-title span')) {
+                document.querySelector('.canvas-brush-title span').textContent = t.brushSize;
+            }
             
-            document.querySelector('.canvas-brush-title span').textContent = translations[lang].brushSize;
+            // Header butonları
+            const updateButtonText = (id, text) => {
+                const btn = document.getElementById(id);
+                if (btn && btn.querySelector('span')) {
+                    btn.querySelector('span').textContent = text;
+                }
+            };
             
-            document.getElementById('saveBtn').querySelector('span').textContent = translations[lang].save;
-            document.getElementById('templatesBtn').querySelector('span').textContent = translations[lang].templates;
-            document.getElementById('galleryBtn').querySelector('span').textContent = translations[lang].gallery;
-            document.getElementById('uploadImageHeaderBtn').querySelector('span').textContent = translations[lang].uploadImage;
-            document.getElementById('newCanvasHeaderBtn').querySelector('span').textContent = translations[lang].newCanvas;
-            document.getElementById('downloadHeaderBtn').querySelector('span').textContent = translations[lang].download;
-            document.getElementById('selectAllBtn').querySelector('span').textContent = translations[lang].selectAll;
-            document.getElementById('deleteSelectedBtn').querySelector('span').textContent = translations[lang].deleteSelected;
+            updateButtonText('saveBtn', t.save);
+            updateButtonText('templatesBtn', t.templates);
+            updateButtonText('galleryBtn', t.gallery);
+            updateButtonText('uploadImageHeaderBtn', t.uploadImage);
+            updateButtonText('newCanvasHeaderBtn', t.newCanvas);
+            updateButtonText('downloadHeaderBtn', t.download);
             
+            // Modal başlıkları
+            const updateModalTitle = (modalId, text) => {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const title = modal.querySelector('.modal-title');
+                    if (title) title.textContent = text;
+                }
+            };
+            
+            updateModalTitle('templatesModal', t.templates);
+            updateModalTitle('galleryModal', t.gallery);
+            updateModalTitle('saveModal', t.save);
+            updateModalTitle('newCanvasModal', t.newCanvas);
+            updateModalTitle('downloadModal', t.download);
+            updateModalTitle('toolsModal', t.tools);
+            updateModalTitle('textToolModal', t.text);
+            updateModalTitle('shapeToolModal', t.shape);
+            updateModalTitle('drawingViewModal', t.viewDrawing);
+            updateModalTitle('helpModal', t.helpTitle);
+            
+            // Galeri butonları
+            updateButtonText('selectAllBtn', t.selectAll);
+            updateButtonText('deleteSelectedBtn', t.deleteSelected);
+            
+            // Diğer arayüz öğeleri
             updateToolIndicator();
             
-            document.querySelector('.loading p').textContent = translations[lang].loading || 'Loading...';
+            if (document.querySelector('.loading p')) {
+                document.querySelector('.loading p').textContent = t.loading || 'Loading...';
+            }
+            
+            // Save modal placeholder
+            if (saveInput) {
+                saveInput.placeholder = t.drawingName || 'Drawing name';
+            }
+            
+            // Renk modal
+            if (document.querySelector('.color-modal-title span')) {
+                document.querySelector('.color-modal-title span').textContent = t.colorPicker;
+            }
+            if (document.querySelector('.color-modal-custom span')) {
+                document.querySelector('.color-modal-custom span').textContent = t.colorPicker;
+            }
+            if (document.querySelector('.color-modal-slider-label span:first-child')) {
+                document.querySelector('.color-modal-slider-label span:first-child').textContent = t.transparency;
+            }
+            if (document.getElementById('colorModalOkBtn')) {
+                document.getElementById('colorModalOkBtn').textContent = t.ok;
+            }
+            
+            // Tools modal
+            if (document.getElementById('toolsModalOkBtn')) {
+                document.getElementById('toolsModalOkBtn').textContent = t.ok;
+            }
+            if (document.getElementById('toolsModalCancelBtn')) {
+                document.getElementById('toolsModalCancelBtn').textContent = t.cancel;
+            }
+            
+            // New canvas modal
+            if (document.getElementById('newCanvasModalOkBtn')) {
+                document.getElementById('newCanvasModalOkBtn').textContent = t.create;
+            }
+            if (document.getElementById('newCanvasModalCancelBtn')) {
+                document.getElementById('newCanvasModalCancelBtn').textContent = t.cancel;
+            }
+            
+            // Download modal
+            if (document.getElementById('downloadModalOkBtn')) {
+                document.getElementById('downloadModalOkBtn').textContent = t.download;
+            }
+            if (document.getElementById('downloadModalCancelBtn')) {
+                document.getElementById('downloadModalCancelBtn').textContent = t.cancel;
+            }
+            
+            // Text tool modal
+            if (document.getElementById('addTextBtn')) {
+                document.getElementById('addTextBtn').textContent = t.text;
+            }
+            if (document.getElementById('textToolCancelBtn')) {
+                document.getElementById('textToolCancelBtn').textContent = t.cancel;
+            }
+            if (document.getElementById('textInput')) {
+                document.getElementById('textInput').placeholder = 'Enter text...';
+            }
+            
+            // Shape tool modal
+            if (document.getElementById('shapeToolCancelBtn')) {
+                document.getElementById('shapeToolCancelBtn').textContent = t.cancel;
+            }
+            
+            // Save modal
+            if (document.getElementById('saveModalOkBtn')) {
+                document.getElementById('saveModalOkBtn').textContent = t.save;
+            }
+            if (document.getElementById('saveModalCancelBtn')) {
+                document.getElementById('saveModalCancelBtn').textContent = t.cancel;
+            }
+            if (document.querySelector('#saveModal .message-modal-text')) {
+                document.querySelector('#saveModal .message-modal-text').textContent = 'Enter a name for your drawing:';
+            }
+            
+            // Message modal
+            if (document.getElementById('messageModalOkBtn')) {
+                document.getElementById('messageModalOkBtn').textContent = t.ok;
+            }
+            
+            // Confirm modal
+            if (document.getElementById('confirmModalYesBtn')) {
+                document.getElementById('confirmModalYesBtn').textContent = translations.en.ok;
+            }
+            if (document.getElementById('confirmModalNoBtn')) {
+                document.getElementById('confirmModalNoBtn').textContent = t.cancel;
+            }
         }
         
         // Çizim görüntüleme modal'ını aç
         function openDrawingView(drawingData, drawingName, drawingDate) {
+            if (!drawingViewContent) return;
+            
+            const t = translations[appState.currentLanguage] || translations.en;
+            
             drawingViewContent.innerHTML = `
                 <img class="drawing-view-img" src="${drawingData}" alt="${drawingName}">
                 <div class="drawing-view-info">
-                    <h4>${translations[appState.currentLanguage].drawingName}: ${drawingName}</h4>
-                    <p>${translations[appState.currentLanguage].drawingDate}: ${new Date(drawingDate).toLocaleDateString()}</p>
+                    <h4>${t.drawingName || translations.en.drawingName}: ${drawingName}</h4>
+                    <p>${t.drawingDate || translations.en.drawingDate}: ${new Date(drawingDate).toLocaleDateString()}</p>
                 </div>
                 <div class="message-modal-buttons">
-                    <button class="btn btn-primary" id="loadDrawingBtn">${translations[appState.currentLanguage].viewDrawing}</button>
-                    <button class="btn btn-secondary" id="downloadDrawingBtn">${translations[appState.currentLanguage].download}</button>
+                    <button class="btn btn-primary" id="loadDrawingBtn">${t.viewDrawing || translations.en.viewDrawing}</button>
+                    <button class="btn btn-secondary" id="downloadDrawingBtn">${t.download || translations.en.download}</button>
                 </div>
             `;
             
             openModal(drawingViewModal);
             
             setTimeout(() => {
-                document.getElementById('loadDrawingBtn').addEventListener('click', function() {
-                    const img = new Image();
-                    img.onload = function() {
-                        const drawingCtx = appState.layers.drawing.getContext('2d');
-                        drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
-                        
-                        drawingCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        renderCanvas();
-                        
-                        appState.hasDrawing = true;
-                        updateCanvasPlaceholder();
-                        saveToUndoStack();
-                        
-                        closeModal(drawingViewModal);
-                        closeModal(galleryModal);
-                        showNotification(translations[appState.currentLanguage].loadedNotification);
-                    };
-                    img.src = drawingData;
-                });
+                const loadBtn = document.getElementById('loadDrawingBtn');
+                const downloadBtn = document.getElementById('downloadDrawingBtn');
                 
-                document.getElementById('downloadDrawingBtn').addEventListener('click', function() {
-                    const link = document.createElement('a');
-                    link.download = `${drawingName}.png`;
-                    link.href = drawingData;
-                    link.click();
-                });
+                if (loadBtn) {
+                    loadBtn.addEventListener('click', function() {
+                        const img = new Image();
+                        img.onload = function() {
+                            if (appState.layers.drawing) {
+                                const drawingCtx = appState.layers.drawing.getContext('2d');
+                                drawingCtx.clearRect(0, 0, appState.layers.drawing.width, appState.layers.drawing.height);
+                                drawingCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                                renderCanvas();
+                                
+                                appState.hasDrawing = true;
+                                updateCanvasPlaceholder();
+                                saveToUndoStack();
+                                
+                                closeModal(drawingViewModal);
+                                closeModal(galleryModal);
+                                showNotification(t.loadedNotification || translations.en.loadedNotification);
+                            }
+                        };
+                        img.src = drawingData;
+                    });
+                }
+                
+                if (downloadBtn) {
+                    downloadBtn.addEventListener('click', function() {
+                        const link = document.createElement('a');
+                        link.download = `${drawingName}.png`;
+                        link.href = drawingData;
+                        link.click();
+                    });
+                }
             }, 100);
         }
         
@@ -3580,13 +4340,16 @@
         function openGalleryModal() {
             const savedDrawings = JSON.parse(localStorage.getItem('artcanvas_drawings')) || [];
             const galleryGrid = document.getElementById('galleryGrid');
+            const t = translations[appState.currentLanguage] || translations.en;
+            
+            if (!galleryGrid) return;
             
             galleryGrid.innerHTML = '';
             
             if (savedDrawings.length === 0) {
-                galleryGrid.innerHTML = `<p style="text-align: center; padding: 40px; color: #666;">${translations[appState.currentLanguage].emptyGallery}</p>`;
-                selectAllBtn.disabled = true;
-                deleteSelectedBtn.disabled = true;
+                galleryGrid.innerHTML = `<p style="text-align: center; padding: 40px; color: #666;">${t.emptyGallery || translations.en.emptyGallery}</p>`;
+                if (selectAllBtn) selectAllBtn.disabled = true;
+                if (deleteSelectedBtn) deleteSelectedBtn.disabled = true;
             } else {
                 savedDrawings.forEach((drawing, index) => {
                     const galleryItem = document.createElement('div');
@@ -3602,10 +4365,10 @@
                         <div class="gallery-name">${drawing.name}</div>
                         <div class="gallery-actions">
                             <button class="action-btn action-btn-download" data-index="${index}">
-                                <i class="fas fa-download"></i> ${translations[appState.currentLanguage].download}
+                                <i class="fas fa-download"></i> ${t.download || translations.en.download}
                             </button>
                             <button class="action-btn action-btn-delete" data-index="${index}">
-                                <i class="fas fa-trash-alt"></i> ${translations[appState.currentLanguage].deleteSelected}
+                                <i class="fas fa-trash-alt"></i> ${t.deleteSelected || translations.en.deleteSelected}
                             </button>
                         </div>
                     `;
@@ -3616,15 +4379,14 @@
                         }
                         
                         const index = parseInt(this.dataset.index);
-                        
                         openDrawingView(drawing.data, drawing.name, drawing.date);
                     });
                     
                     galleryGrid.appendChild(galleryItem);
                 });
                 
-                selectAllBtn.disabled = false;
-                deleteSelectedBtn.disabled = appState.selectedDrawings.size === 0;
+                if (selectAllBtn) selectAllBtn.disabled = false;
+                if (deleteSelectedBtn) deleteSelectedBtn.disabled = appState.selectedDrawings.size === 0;
                 
                 setTimeout(() => {
                     document.querySelectorAll('.action-btn-download').forEach(btn => {
@@ -3636,7 +4398,7 @@
                             link.download = `${drawing.name}.png`;
                             link.href = drawing.data;
                             link.click();
-                            showNotification(translations[appState.currentLanguage].exportedNotification);
+                            showNotification(t.exportedNotification || translations.en.exportedNotification);
                         });
                     });
                     
@@ -3645,8 +4407,8 @@
                             e.stopPropagation();
                             const index = parseInt(this.dataset.index);
                             showConfirm(
-                                translations[appState.currentLanguage].deleteSelected,
-                                translations[appState.currentLanguage].confirmDelete,
+                                t.deleteSelected || translations.en.deleteSelected,
+                                t.confirmDelete || translations.en.confirmDelete,
                                 function() {
                                     savedDrawings.splice(index, 1);
                                     localStorage.setItem('artcanvas_drawings', JSON.stringify(savedDrawings));
@@ -3680,13 +4442,15 @@
             
             openGalleryModal();
             
-            deleteSelectedBtn.disabled = false;
+            if (deleteSelectedBtn) deleteSelectedBtn.disabled = false;
         }
         
         // Seçili çizimleri sil
         function deleteSelectedDrawings() {
+            const t = translations[appState.currentLanguage] || translations.en;
+            
             if (appState.selectedDrawings.size === 0) {
-                showMessage(translations[appState.currentLanguage].warning, translations[appState.currentLanguage].noDrawingsSelected, 'warning');
+                showMessage(t.warning || "Warning", t.noDrawingsSelected || translations.en.noDrawingsSelected, 'warning');
                 return;
             }
             
@@ -3696,8 +4460,8 @@
             const count = appState.selectedDrawings.size;
             
             showConfirm(
-                translations[appState.currentLanguage].deleteSelected,
-                translations[appState.currentLanguage].confirmDeleteMultiple.replace('{count}', count),
+                t.deleteSelected || translations.en.deleteSelected,
+                (t.confirmDeleteMultiple || translations.en.confirmDeleteMultiple).replace('{count}', count),
                 function() {
                     const indicesToDelete = Array.from(appState.selectedDrawings).sort((a, b) => b - a);
                     
@@ -3720,6 +4484,8 @@
         
         // Event listeners
         function initEventListeners() {
+            if (!canvas) return;
+            
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
@@ -3744,135 +4510,223 @@
                 stopDrawing();
             }, { passive: false });
             
-            languageSelect.addEventListener('change', function() {
-                changeLanguage(this.value);
-            });
+            if (languageSelect) {
+                languageSelect.addEventListener('change', function() {
+                    changeLanguage(this.value);
+                });
+            }
             
-            brushSizeSlider.addEventListener('input', function() {
-                appState.brushSize = parseInt(this.value);
-                brushSizeValue.textContent = `${appState.brushSize}px`;
-                updateCursor();
-            });
+            if (brushSizeSlider && brushSizeValue) {
+                brushSizeSlider.addEventListener('input', function() {
+                    appState.brushSize = parseInt(this.value);
+                    brushSizeValue.textContent = `${appState.brushSize}px`;
+                    updateCursor();
+                });
+            }
             
-            templatesBtn.addEventListener('click', () => {
-                openModal(templatesModal);
-                createTemplates();
-            });
+            if (templatesBtn) {
+                templatesBtn.addEventListener('click', () => {
+                    openModal(templatesModal);
+                    createTemplates();
+                });
+            }
             
-            closeTemplatesModal.addEventListener('click', () => closeModal(templatesModal));
+            if (closeTemplatesModal) {
+                closeTemplatesModal.addEventListener('click', () => closeModal(templatesModal));
+            }
             
-            galleryBtn.addEventListener('click', () => {
-                openGalleryModal();
-            });
+            if (galleryBtn) {
+                galleryBtn.addEventListener('click', () => {
+                    openGalleryModal();
+                });
+            }
             
-            closeGalleryModal.addEventListener('click', () => closeModal(galleryModal));
+            if (closeGalleryModal) {
+                closeGalleryModal.addEventListener('click', () => closeModal(galleryModal));
+            }
             
-            closeDrawingViewModal.addEventListener('click', () => closeModal(drawingViewModal));
+            if (closeDrawingViewModal) {
+                closeDrawingViewModal.addEventListener('click', () => closeModal(drawingViewModal));
+            }
             
-            closeSaveModal.addEventListener('click', () => closeModal(saveModal));
-            saveModalCancelBtn.addEventListener('click', () => closeModal(saveModal));
-            saveModalOkBtn.addEventListener('click', performSave);
+            if (closeSaveModal) {
+                closeSaveModal.addEventListener('click', () => closeModal(saveModal));
+            }
             
-            saveInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSave();
-                }
-            });
+            if (saveModalCancelBtn) {
+                saveModalCancelBtn.addEventListener('click', () => closeModal(saveModal));
+            }
             
-            closeColorModal.addEventListener('click', () => closeModal(colorModal));
-            colorModalOkBtn.addEventListener('click', () => {
-                appState.opacity = colorModalOpacity.value / 100;
-                closeModal(colorModal);
-            });
+            if (saveModalOkBtn) {
+                saveModalOkBtn.addEventListener('click', performSave);
+            }
             
-            colorModalPicker.addEventListener('change', function() {
-                appState.currentColor = this.value;
-                
-                if (appState.currentTool === 'eraser') {
-                    appState.currentTool = 'brush';
+            if (saveInput) {
+                saveInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSave();
+                    }
+                });
+            }
+            
+            if (closeColorModal) {
+                closeColorModal.addEventListener('click', () => closeModal(colorModal));
+            }
+            
+            if (colorModalOkBtn) {
+                colorModalOkBtn.addEventListener('click', () => {
+                    if (colorModalOpacity) {
+                        appState.opacity = colorModalOpacity.value / 100;
+                    }
+                    closeModal(colorModal);
+                });
+            }
+            
+            if (colorModalPicker) {
+                colorModalPicker.addEventListener('change', function() {
+                    appState.currentColor = this.value;
+                    
+                    if (appState.currentTool === 'eraser') {
+                        appState.currentTool = 'brush';
+                        updateToolButtons();
+                    }
+                    
+                    updateCursor();
+                    updateToolIndicator();
+                });
+            }
+            
+            if (colorModalOpacity && colorModalOpacityValue) {
+                colorModalOpacity.addEventListener('input', function() {
+                    colorModalOpacityValue.textContent = `${this.value}%`;
+                });
+            }
+            
+            if (newCanvasHeaderBtn) {
+                newCanvasHeaderBtn.addEventListener('click', () => {
+                    createNewCanvasModal();
+                    openModal(newCanvasModal);
+                });
+            }
+            
+            if (closeNewCanvasModal) {
+                closeNewCanvasModal.addEventListener('click', () => closeModal(newCanvasModal));
+            }
+            
+            if (newCanvasModalOkBtn) {
+                newCanvasModalOkBtn.addEventListener('click', createNewCanvas);
+            }
+            
+            if (newCanvasModalCancelBtn) {
+                newCanvasModalCancelBtn.addEventListener('click', () => closeModal(newCanvasModal));
+            }
+            
+            if (downloadHeaderBtn) {
+                downloadHeaderBtn.addEventListener('click', () => {
+                    createDownloadModal();
+                    openModal(downloadModal);
+                });
+            }
+            
+            if (closeDownloadModal) {
+                closeDownloadModal.addEventListener('click', () => closeModal(downloadModal));
+            }
+            
+            if (downloadModalOkBtn) {
+                downloadModalOkBtn.addEventListener('click', downloadCanvas);
+            }
+            
+            if (downloadModalCancelBtn) {
+                downloadModalCancelBtn.addEventListener('click', () => closeModal(downloadModal));
+            }
+            
+            if (brushOverlayBtn) {
+                brushOverlayBtn.addEventListener('click', () => {
+                    createToolsModal();
+                    openModal(toolsModal);
+                });
+            }
+            
+            if (closeToolsModal) {
+                closeToolsModal.addEventListener('click', () => closeModal(toolsModal));
+            }
+            
+            if (toolsModalOkBtn) {
+                toolsModalOkBtn.addEventListener('click', () => {
+                    closeModal(toolsModal);
                     updateToolButtons();
-                }
-                
-                updateCursor();
-                updateToolIndicator();
-            });
+                });
+            }
             
-            colorModalOpacity.addEventListener('input', function() {
-                colorModalOpacityValue.textContent = `${this.value}%`;
-            });
+            if (toolsModalCancelBtn) {
+                toolsModalCancelBtn.addEventListener('click', () => closeModal(toolsModal));
+            }
             
-            newCanvasHeaderBtn.addEventListener('click', () => {
-                createNewCanvasModal();
-                openModal(newCanvasModal);
-            });
+            if (closeTextToolModal) {
+                closeTextToolModal.addEventListener('click', () => {
+                    appState.currentTool = 'brush';
+                    appState.textToolActive = false;
+                    closeModal(textToolModal);
+                    updateToolButtons();
+                });
+            }
             
-            closeNewCanvasModal.addEventListener('click', () => closeModal(newCanvasModal));
-            newCanvasModalOkBtn.addEventListener('click', createNewCanvas);
-            newCanvasModalCancelBtn.addEventListener('click', () => closeModal(newCanvasModal));
+            if (addTextBtn) {
+                addTextBtn.addEventListener('click', addText);
+            }
             
-            downloadHeaderBtn.addEventListener('click', () => {
-                createDownloadModal();
-                openModal(downloadModal);
-            });
+            if (textToolCancelBtn) {
+                textToolCancelBtn.addEventListener('click', () => {
+                    appState.currentTool = 'brush';
+                    appState.textToolActive = false;
+                    closeModal(textToolModal);
+                    updateToolButtons();
+                });
+            }
             
-            closeDownloadModal.addEventListener('click', () => closeModal(downloadModal));
-            downloadModalOkBtn.addEventListener('click', downloadCanvas);
-            downloadModalCancelBtn.addEventListener('click', () => closeModal(downloadModal));
+            if (textSize && textSizeValue) {
+                textSize.addEventListener('input', function() {
+                    textSizeValue.textContent = `${this.value}px`;
+                });
+            }
             
-            brushOverlayBtn.addEventListener('click', () => {
-                createToolsModal();
-                openModal(toolsModal);
-            });
+            if (closeShapeToolModal) {
+                closeShapeToolModal.addEventListener('click', () => {
+                    appState.currentTool = 'brush';
+                    appState.shapeToolActive = false;
+                    closeModal(shapeToolModal);
+                    updateToolButtons();
+                });
+            }
             
-            closeToolsModal.addEventListener('click', () => closeModal(toolsModal));
-            toolsModalOkBtn.addEventListener('click', () => {
-                closeModal(toolsModal);
-                updateToolButtons();
-            });
+            if (shapeToolCancelBtn) {
+                shapeToolCancelBtn.addEventListener('click', () => {
+                    appState.currentTool = 'brush';
+                    appState.shapeToolActive = false;
+                    closeModal(shapeToolModal);
+                    updateToolButtons();
+                });
+            }
             
-            toolsModalCancelBtn.addEventListener('click', () => closeModal(toolsModal));
+            if (closeHelpModal) {
+                closeHelpModal.addEventListener('click', () => closeModal(helpModal));
+            }
             
-            closeTextToolModal.addEventListener('click', () => {
-                appState.currentTool = 'brush';
-                appState.textToolActive = false;
-                closeModal(textToolModal);
-                updateToolButtons();
-            });
+            if (messageModalOkBtn) {
+                messageModalOkBtn.addEventListener('click', () => closeModal(messageModal));
+            }
             
-            addTextBtn.addEventListener('click', addText);
-            textToolCancelBtn.addEventListener('click', () => {
-                appState.currentTool = 'brush';
-                appState.textToolActive = false;
-                closeModal(textToolModal);
-                updateToolButtons();
-            });
+            if (selectAllBtn) {
+                selectAllBtn.addEventListener('click', selectAllDrawings);
+            }
             
-            textSize.addEventListener('input', function() {
-                textSizeValue.textContent = `${this.value}px`;
-            });
+            if (deleteSelectedBtn) {
+                deleteSelectedBtn.addEventListener('click', deleteSelectedDrawings);
+            }
             
-            closeShapeToolModal.addEventListener('click', () => {
-                appState.currentTool = 'brush';
-                appState.shapeToolActive = false;
-                closeModal(shapeToolModal);
-                updateToolButtons();
-            });
-            
-            shapeToolCancelBtn.addEventListener('click', () => {
-                appState.currentTool = 'brush';
-                appState.shapeToolActive = false;
-                closeModal(shapeToolModal);
-                updateToolButtons();
-            });
-            
-            closeHelpModal.addEventListener('click', () => closeModal(helpModal));
-            
-            messageModalOkBtn.addEventListener('click', () => closeModal(messageModal));
-            
-            selectAllBtn.addEventListener('click', selectAllDrawings);
-            deleteSelectedBtn.addEventListener('click', deleteSelectedDrawings);
-            
-            helpGuide.addEventListener('click', openHelpModal);
+            if (helpGuide) {
+                helpGuide.addEventListener('click', openHelpModal);
+            }
             
             window.addEventListener('click', function(e) {
                 if (e.target === templatesModal) closeModal(templatesModal);
@@ -3900,27 +4754,52 @@
                 if (e.target === helpModal) closeModal(helpModal);
             });
             
-            undoOverlayBtn.addEventListener('click', undo);
-            redoOverlayBtn.addEventListener('click', redo);
+            if (undoOverlayBtn) {
+                undoOverlayBtn.addEventListener('click', undo);
+            }
             
-            eraserOverlayBtn.addEventListener('click', function() {
-                if (appState.currentTool === 'eraser') {
-                    appState.currentTool = 'brush';
-                } else {
-                    appState.currentTool = 'eraser';
-                }
-                updateToolButtons();
-            });
+            if (redoOverlayBtn) {
+                redoOverlayBtn.addEventListener('click', redo);
+            }
             
-            clearOverlayBtn.addEventListener('click', clearCanvas);
-            colorOverlayBtn.addEventListener('click', openColorModal);
+            if (eraserOverlayBtn) {
+                eraserOverlayBtn.addEventListener('click', function() {
+                    if (appState.currentTool === 'eraser') {
+                        appState.currentTool = 'brush';
+                    } else {
+                        appState.currentTool = 'eraser';
+                    }
+                    updateToolButtons();
+                });
+            }
             
-            saveBtn.addEventListener('click', saveCanvas);
-            uploadImageHeaderBtn.addEventListener('click', uploadImage);
+            if (clearOverlayBtn) {
+                clearOverlayBtn.addEventListener('click', clearCanvas);
+            }
             
-            zoomInBtn.addEventListener('click', zoomIn);
-            zoomOutBtn.addEventListener('click', zoomOut);
-            resetZoomBtn.addEventListener('click', resetZoom);
+            if (colorOverlayBtn) {
+                colorOverlayBtn.addEventListener('click', openColorModal);
+            }
+            
+            if (saveBtn) {
+                saveBtn.addEventListener('click', saveCanvas);
+            }
+            
+            if (uploadImageHeaderBtn) {
+                uploadImageHeaderBtn.addEventListener('click', uploadImage);
+            }
+            
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', zoomIn);
+            }
+            
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', zoomOut);
+            }
+            
+            if (resetZoomBtn) {
+                resetZoomBtn.addEventListener('click', resetZoom);
+            }
             
             window.addEventListener('resize', resizeCanvas);
             
@@ -3931,31 +4810,63 @@
         
         // Uygulamayı başlat
         function initApp() {
-            resizeCanvas();
+            console.log("Initializing app...");
             
-            createShapeOptions();
+            // DOM'ın tamamen yüklendiğinden emin ol
+            if (!canvas || !ctx) {
+                console.error("Canvas not found, retrying...");
+                setTimeout(initApp, 100);
+                return;
+            }
             
-            initEventListeners();
+            // Başlangıçta loading ekranını göster
+            loading.style.display = 'flex';
+            loading.classList.remove('hidden');
             
-            changeLanguage('en');
-            
-            updateUndoRedoButtons();
-            updateToolButtons();
-            updateZoom();
-            
-            setTimeout(() => {
-                loading.style.display = 'none';
-            }, 800);
-            
-            setTimeout(() => {
-                showMessage(
-                    translations[appState.currentLanguage].welcomeTitle,
-                    translations[appState.currentLanguage].welcomeMessage
-                );
-            }, 1000);
+            // Uygulamayı başlat
+            try {
+                resizeCanvas();
+                createShapeOptions();
+                initEventListeners();
+                changeLanguage('en');
+                updateUndoRedoButtons();
+                updateToolButtons();
+                updateZoom();
+                
+                // App state'i initialized olarak işaretle
+                appState.appInitialized = true;
+                
+                console.log("App initialized successfully");
+                
+                // Loading ekranını gizle
+                setTimeout(hideLoading, 500);
+                
+                // Karşılama mesajını göster
+                setTimeout(() => {
+                    showMessage(
+                        translations[appState.currentLanguage]?.welcomeTitle || translations.en.welcomeTitle,
+                        translations[appState.currentLanguage]?.welcomeMessage || translations.en.welcomeMessage
+                    );
+                }, 800);
+                
+            } catch (error) {
+                console.error("Error initializing app:", error);
+                hideLoading();
+                showMessage("Error", "Failed to initialize the application. Please refresh the page.", "error");
+            }
         }
         
-        window.addEventListener('DOMContentLoaded', initApp);
+        // DOM tamamen yüklendiğinde uygulamayı başlat
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded, starting app initialization...");
+            // Kısa bir gecikme ekle tüm elementlerin yüklendiğinden emin olmak için
+            setTimeout(initApp, 100);
+        });
+        
+        // Ayrıca window load event'ini de dinle
+        window.addEventListener('load', function() {
+            console.log("Window loaded");
+        });
     </script>
 </body>
 </html>
