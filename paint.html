@@ -31,6 +31,8 @@
             min-height: 100vh;
             overflow-x: hidden;
             touch-action: manipulation;
+            width: 100%;
+            position: relative;
         }
         
         .app-container {
@@ -38,6 +40,8 @@
             flex-direction: column;
             height: 100vh;
             width: 100%;
+            overflow: hidden;
+            position: relative;
         }
         
         /* Header Styles */
@@ -52,6 +56,7 @@
             z-index: 100;
             flex-shrink: 0;
             width: 100%;
+            position: relative;
         }
         
         .header-left {
@@ -86,6 +91,13 @@
         .user-actions {
             display: flex;
             gap: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 5px 0;
+        }
+        
+        .user-actions::-webkit-scrollbar {
+            display: none;
         }
         
         .btn {
@@ -100,6 +112,7 @@
             gap: 6px;
             font-size: 0.85rem;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         
         .btn-primary {
@@ -174,7 +187,7 @@
             display: flex;
             flex-direction: column;
             padding: 15px;
-            overflow: auto;
+            overflow: hidden;
             width: 100%;
         }
         
@@ -211,6 +224,7 @@
             align-items: center;
             min-height: 300px;
             width: 100%;
+            touch-action: none;
         }
         
         #drawingCanvas {
@@ -529,6 +543,8 @@
             margin-top: 20px;
             padding-top: 15px;
             border-top: 2px solid #eee;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         /* Message Modal (Kaydet) */
@@ -1028,7 +1044,8 @@
         .help-guide {
             position: fixed;
             bottom: 15px;
-            left: 15px;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: white;
             border-radius: 50%;
             width: 45px;
@@ -1141,6 +1158,10 @@
                 font-size: 1.5rem;
             }
             
+            .user-actions {
+                gap: 5px;
+            }
+            
             .user-actions .btn span {
                 display: none;
             }
@@ -1150,7 +1171,7 @@
             }
             
             .btn {
-                padding: 8px 12px;
+                padding: 8px 10px;
             }
             
             .language-selector select {
@@ -1195,6 +1216,16 @@
             
             .canvas-placeholder {
                 font-size: 1.8rem;
+            }
+            
+            .gallery-bulk-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .gallery-bulk-actions .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
         
@@ -1279,7 +1310,6 @@
                 height: 40px;
                 font-size: 1.1rem;
                 bottom: 10px;
-                left: 10px;
             }
             
             .notification {
@@ -1321,6 +1351,10 @@
             .color-modal-option {
                 width: 40px;
                 height: 40px;
+            }
+            
+            .user-actions {
+                max-width: 200px;
             }
         }
         
@@ -1378,6 +1412,10 @@
             .color-modal-palette {
                 grid-template-columns: repeat(4, 1fr);
             }
+            
+            .user-actions {
+                max-width: 180px;
+            }
         }
         
         @media (max-width: 320px) {
@@ -1407,6 +1445,10 @@
                 height: 30px;
                 font-size: 0.8rem;
             }
+            
+            .user-actions {
+                max-width: 150px;
+            }
         }
         
         /* Ekran döndürme için */
@@ -1418,6 +1460,49 @@
             .canvas-wrapper {
                 min-height: 200px;
             }
+            
+            .help-guide {
+                bottom: 5px;
+            }
+        }
+        
+        /* Yardım modal içeriği için scroll */
+        .help-modal-content {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .help-modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .help-modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .help-modal-content::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .help-modal-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .help-modal-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .help-modal-content li {
+            margin-bottom: 8px;
+        }
+        
+        .help-modal-content strong {
+            color: var(--dark-color);
         }
     </style>
 </head>
@@ -1783,6 +1868,19 @@
         </div>
     </div>
     
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="helpModalTitle">ArtCanvas User Guide</h3>
+                <button class="close-modal" id="closeHelpModal">&times;</button>
+            </div>
+            <div class="help-modal-content" id="helpModalContent">
+                <!-- Help content will be added by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
     <!-- Confirm Modal -->
     <div class="message-modal" id="confirmModal">
         <div class="message-modal-content">
@@ -1929,1005 +2027,6 @@
                 welcomeMessage: "Enjoy digital painting with ArtCanvas. All controls are on the canvas. Start drawing using the tools at the top left corner. From the top menu, you can create a new canvas, upload images, use templates, save your drawings and view them from the gallery. Have fun!",
                 loading: "Loading..."
             },
-            es: {
-                canvasTitle: "Nuevo Lienzo",
-                save: "Guardar",
-                templates: "Plantillas",
-                gallery: "Galería",
-                brush: "Pincel",
-                pencil: "Lápiz",
-                eraser: "Borrador",
-                watercolor: "Acuarela",
-                pastel: "Pastel",
-                spray: "Spray",
-                fill: "Relleno",
-                shape: "Forma",
-                text: "Texto",
-                uploadImage: "Subir Imagen",
-                clear: "Limpiar",
-                undo: "Deshacer",
-                redo: "Rehacer",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Nuevo Lienzo",
-                download: "Descargar",
-                share: "Compartir",
-                savedNotification: "¡Tu dibujo ha sido guardado!",
-                loadedNotification: "¡Plantilla cargada!",
-                exportedNotification: "¡Tu dibujo ha sido exportado!",
-                emptyGallery: "Aún no tienes dibujos guardados.",
-                confirmDelete: "¿Estás seguro de que quieres eliminar este dibujo?",
-                confirmDeleteMultiple: "¿Estás seguro de que quieres eliminar {count} dibujos seleccionados?",
-                newCanvasConfirm: "¿Estás seguro de que quieres crear un nuevo lienzo? Tu trabajo actual no se guardará.",
-                clearCanvasConfirm: "¿Estás seguro de que quieres limpiar el lienzo?",
-                helpTitle: "Guía de Usuario de ArtCanvas",
-                helpContent: `
-                    <h3>¡Bienvenido a ArtCanvas!</h3>
-                    <p>Disfruta de la pintura digital con ArtCanvas. Todos los controles están en el lienzo y el menú superior.</p>
-                    <ul>
-                        <li><strong>Controles del Lienzo (Esquina Superior Izquierda):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Deshacer: Deshacer última acción</li>
-                                <li><i class="fas fa-redo"></i> Rehacer: Rehacer acción deshecha</li>
-                                <li><i class="fas fa-eraser"></i> Borrador: Borrar dibujo (lo hace transparente)</li>
-                                <li><i class="fas fa-trash-alt"></i> Limpiar: Limpiar todo el lienzo</li>
-                                <li><i class="fas fa-palette"></i> Seleccionar Color: Abrir paleta de colores</li>
-                                <li><i class="fas fa-paint-brush"></i> Herramientas: Abrir herramientas de dibujo</li>
-                            </ul>
-                        </li>
-                        <li><strong>Menú Superior:</strong>
-                            <ul>
-                                <li>Subir Imagen: Subir imagen desde tu computadora</li>
-                                <li>Nuevo Lienzo: Crear nuevo lienzo en blanco</li>
-                                <li>Guardar: Guardar tu dibujo</li>
-                                <li>Plantillas: Elegir entre plantillas listas</li>
-                                <li>Galería: Ver tus dibujos guardados</li>
-                                <li>Descargar: Descargar tu dibujo como PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Otros Controles del Lienzo:</strong>
-                            <ul>
-                                <li>Esquina Inferior Izquierda: Ajuste de tamaño del pincel</li>
-                                <li>Esquina Inferior Derecha: Zoom acercar/alejar</li>
-                                <li>Esquina Superior Derecha: Información de herramienta y color actual</li>
-                            </ul>
-                        </li>
-                        <li><strong>Herramientas de Dibujo:</strong> Haz clic en el botón de herramientas para acceder a pincel, lápiz, acuarela, pastel, spray, relleno, texto y herramientas de formas.</li>
-                        <li><strong>Selección de Color:</strong> Haz clic en el botón de selección de color para abrir la paleta de colores, elegir colores personalizados y ajustar la transparencia.</li>
-                        <li><strong>Tamaño del Pincel:</strong> Ajusta el tamaño del pincel con el deslizador en la esquina inferior izquierda.</li>
-                        <li><strong>Zoom Acercar/Alejar:</strong> Usa los botones en la esquina inferior derecha para hacer zoom en el lienzo.</li>
-                        <li><strong>Plantillas:</strong> Selecciona entre plantillas pre-hechas para comenzar rápidamente.</li>
-                        <li><strong>Deshacer/Rehacer:</strong> Usa los botones en la esquina superior izquierda del lienzo para deshacer o rehacer tus acciones.</li>
-                    </ul>
-                    <p>¡Diviértete y disfruta de momentos artísticos!</p>
-                `,
-                selectAll: "Seleccionar Todo",
-                deleteSelected: "Eliminar Seleccionados",
-                noDrawingsSelected: "No hay dibujos seleccionados.",
-                templateLoadError: "Error al cargar la plantilla. Por favor selecciona otra plantilla.",
-                brushSize: "Tamaño del Pincel",
-                colorPicker: "Selector de Color",
-                transparency: "Transparencia",
-                tools: "Herramientas",
-                ok: "Aceptar",
-                cancel: "Cancelar",
-                create: "Crear",
-                blankCanvas: "Lienzo Blanco",
-                gridCanvas: "Lienzo Cuadriculado",
-                linedCanvas: "Lienzo Rayado",
-                coloredCanvas: "Lienzo de Color",
-                canvasBlankDesc: "Lienzo blanco en blanco",
-                canvasGridDesc: "Vista de papel cuadriculado",
-                canvasLinedDesc: "Vista de papel rayado",
-                canvasColoredDesc: "Lienzo en color seleccionado",
-                formatPNG: "Formato PNG",
-                formatJPG: "Formato JPG",
-                formatPDF: "Formato PDF",
-                formatPNGDesc: "Imagen de alta calidad",
-                formatJPGDesc: "Tamaño de archivo más pequeño",
-                formatPDFDesc: "Dibujo vectorial",
-                shapeCircle: "Círculo",
-                shapeSquare: "Cuadrado",
-                shapeTriangle: "Triángulo",
-                shapeRectangle: "Rectángulo",
-                shapeStar: "Estrella",
-                shapeHeart: "Corazón",
-                drawingName: "Nombre del Dibujo",
-                drawingDate: "Fecha de Guardado",
-                viewDrawing: "Ver Dibujo",
-                welcomeTitle: "¡Bienvenido a ArtCanvas!",
-                welcomeMessage: "Disfruta de la pintura digital con ArtCanvas. Todos los controles están en el lienzo. Comienza a dibujar usando las herramientas en la esquina superior izquierda. Desde el menú superior, puedes crear un nuevo lienzo, subir imágenes, usar plantillas, guardar tus dibujos y verlos desde la galería. ¡Diviértete!",
-                loading: "Cargando..."
-            },
-            pt: {
-                canvasTitle: "Nova Tela",
-                save: "Salvar",
-                templates: "Modelos",
-                gallery: "Galeria",
-                brush: "Pincel",
-                pencil: "Lápis",
-                eraser: "Borracha",
-                watercolor: "Aquarela",
-                pastel: "Pastel",
-                spray: "Spray",
-                fill: "Preenchimento",
-                shape: "Forma",
-                text: "Texto",
-                uploadImage: "Carregar Imagem",
-                clear: "Limpar",
-                undo: "Desfazer",
-                redo: "Refazer",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Nova Tela",
-                download: "Baixar",
-                share: "Compartilhar",
-                savedNotification: "Seu desenho foi salvo!",
-                loadedNotification: "Modelo carregado!",
-                exportedNotification: "Seu desenho foi exportado!",
-                emptyGallery: "Você ainda não tem desenhos salvos.",
-                confirmDelete: "Tem certeza que deseja excluir este desenho?",
-                confirmDeleteMultiple: "Tem certeza que deseja excluir {count} desenhos selecionados?",
-                newCanvasConfirm: "Tem certeza que deseja criar uma nova tela? Seu trabalho atual não será salvo.",
-                clearCanvasConfirm: "Tem certeza que deseja limpar a tela?",
-                helpTitle: "Guia do Usuário ArtCanvas",
-                helpContent: `
-                    <h3>Bem-vindo ao ArtCanvas!</h3>
-                    <p>Aproveite a pintura digital com ArtCanvas. Todos os controles estão na tela e no menu superior.</p>
-                    <ul>
-                        <li><strong>Controles da Tela (Canto Superior Esquerdo):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Desfazer: Desfazer última ação</li>
-                                <li><i class="fas fa-redo"></i> Refazer: Refazer ação desfeita</li>
-                                <li><i class="fas fa-eraser"></i> Borracha: Apagar desenho (torna transparente)</li>
-                                <li><i class="fas fa-trash-alt"></i> Limpar: Limpar toda a tela</li>
-                                <li><i class="fas fa-palette"></i> Selecionar Cor: Abrir paleta de cores</li>
-                                <li><i class="fas fa-paint-brush"></i> Ferramentas: Abrir ferramentas de desenho</li>
-                            </ul>
-                        </li>
-                        <li><strong>Menu Superior:</strong>
-                            <ul>
-                                <li>Carregar Imagem: Carregar imagem do seu computador</li>
-                                <li>Nova Tela: Criar nova tela em branco</li>
-                                <li>Salvar: Salvar seu desenho</li>
-                                <li>Modelos: Escolher entre modelos prontos</li>
-                                <li>Galeria: Ver seus desenhos salvos</li>
-                                <li>Baixar: Baixar seu desenho como PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Outros Controles da Tela:</strong>
-                            <ul>
-                                <li>Canto Inferior Esquerdo: Ajuste do tamanho do pincel</li>
-                                <li>Canto Inferior Direito: Zoom aproximar/afastar</li>
-                                <li>Canto Superior Direito: Informação da ferramenta e cor atual</li>
-                            </ul>
-                        </li>
-                        <li><strong>Ferramentas de Desenho:</strong> Clique no botão de ferramentas para acessar pincel, lápis, aquarela, pastel, spray, preenchimento, texto e ferramentas de formas.</li>
-                        <li><strong>Seleção de Cor:</strong> Clique no botão de seleção de cor para abrir a paleta de cores, escolher cores personalizadas e ajustar a transparência.</li>
-                        <li><strong>Tamanho do Pincel:</strong> Ajuste o tamanho do pincel com o controle deslizante no canto inferior esquerdo.</li>
-                        <li><strong>Zoom Aproximar/Afastar:</strong> Use os botões no canto inferior direito para dar zoom na tela.</li>
-                        <li><strong>Modelos:</strong> Selecione entre modelos pré-feitos para começar rapidamente.</li>
-                        <li><strong>Desfazer/Refazer:</strong> Use os botões no canto superior esquerdo da tela para desfazer ou refazer suas ações.</li>
-                    </ul>
-                    <p>Divirta-se e aproveite momentos artísticos!</p>
-                `,
-                selectAll: "Selecionar Tudo",
-                deleteSelected: "Excluir Selecionados",
-                noDrawingsSelected: "Nenhum desenho selecionado.",
-                templateLoadError: "Erro ao carregar o modelo. Por favor selecione outro modelo.",
-                brushSize: "Tamanho do Pincel",
-                colorPicker: "Seletor de Cor",
-                transparency: "Transparência",
-                tools: "Ferramentas",
-                ok: "OK",
-                cancel: "Cancelar",
-                create: "Criar",
-                blankCanvas: "Tela em Branco",
-                gridCanvas: "Tela Quadriculada",
-                linedCanvas: "Tela Linhada",
-                coloredCanvas: "Tela Colorida",
-                canvasBlankDesc: "Tela branca em branco",
-                canvasGridDesc: "Visualização de papel quadriculado",
-                canvasLinedDesc: "Visualização de papel linhas",
-                canvasColoredDesc: "Tela na cor selecionada",
-                formatPNG: "Formato PNG",
-                formatJPG: "Formato JPG",
-                formatPDF: "Formato PDF",
-                formatPNGDesc: "Imagem de alta qualidade",
-                formatJPGDesc: "Tamanho de arquivo menor",
-                formatPDFDesc: "Desenho vetorial",
-                shapeCircle: "Círculo",
-                shapeSquare: "Quadrado",
-                shapeTriangle: "Triângulo",
-                shapeRectangle: "Retângulo",
-                shapeStar: "Estrela",
-                shapeHeart: "Coração",
-                drawingName: "Nome do Desenho",
-                drawingDate: "Data de Salvamento",
-                viewDrawing: "Ver Desenho",
-                welcomeTitle: "Bem-vindo ao ArtCanvas!",
-                welcomeMessage: "Aproveite a pintura digital com ArtCanvas. Todos os controles estão na tela. Comece a desenhar usando as ferramentas no canto superior esquerdo. No menu superior, você pode criar uma nova tela, carregar imagens, usar modelos, salvar seus desenhos e vê-los na galeria. Divirta-se!",
-                loading: "Carregando..."
-            },
-            ru: {
-                canvasTitle: "Новый Холст",
-                save: "Сохранить",
-                templates: "Шаблоны",
-                gallery: "Галерея",
-                brush: "Кисть",
-                pencil: "Карандаш",
-                eraser: "Ластик",
-                watercolor: "Акварель",
-                pastel: "Пастель",
-                spray: "Спрей",
-                fill: "Заливка",
-                shape: "Фигура",
-                text: "Текст",
-                uploadImage: "Загрузить Изображение",
-                clear: "Очистить",
-                undo: "Отменить",
-                redo: "Повторить",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Новый Холст",
-                download: "Скачать",
-                share: "Поделиться",
-                savedNotification: "Ваш рисунок сохранен!",
-                loadedNotification: "Шаблон загружен!",
-                exportedNotification: "Ваш рисунок экспортирован!",
-                emptyGallery: "У вас пока нет сохраненных рисунков.",
-                confirmDelete: "Вы уверены, что хотите удалить этот рисунок?",
-                confirmDeleteMultiple: "Вы уверены, что хотите удалить {count} выбранных рисунков?",
-                newCanvasConfirm: "Вы уверены, что хотите создать новый холст? Ваша текущая работа не будет сохранена.",
-                clearCanvasConfirm: "Вы уверены, что хотите очистить холст?",
-                helpTitle: "Руководство пользователя ArtCanvas",
-                helpContent: `
-                    <h3>Добро пожаловать в ArtCanvas!</h3>
-                    <p>Наслаждайтесь цифровой живописью с ArtCanvas. Все элементы управления находятся на холсте и в верхнем меню.</p>
-                    <ul>
-                        <li><strong>Элементы управления холстом (Верхний левый угол):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Отменить: Отменить последнее действие</li>
-                                <li><i class="fas fa-redo"></i> Повторить: Повторить отмененное действие</li>
-                                <li><i class="fas fa-eraser"></i> Ластик: Стереть рисунок (делает прозрачным)</li>
-                                <li><i class="fas fa-trash-alt"></i> Очистить: Очистить весь холст</li>
-                                <li><i class="fas fa-palette"></i> Выбор цвета: Открыть палитру цветов</li>
-                                <li><i class="fas fa-paint-brush"></i> Инструменты: Открыть инструменты рисования</li>
-                            </ul>
-                        </li>
-                        <li><strong>Верхнее меню:</strong>
-                            <ul>
-                                <li>Загрузить изображение: Загрузить изображение с компьютера</li>
-                                <li>Новый холст: Создать новый чистый холст</li>
-                                <li>Сохранить: Сохранить ваш рисунок</li>
-                                <li>Шаблоны: Выбрать из готовых шаблонов</li>
-                                <li>Галерея: Просмотреть сохраненные рисунки</li>
-                                <li>Скачать: Скачать ваш рисунок как PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Другие элементы управления холстом:</strong>
-                            <ul>
-                                <li>Нижний левый угол: Регулировка размера кисти</li>
-                                <li>Нижний правый угол: Приближение/отдаление</li>
-                                <li>Верхний правый угол: Информация о текущем инструменте и цвете</li>
-                            </ul>
-                        </li>
-                        <li><strong>Инструменты рисования:</strong> Нажмите кнопку инструментов для доступа к кисти, карандашу, акварели, пастели, спрею, заливке, тексту и инструментам фигур.</li>
-                        <li><strong>Выбор цвета:</strong> Нажмите кнопку выбора цвета, чтобы открыть палитру цветов, выбрать пользовательские цвета и настроить прозрачность.</li>
-                        <li><strong>Размер кисти:</strong> Отрегулируйте размер кисти с помощью ползунка в нижнем левом углу.</li>
-                        <li><strong>Приближение/отдаление:</strong> Используйте кнопки в нижнем правом углу для увеличения холста.</li>
-                        <li><strong>Шаблоны:</strong> Выберите из предварительно созданных шаблонов, чтобы быстро начать.</li>
-                        <li><strong>Отменить/Повторить:</strong> Используйте кнопки в верхнем левом углу холста, чтобы отменить или повторить ваши действия.</li>
-                    </ul>
-                    <p>Приятного творчества и художественных моментов!</p>
-                `,
-                selectAll: "Выбрать Все",
-                deleteSelected: "Удалить Выбранные",
-                noDrawingsSelected: "Нет выбранных рисунков.",
-                templateLoadError: "Ошибка загрузки шаблона. Пожалуйста, выберите другой шаблон.",
-                brushSize: "Размер Кисти",
-                colorPicker: "Выбор Цвета",
-                transparency: "Прозрачность",
-                tools: "Инструменты",
-                ok: "ОК",
-                cancel: "Отмена",
-                create: "Создать",
-                blankCanvas: "Чистый Холст",
-                gridCanvas: "Клетчатый Холст",
-                linedCanvas: "Линованный Холст",
-                coloredCanvas: "Цветной Холст",
-                canvasBlankDesc: "Белый чистый холст",
-                canvasGridDesc: "Вид клетчатой бумаги",
-                canvasLinedDesc: "Вид линованной бумаги",
-                canvasColoredDesc: "Холст выбранного цвета",
-                formatPNG: "Формат PNG",
-                formatJPG: "Формат JPG",
-                formatPDF: "Формат PDF",
-                formatPNGDesc: "Высококачественное изображение",
-                formatJPGDesc: "Меньший размер файла",
-                formatPDFDesc: "Векторный рисунок",
-                shapeCircle: "Круг",
-                shapeSquare: "Квадрат",
-                shapeTriangle: "Треугольник",
-                shapeRectangle: "Прямоугольник",
-                shapeStar: "Звезда",
-                shapeHeart: "Сердце",
-                drawingName: "Название Рисунка",
-                drawingDate: "Дата Сохранения",
-                viewDrawing: "Просмотреть Рисунок",
-                welcomeTitle: "Добро пожаловать в ArtCanvas!",
-                welcomeMessage: "Наслаждайтесь цифровой живописью с ArtCanvas. Все элементы управления находятся на холсте. Начните рисовать, используя инструменты в верхнем левом углу. В верхнем меню вы можете создать новый холст, загружать изображения, использовать шаблоны, сохранять свои рисунки и просматривать их в галерее. Приятного творчества!",
-                loading: "Загрузка..."
-            },
-            de: {
-                canvasTitle: "Neue Leinwand",
-                save: "Speichern",
-                templates: "Vorlagen",
-                gallery: "Galerie",
-                brush: "Pinsel",
-                pencil: "Bleistift",
-                eraser: "Radiergummi",
-                watercolor: "Aquarell",
-                pastel: "Pastell",
-                spray: "Spray",
-                fill: "Füllen",
-                shape: "Form",
-                text: "Text",
-                uploadImage: "Bild Hochladen",
-                clear: "Löschen",
-                undo: "Rückgängig",
-                redo: "Wiederholen",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Neue Leinwand",
-                download: "Herunterladen",
-                share: "Teilen",
-                savedNotification: "Ihre Zeichnung wurde gespeichert!",
-                loadedNotification: "Vorlage geladen!",
-                exportedNotification: "Ihre Zeichnung wurde exportiert!",
-                emptyGallery: "Sie haben noch keine gespeicherten Zeichnungen.",
-                confirmDelete: "Sind Sie sicher, dass Sie diese Zeichnung löschen möchten?",
-                confirmDeleteMultiple: "Sind Sie sicher, dass Sie {count} ausgewählte Zeichnungen löschen möchten?",
-                newCanvasConfirm: "Sind Sie sicher, dass Sie eine neue Leinwand erstellen möchten? Ihre aktuelle Arbeit wird nicht gespeichert.",
-                clearCanvasConfirm: "Sind Sie sicher, dass Sie die Leinwand löschen möchten?",
-                helpTitle: "ArtCanvas Benutzerhandbuch",
-                helpContent: `
-                    <h3>Willkommen bei ArtCanvas!</h3>
-                    <p>Genießen Sie digitale Malerei mit ArtCanvas. Alle Steuerelemente befinden sich auf der Leinwand und im oberen Menü.</p>
-                    <ul>
-                        <li><strong>Leinwand-Steuerelemente (Obere linke Ecke):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Rückgängig: Letzte Aktion rückgängig machen</li>
-                                <li><i class="fas fa-redo"></i> Wiederholen: Rückgängig gemachte Aktion wiederholen</li>
-                                <li><i class="fas fa-eraser"></i> Radiergummi: Zeichnung löschen (macht transparent)</li>
-                                <li><i class="fas fa-trash-alt"></i> Löschen: Gesamte Leinwand löschen</li>
-                                <li><i class="fas fa-palette"></i> Farbe wählen: Farbpalette öffnen</li>
-                                <li><i class="fas fa-paint-brush"></i> Werkzeuge: Zeichenwerkzeuge öffnen</li>
-                            </ul>
-                        </li>
-                        <li><strong>Oberes Menü:</strong>
-                            <ul>
-                                <li>Bild hochladen: Bild von Ihrem Computer hochladen</li>
-                                <li>Neue Leinwand: Neue leere Leinwand erstellen</li>
-                                <li>Speichern: Ihre Zeichnung speichern</li>
-                                <li>Vorlagen: Aus vorgefertigten Vorlagen wählen</li>
-                                <li>Galerie: Ihre gespeicherten Zeichnungen ansehen</li>
-                                <li>Herunterladen: Ihre Zeichnung als PNG/JPG/PDF herunterladen</li>
-                            </ul>
-                        </li>
-                        <li><strong>Andere Leinwand-Steuerelemente:</strong>
-                            <ul>
-                                <li>Untere linke Ecke: Pinselgröße einstellen</li>
-                                <li>Untere rechte Ecke: Zoom hinein/hinaus</li>
-                                <li>Obere rechte Ecke: Aktuelles Werkzeug und Farbinformation</li>
-                            </ul>
-                        </li>
-                        <li><strong>Zeichenwerkzeuge:</strong> Klicken Sie auf den Werkzeug-Button, um auf Pinsel, Bleistift, Aquarell, Pastell, Spray, Füllung, Text und Formwerkzeuge zuzugreifen.</li>
-                        <li><strong>Farbauswahl:</strong> Klicken Sie auf den Farbauswahl-Button, um die Farbpalette zu öffnen, benutzerdefinierte Farben zu wählen und die Transparenz einzustellen.</li>
-                        <li><strong>Pinselgröße:</strong> Stellen Sie die Pinselgröße mit dem Schieberegler in der unteren linken Ecke ein.</li>
-                        <li><strong>Zoom Hinein/Hinaus:</strong> Verwenden Sie die Buttons in der unteren rechten Ecke, um die Leinwand zu vergrößern.</li>
-                        <li><strong>Vorlagen:</strong> Wählen Sie aus vorgefertigten Vorlagen, um schnell zu beginnen.</li>
-                        <li><strong>Rückgängig/Wiederholen:</strong> Verwenden Sie die Buttons in der oberen linken Ecke der Leinwand, um Aktionen rückgängig zu machen oder zu wiederholen.</li>
-                    </ul>
-                    <p>Viel Spaß und genießen Sie künstlerische Momente!</p>
-                `,
-                selectAll: "Alle Auswählen",
-                deleteSelected: "Ausgewählte Löschen",
-                noDrawingsSelected: "Keine Zeichnungen ausgewählt.",
-                templateLoadError: "Fehler beim Laden der Vorlage. Bitte wählen Sie eine andere Vorlage.",
-                brushSize: "Pinselgröße",
-                colorPicker: "Farbauswahl",
-                transparency: "Transparenz",
-                tools: "Werkzeuge",
-                ok: "OK",
-                cancel: "Abbrechen",
-                create: "Erstellen",
-                blankCanvas: "Leere Leinwand",
-                gridCanvas: "Karrierte Leinwand",
-                linedCanvas: "Linierte Leinwand",
-                coloredCanvas: "Farbige Leinwand",
-                canvasBlankDesc: "Weiße leere Leinwand",
-                canvasGridDesc: "Karriertes Papier Ansicht",
-                canvasLinedDesc: "Liniertes Papier Ansicht",
-                canvasColoredDesc: "Leinwand in ausgewählter Farbe",
-                formatPNG: "PNG Format",
-                formatJPG: "JPG Format",
-                formatPDF: "PDF Format",
-                formatPNGDesc: "Hohe Qualität Bild",
-                formatJPGDesc: "Kleinere Dateigröße",
-                formatPDFDesc: "Vektorzeichnung",
-                shapeCircle: "Kreis",
-                shapeSquare: "Quadrat",
-                shapeTriangle: "Dreieck",
-                shapeRectangle: "Rechteck",
-                shapeStar: "Stern",
-                shapeHeart: "Herz",
-                drawingName: "Zeichnungsname",
-                drawingDate: "Speicherdatum",
-                viewDrawing: "Zeichnung Ansehen",
-                welcomeTitle: "Willkommen bei ArtCanvas!",
-                welcomeMessage: "Genießen Sie digitale Malerei mit ArtCanvas. Alle Steuerelemente befinden sich auf der Leinwand. Beginnen Sie mit dem Zeichnen, indem Sie die Werkzeuge in der oberen linken Ecke verwenden. Im oberen Menü können Sie eine neue Leinwand erstellen, Bilder hochladen, Vorlagen verwenden, Ihre Zeichnungen speichern und sie in der Galerie ansehen. Viel Spaß!",
-                loading: "Lädt..."
-            },
-            fr: {
-                canvasTitle: "Nouvelle Toile",
-                save: "Sauvegarder",
-                templates: "Modèles",
-                gallery: "Galerie",
-                brush: "Pinceau",
-                pencil: "Crayon",
-                eraser: "Gomme",
-                watercolor: "Aquarelle",
-                pastel: "Pastel",
-                spray: "Spray",
-                fill: "Remplissage",
-                shape: "Forme",
-                text: "Texte",
-                uploadImage: "Télécharger Image",
-                clear: "Effacer",
-                undo: "Annuler",
-                redo: "Rétablir",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Nouvelle Toile",
-                download: "Télécharger",
-                share: "Partager",
-                savedNotification: "Votre dessin a été sauvegardé !",
-                loadedNotification: "Modèle chargé !",
-                exportedNotification: "Votre dessin a été exporté !",
-                emptyGallery: "Vous n'avez pas encore de dessins sauvegardés.",
-                confirmDelete: "Êtes-vous sûr de vouloir supprimer ce dessin ?",
-                confirmDeleteMultiple: "Êtes-vous sûr de vouloir supprimer {count} dessins sélectionnés ?",
-                newCanvasConfirm: "Êtes-vous sûr de vouloir créer une nouvelle toile ? Votre travail actuel ne sera pas sauvegardé.",
-                clearCanvasConfirm: "Êtes-vous sûr de vouloir effacer la toile ?",
-                helpTitle: "Guide Utilisateur ArtCanvas",
-                helpContent: `
-                    <h3>Bienvenue sur ArtCanvas !</h3>
-                    <p>Profitez de la peinture numérique avec ArtCanvas. Tous les contrôles sont sur la toile et dans le menu supérieur.</p>
-                    <ul>
-                        <li><strong>Contrôles de la Toile (Coin Supérieur Gauche):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Annuler: Annuler la dernière action</li>
-                                <li><i class="fas fa-redo"></i> Rétablir: Rétablir l'action annulée</li>
-                                <li><i class="fas fa-eraser"></i> Gomme: Effacer le dessin (rend transparent)</li>
-                                <li><i class="fas fa-trash-alt"></i> Effacer: Effacer toute la toile</li>
-                                <li><i class="fas fa-palette"></i> Sélection Couleur: Ouvrir la palette de couleurs</li>
-                                <li><i class="fas fa-paint-brush"></i> Outils: Ouvrir les outils de dessin</li>
-                            </ul>
-                        </li>
-                        <li><strong>Menu Supérieur:</strong>
-                            <ul>
-                                <li>Télécharger Image: Télécharger une image depuis votre ordinateur</li>
-                                <li>Nouvelle Toile: Créer une nouvelle toile vide</li>
-                                <li>Sauvegarder: Sauvegarder votre dessin</li>
-                                <li>Modèles: Choisir parmi des modèles prêts</li>
-                                <li>Galerie: Voir vos dessins sauvegardés</li>
-                                <li>Télécharger: Télécharger votre dessin en PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Autres Contrôles de la Toile:</strong>
-                            <ul>
-                                <li>Coin Inférieur Gauche: Ajustement de la taille du pinceau</li>
-                                <li>Coin Inférieur Droit: Zoom avant/arrière</li>
-                                <li>Coin Supérieur Droit: Information sur l'outil et la couleur actuelle</li>
-                            </ul>
-                        </li>
-                        <li><strong>Outils de Dessin:</strong> Cliquez sur le bouton outils pour accéder au pinceau, crayon, aquarelle, pastel, spray, remplissage, texte et outils de formes.</li>
-                        <li><strong>Sélection de Couleur:</strong> Cliquez sur le bouton de sélection de couleur pour ouvrir la palette de couleurs, choisir des couleurs personnalisées et ajuster la transparence.</li>
-                        <li><strong>Taille du Pinceau:</strong> Ajustez la taille du pinceau avec le curseur dans le coin inférieur gauche.</li>
-                        <li><strong>Zoom Avant/Arrière:</strong> Utilisez les boutons dans le coin inférieur droit pour zoomer sur la toile.</li>
-                        <li><strong>Modèles:</strong> Sélectionnez parmi des modèles pré-faits pour commencer rapidement.</li>
-                        <li><strong>Annuler/Rétablir:</strong> Utilisez les boutons dans le coin supérieur gauche de la toile pour annuler ou rétablir vos actions.</li>
-                    </ul>
-                    <p>Amusez-vous et profitez de moments artistiques !</p>
-                `,
-                selectAll: "Tout Sélectionner",
-                deleteSelected: "Supprimer Sélectionnés",
-                noDrawingsSelected: "Aucun dessin sélectionné.",
-                templateLoadError: "Erreur de chargement du modèle. Veuillez sélectionner un autre modèle.",
-                brushSize: "Taille du Pinceau",
-                colorPicker: "Sélecteur de Couleur",
-                transparency: "Transparence",
-                tools: "Outils",
-                ok: "OK",
-                cancel: "Annuler",
-                create: "Créer",
-                blankCanvas: "Toile Blanche",
-                gridCanvas: "Toile Quadrillée",
-                linedCanvas: "Toile Lignée",
-                coloredCanvas: "Toile Colorée",
-                canvasBlankDesc: "Toile blanche vide",
-                canvasGridDesc: "Vue papier quadrillé",
-                canvasLinedDesc: "Vue papier ligné",
-                canvasColoredDesc: "Toile dans la couleur sélectionnée",
-                formatPNG: "Format PNG",
-                formatJPG: "Format JPG",
-                formatPDF: "Format PDF",
-                formatPNGDesc: "Image haute qualité",
-                formatJPGDesc: "Taille de fichier plus petite",
-                formatPDFDesc: "Dessin vectoriel",
-                shapeCircle: "Cercle",
-                shapeSquare: "Carré",
-                shapeTriangle: "Triangle",
-                shapeRectangle: "Rectangle",
-                shapeStar: "Étoile",
-                shapeHeart: "Cœur",
-                drawingName: "Nom du Dessin",
-                drawingDate: "Date de Sauvegarde",
-                viewDrawing: "Voir le Dessin",
-                welcomeTitle: "Bienvenue sur ArtCanvas !",
-                welcomeMessage: "Profitez de la peinture numérique avec ArtCanvas. Tous les contrôles sont sur la toile. Commencez à dessiner en utilisant les outils dans le coin supérieur gauche. Dans le menu supérieur, vous pouvez créer une nouvelle toile, télécharger des images, utiliser des modèles, sauvegarder vos dessins et les voir dans la galerie. Amusez-vous !",
-                loading: "Chargement..."
-            },
-            hi: {
-                canvasTitle: "नया कैनवास",
-                save: "सहेजें",
-                templates: "टेम्प्लेट्स",
-                gallery: "गैलरी",
-                brush: "ब्रश",
-                pencil: "पेंसिल",
-                eraser: "रबड़",
-                watercolor: "वॉटरकलर",
-                pastel: "पेस्टल",
-                spray: "स्प्रे",
-                fill: "भरना",
-                shape: "आकार",
-                text: "टेक्स्ट",
-                uploadImage: "छवि अपलोड करें",
-                clear: "साफ करें",
-                undo: "पूर्ववत",
-                redo: "फिर से करें",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "नया कैनवास",
-                download: "डाउनलोड",
-                share: "शेयर",
-                savedNotification: "आपका चित्र सहेजा गया है!",
-                loadedNotification: "टेम्प्लेट लोड हुआ!",
-                exportedNotification: "आपका चित्र निर्यात किया गया है!",
-                emptyGallery: "आपके पास अभी तक कोई सहेजे गए चित्र नहीं हैं।",
-                confirmDelete: "क्या आप वाकई इस चित्र को हटाना चाहते हैं?",
-                confirmDeleteMultiple: "क्या आप वाकई {count} चुने गए चित्रों को हटाना चाहते हैं?",
-                newCanvasConfirm: "क्या आप वाकई एक नया कैनवास बनाना चाहते हैं? आपका वर्तमान कार्य सहेजा नहीं जाएगा।",
-                clearCanvasConfirm: "क्या आप वाकई कैनवास साफ करना चाहते हैं?",
-                helpTitle: "ArtCanvas उपयोगकर्ता मार्गदर्शिका",
-                helpContent: `
-                    <h3>ArtCanvas में आपका स्वागत है!</h3>
-                    <p>ArtCanvas के साथ डिजिटल पेंटिंग का आनंद लें। सभी नियंत्रण कैनवास और शीर्ष मेनू पर हैं।</p>
-                    <ul>
-                        <li><strong>कैनवास नियंत्रण (शीर्ष बाएं कोना):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> पूर्ववत: अंतिम क्रिया पूर्ववत करें</li>
-                                <li><i class="fas fa-redo"></i> फिर से करें: पूर्ववत की गई क्रिया फिर से करें</li>
-                                <li><i class="fas fa-eraser"></i> रबड़: चित्र मिटाएं (पारदर्शी बनाता है)</li>
-                                <li><i class="fas fa-trash-alt"></i> साफ करें: पूरा कैनवास साफ करें</li>
-                                <li><i class="fas fa-palette"></i> रंग चुनें: रंग पैलेट खोलें</li>
-                                <li><i class="fas fa-paint-brush"></i> टूल्स: ड्राइंग टूल्स खोलें</li>
-                            </ul>
-                        </li>
-                        <li><strong>शीर्ष मेनू:</strong>
-                            <ul>
-                                <li>छवि अपलोड करें: अपने कंप्यूटर से छवि अपलोड करें</li>
-                                <li>नया कैनवास: नया खाली कैनवास बनाएं</li>
-                                <li>सहेजें: अपना चित्र सहेजें</li>
-                                <li>टेम्प्लेट्स: तैयार टेम्प्लेट्स में से चुनें</li>
-                                <li>गैलरी: अपने सहेजे गए चित्र देखें</li>
-                                <li>डाउनलोड: अपना चित्र PNG/JPG/PDF के रूप में डाउनलोड करें</li>
-                            </ul>
-                        </li>
-                        <li><strong>अन्य कैनवास नियंत्रण:</strong>
-                            <ul>
-                                <li>नीचे बाएं कोना: ब्रश आकार समायोजन</li>
-                                <li>नीचे दाएं कोना: जूम इन/आउट</li>
-                                <li>शीर्ष दाएं कोना: वर्तमान टूल और रंग जानकारी</li>
-                            </ul>
-                        </li>
-                        <li><strong>ड्राइंग टूल्स:</strong> टूल्स बटन पर क्लिक करके ब्रश, पेंसिल, वॉटरकलर, पेस्टल, स्प्रे, फिल, टेक्स्ट और शेप टूल्स तक पहुंचें।</li>
-                        <li><strong>रंग चयन:</strong> रंग चयन बटन पर क्लिक करके रंग पैलेट खोलें, कस्टम रंग चुनें और पारदर्शिता समायोजित करें।</li>
-                        <li><strong>ब्रश आकार:</strong> नीचे बाएं कोने में स्लाइडर के साथ ब्रश आकार समायोजित करें।</li>
-                        <li><strong>जूम इन/आउट:</strong> नीचे दाएं कोने में बटन का उपयोग करके कैनवास जूम करें।</li>
-                        <li><strong>टेम्प्लेट्स:</strong> तेजी से शुरू करने के लिए पूर्व-निर्मित टेम्प्लेट्स में से चुनें।</li>
-                        <li><strong>पूर्ववत/फिर से करें:</strong> कैनवास के शीर्ष बाएं कोने में बटन का उपयोग करके अपनी क्रियाओं को पूर्ववत या फिर से करें।</li>
-                    </ul>
-                    <p>मजे करें और कलात्मक पलों का आनंद लें!</p>
-                `,
-                selectAll: "सभी चुनें",
-                deleteSelected: "चुने हुए हटाएं",
-                noDrawingsSelected: "कोई चित्र चयनित नहीं।",
-                templateLoadError: "टेम्प्लेट लोड करने में त्रुटि। कृपया कोई अन्य टेम्प्लेट चुनें।",
-                brushSize: "ब्रश आकार",
-                colorPicker: "रंग चयन",
-                transparency: "पारदर्शिता",
-                tools: "टूल्स",
-                ok: "ठीक",
-                cancel: "रद्द",
-                create: "बनाएं",
-                blankCanvas: "खाली कैनवास",
-                gridCanvas: "ग्रिड कैनवास",
-                linedCanvas: "लाइन कैनवास",
-                coloredCanvas: "रंगीन कैनवास",
-                canvasBlankDesc: "सफेद खाली कैनवास",
-                canvasGridDesc: "ग्रिड पेपर दृश्य",
-                canvasLinedDesc: "लाइन पेपर दृश्य",
-                canvasColoredDesc: "चुने हुए रंग में कैनवास",
-                formatPNG: "PNG फॉर्मेट",
-                formatJPG: "JPG फॉर्मेट",
-                formatPDF: "PDF फॉर्मेट",
-                formatPNGDesc: "उच्च गुणवत्ता छवि",
-                formatJPGDesc: "छोटी फ़ाइल आकार",
-                formatPDFDesc: "वेक्टर ड्राइंग",
-                shapeCircle: "वृत्त",
-                shapeSquare: "वर्ग",
-                shapeTriangle: "त्रिभुज",
-                shapeRectangle: "आयत",
-                shapeStar: "तारा",
-                shapeHeart: "दिल",
-                drawingName: "चित्र का नाम",
-                drawingDate: "सहेजने की तारीख",
-                viewDrawing: "चित्र देखें",
-                welcomeTitle: "ArtCanvas में आपका स्वागत है!",
-                welcomeMessage: "ArtCanvas के साथ डिजिटल पेंटिंग का आनंद लें। सभी नियंत्रण कैनवास पर हैं। शीर्ष बाएं कोने में टूल्स का उपयोग करके चित्र बनाना शुरू करें। शीर्ष मेनू से, आप एक नया कैनवास बना सकते हैं, छवियां अपलोड कर सकते हैं, टेम्प्लेट्स का उपयोग कर सकते हैं, अपने चित्र सहेज सकते हैं और उन्हें गैलरी से देख सकते हैं। मजे करें!",
-                loading: "लोड हो रहा है..."
-            },
-            id: {
-                canvasTitle: "Kanvas Baru",
-                save: "Simpan",
-                templates: "Template",
-                gallery: "Galeri",
-                brush: "Kuas",
-                pencil: "Pensil",
-                eraser: "Penghapus",
-                watercolor: "Cat Air",
-                pastel: "Pastel",
-                spray: "Semprot",
-                fill: "Isi",
-                shape: "Bentuk",
-                text: "Teks",
-                uploadImage: "Unggah Gambar",
-                clear: "Bersihkan",
-                undo: "Batal",
-                redo: "Ulangi",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Kanvas Baru",
-                download: "Unduh",
-                share: "Bagikan",
-                savedNotification: "Gambar Anda telah disimpan!",
-                loadedNotification: "Template dimuat!",
-                exportedNotification: "Gambar Anda telah diekspor!",
-                emptyGallery: "Anda belum memiliki gambar tersimpan.",
-                confirmDelete: "Apakah Anda yakin ingin menghapus gambar ini?",
-                confirmDeleteMultiple: "Apakah Anda yakin ingin menghapus {count} gambar yang dipilih?",
-                newCanvasConfirm: "Apakah Anda yakin ingin membuat kanvas baru? Pekerjaan Anda saat ini tidak akan disimpan.",
-                clearCanvasConfirm: "Apakah Anda yakin ingin membersihkan kanvas?",
-                helpTitle: "Panduan Pengguna ArtCanvas",
-                helpContent: `
-                    <h3>Selamat Datang di ArtCanvas!</h3>
-                    <p>Nikmati lukisan digital dengan ArtCanvas. Semua kontrol berada di kanvas dan menu atas.</p>
-                    <ul>
-                        <li><strong>Kontrol Kanvas (Pojok Kiri Atas):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Batal: Batalkan aksi terakhir</li>
-                                <li><i class="fas fa-redo"></i> Ulangi: Ulangi aksi yang dibatalkan</li>
-                                <li><i class="fas fa-eraser"></i> Penghapus: Hapus gambar (buat transparan)</li>
-                                <li><i class="fas fa-trash-alt"></i> Bersihkan: Bersihkan seluruh kanvas</li>
-                                <li><i class="fas fa-palette"></i> Pilih Warna: Buka palet warna</li>
-                                <li><i class="fas fa-paint-brush"></i> Alat: Buka alat menggambar</li>
-                            </ul>
-                        </li>
-                        <li><strong>Menu Atas:</strong>
-                            <ul>
-                                <li>Unggah Gambar: Unggah gambar dari komputer Anda</li>
-                                <li>Kanvas Baru: Buat kanvas kosong baru</li>
-                                <li>Simpan: Simpan gambar Anda</li>
-                                <li>Template: Pilih dari template siap pakai</li>
-                                <li>Galeri: Lihat gambar tersimpan Anda</li>
-                                <li>Unduh: Unduh gambar Anda sebagai PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Kontrol Kanvas Lainnya:</strong>
-                            <ul>
-                                <li>Pojok Kiri Bawah: Penyesuaian ukuran kuas</li>
-                                <li>Pojok Kanan Bawah: Zoom masuk/keluar</li>
-                                <li>Pojok Kanan Atas: Informasi alat dan warna saat ini</li>
-                            </ul>
-                        </li>
-                        <li><strong>Alat Menggambar:</strong> Klik tombol alat untuk mengakses kuas, pensil, cat air, pastel, semprot, isi, teks dan alat bentuk.</li>
-                        <li><strong>Pemilihan Warna:</strong> Klik tombol pemilihan warna untuk membuka palet warna, pilih warna kustom dan atur transparansi.</li>
-                        <li><strong>Ukuran Kuas:</strong> Sesuaikan ukuran kuas dengan slider di pojok kiri bawah.</li>
-                        <li><strong>Zoom Masuk/Keluar:</strong> Gunakan tombol di pojok kanan bawah untuk memperbesar kanvas.</li>
-                        <li><strong>Template:</strong> Pilih dari template yang sudah dibuat untuk memulai dengan cepat.</li>
-                        <li><strong>Batal/Ulangi:</strong> Gunakan tombol di pojok kiri atas kanvas untuk membatalkan atau mengulangi tindakan Anda.</li>
-                    </ul>
-                    <p>Selamat bersenang-senang dan nikmati momen artistik!</p>
-                `,
-                selectAll: "Pilih Semua",
-                deleteSelected: "Hapus Terpilih",
-                noDrawingsSelected: "Tidak ada gambar yang dipilih.",
-                templateLoadError: "Kesalahan memuat template. Silakan pilih template lain.",
-                brushSize: "Ukuran Kuas",
-                colorPicker: "Pemilih Warna",
-                transparency: "Transparansi",
-                tools: "Alat",
-                ok: "OK",
-                cancel: "Batal",
-                create: "Buat",
-                blankCanvas: "Kanvas Kosong",
-                gridCanvas: "Kanvas Kotak",
-                linedCanvas: "Kanvas Bergaris",
-                coloredCanvas: "Kanvas Berwarna",
-                canvasBlankDesc: "Kanvas putih kosong",
-                canvasGridDesc: "Tampilan kertas kotak",
-                canvasLinedDesc: "Tampilan kertas bergaris",
-                canvasColoredDesc: "Kanvas dalam warna pilihan",
-                formatPNG: "Format PNG",
-                formatJPG: "Format JPG",
-                formatPDF: "Format PDF",
-                formatPNGDesc: "Gambar berkualitas tinggi",
-                formatJPGDesc: "Ukuran file lebih kecil",
-                formatPDFDesc: "Gambar vektor",
-                shapeCircle: "Lingkaran",
-                shapeSquare: "Persegi",
-                shapeTriangle: "Segitiga",
-                shapeRectangle: "Persegi Panjang",
-                shapeStar: "Bintang",
-                shapeHeart: "Hati",
-                drawingName: "Nama Gambar",
-                drawingDate: "Tanggal Simpan",
-                viewDrawing: "Lihat Gambar",
-                welcomeTitle: "Selamat Datang di ArtCanvas!",
-                welcomeMessage: "Nikmati lukisan digital dengan ArtCanvas. Semua kontrol berada di kanvas. Mulai menggambar menggunakan alat di pojok kiri atas. Dari menu atas, Anda dapat membuat kanvas baru, mengunggah gambar, menggunakan template, menyimpan gambar Anda dan melihatnya dari galeri. Selamat bersenang-senang!",
-                loading: "Memuat..."
-            },
-            ja: {
-                canvasTitle: "新しいキャンバス",
-                save: "保存",
-                templates: "テンプレート",
-                gallery: "ギャラリー",
-                brush: "ブラシ",
-                pencil: "鉛筆",
-                eraser: "消しゴム",
-                watercolor: "水彩",
-                pastel: "パステル",
-                spray: "スプレー",
-                fill: "塗りつぶし",
-                shape: "図形",
-                text: "テキスト",
-                uploadImage: "画像をアップロード",
-                clear: "クリア",
-                undo: "元に戻す",
-                redo: "やり直す",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "新しいキャンバス",
-                download: "ダウンロード",
-                share: "共有",
-                savedNotification: "絵が保存されました！",
-                loadedNotification: "テンプレートを読み込みました！",
-                exportedNotification: "絵がエクスポートされました！",
-                emptyGallery: "保存された絵はまだありません。",
-                confirmDelete: "この絵を削除してもよろしいですか？",
-                confirmDeleteMultiple: "選択された{count}個の絵を削除してもよろしいですか？",
-                newCanvasConfirm: "新しいキャンバスを作成してもよろしいですか？現在の作業は保存されません。",
-                clearCanvasConfirm: "キャンバスをクリアしてもよろしいですか？",
-                helpTitle: "ArtCanvas ユーザーガイド",
-                helpContent: `
-                    <h3>ArtCanvasへようこそ！</h3>
-                    <p>ArtCanvasでデジタル絵画をお楽しみください。すべてのコントロールはキャンバスと上部メニューにあります。</p>
-                    <ul>
-                        <li><strong>キャンバスコントロール（左上隅）：</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> 元に戻す: 最後の操作を元に戻します</li>
-                                <li><i class="fas fa-redo"></i> やり直す: 元に戻した操作をやり直します</li>
-                                <li><i class="fas fa-eraser"></i> 消しゴム: 絵を消去します（透明にします）</li>
-                                <li><i class="fas fa-trash-alt"></i> クリア: キャンバス全体をクリアします</li>
-                                <li><i class="fas fa-palette"></i> 色選択: カラーパレットを開きます</li>
-                                <li><i class="fas fa-paint-brush"></i> ツール: 描画ツールを開きます</li>
-                            </ul>
-                        </li>
-                        <li><strong>上部メニュー:</strong>
-                            <ul>
-                                <li>画像アップロード: コンピューターから画像をアップロードします</li>
-                                <li>新しいキャンバス: 新しい空白のキャンバスを作成します</li>
-                                <li>保存: 絵を保存します</li>
-                                <li>テンプレート: 既製のテンプレートから選択します</li>
-                                <li>ギャラリー: 保存した絵を表示します</li>
-                                <li>ダウンロード: 絵をPNG/JPG/PDFとしてダウンロードします</li>
-                            </ul>
-                        </li>
-                        <li><strong>その他のキャンバスコントロール:</strong>
-                            <ul>
-                                <li>左下隅: ブラシサイズ調整</li>
-                                <li>右下隅: ズームイン/アウト</li>
-                                <li>右上隅: 現在のツールと色情報</li>
-                            </ul>
-                        </li>
-                        <li><strong>描画ツール:</strong> ツールボタンをクリックして、ブラシ、鉛筆、水彩、パステル、スプレー、塗りつぶし、テキスト、図形ツールにアクセスします。</li>
-                        <li><strong>色選択:</strong> 色選択ボタンをクリックしてカラーパレットを開き、カスタムカラーを選択して透明度を調整します。</li>
-                        <li><strong>ブラシサイズ:</strong> 左下隅のスライダーでブラシサイズを調整します。</li>
-                        <li><strong>ズームイン/アウト:</strong> 右下隅のボタンを使用してキャンバスをズームします。</li>
-                        <li><strong>テンプレート:</strong> 事前に作成されたテンプレートから選択してすぐに開始します。</li>
-                        <li><strong>元に戻す/やり直す:</strong> キャンバスの左上隅のボタンを使用して操作を元に戻したりやり直したりします。</li>
-                    </ul>
-                    <p>楽しんで、芸術的な瞬間をお楽しみください！</p>
-                `,
-                selectAll: "すべて選択",
-                deleteSelected: "選択を削除",
-                noDrawingsSelected: "絵が選択されていません。",
-                templateLoadError: "テンプレートの読み込みエラー。別のテンプレートを選択してください。",
-                brushSize: "ブラシサイズ",
-                colorPicker: "カラーピッカー",
-                transparency: "透明度",
-                tools: "ツール",
-                ok: "OK",
-                cancel: "キャンセル",
-                create: "作成",
-                blankCanvas: "空白キャンバス",
-                gridCanvas: "グリッドキャンバス",
-                linedCanvas: "罫線キャンバス",
-                coloredCanvas: "カラーキャンバス",
-                canvasBlankDesc: "白い空白のキャンバス",
-                canvasGridDesc: "方眼紙ビュー",
-                canvasLinedDesc: "罫線紙ビュー",
-                canvasColoredDesc: "選択した色のキャンバス",
-                formatPNG: "PNGフォーマット",
-                formatJPG: "JPGフォーマット",
-                formatPDF: "PDFフォーマット",
-                formatPNGDesc: "高品質画像",
-                formatJPGDesc: "小さいファイルサイズ",
-                formatPDFDesc: "ベクトル描画",
-                shapeCircle: "円",
-                shapeSquare: "正方形",
-                shapeTriangle: "三角形",
-                shapeRectangle: "長方形",
-                shapeStar: "星",
-                shapeHeart: "ハート",
-                drawingName: "絵の名前",
-                drawingDate: "保存日",
-                viewDrawing: "絵を表示",
-                welcomeTitle: "ArtCanvasへようこそ！",
-                welcomeMessage: "ArtCanvasでデジタル絵画をお楽しみください。すべてのコントロールはキャンバスにあります。左上隅のツールを使用して描画を開始します。上部メニューから、新しいキャンバスを作成し、画像をアップロードし、テンプレートを使用し、絵を保存し、ギャラリーからそれらを表示できます。楽しんでください！",
-                loading: "読み込み中..."
-            },
-            ko: {
-                canvasTitle: "새 캔버스",
-                save: "저장",
-                templates: "템플릿",
-                gallery: "갤러리",
-                brush: "브러시",
-                pencil: "연필",
-                eraser: "지우개",
-                watercolor: "수채화",
-                pastel: "파스텔",
-                spray: "스프레이",
-                fill: "채우기",
-                shape: "도형",
-                text: "텍스트",
-                uploadImage: "이미지 업로드",
-                clear: "지우기",
-                undo: "실행 취소",
-                redo: "다시 실행",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "새 캔버스",
-                download: "다운로드",
-                share: "공유",
-                savedNotification: "그림이 저장되었습니다!",
-                loadedNotification: "템플릿이 로드되었습니다!",
-                exportedNotification: "그림이 내보내졌습니다!",
-                emptyGallery: "아직 저장된 그림이 없습니다.",
-                confirmDelete: "이 그림을 삭제하시겠습니까?",
-                confirmDeleteMultiple: "선택한 {count}개의 그림을 삭제하시겠습니까?",
-                newCanvasConfirm: "새 캔버스를 만들겠습니까? 현재 작업은 저장되지 않습니다.",
-                clearCanvasConfirm: "캔버스를 지우시겠습니까?",
-                helpTitle: "ArtCanvas 사용자 가이드",
-                helpContent: `
-                    <h3>ArtCanvas에 오신 것을 환영합니다!</h3>
-                    <p>ArtCanvas로 디지털 그림을 즐기세요. 모든 컨트롤은 캔버스와 상단 메뉴에 있습니다.</p>
-                    <ul>
-                        <li><strong>캔버스 컨트롤 (왼쪽 상단 모서리):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> 실행 취소: 마지막 작업 실행 취소</li>
-                                <li><i class="fas fa-redo"></i> 다시 실행: 실행 취소한 작업 다시 실행</li>
-                                <li><i class="fas fa-eraser"></i> 지우개: 그림 지우기 (투명하게 만듭니다)</li>
-                                <li><i class="fas fa-trash-alt"></i> 지우기: 전체 캔버스 지우기</li>
-                                <li><i class="fas fa-palette"></i> 색상 선택: 색상 팔레트 열기</li>
-                                <li><i class="fas fa-paint-brush"></i> 도구: 그리기 도구 열기</li>
-                            </ul>
-                        </li>
-                        <li><strong>상단 메뉴:</strong>
-                            <ul>
-                                <li>이미지 업로드: 컴퓨터에서 이미지 업로드</li>
-                                <li>새 캔버스: 새 빈 캔버스 만들기</li>
-                                <li>저장: 그림 저장</li>
-                                <li>템플릿: 준비된 템플릿에서 선택</li>
-                                <li>갤러리: 저장된 그림 보기</li>
-                                <li>다운로드: 그림을 PNG/JPG/PDF로 다운로드</li>
-                            </ul>
-                        </li>
-                        <li><strong>기타 캔버스 컨트롤:</strong>
-                            <ul>
-                                <li>왼쪽 하단 모서리: 브러시 크기 조정</li>
-                                <li>오른쪽 하단 모서리: 확대/축소</li>
-                                <li>오른쪽 상단 모서리: 현재 도구 및 색상 정보</li>
-                            </ul>
-                        </li>
-                        <li><strong>그리기 도구:</strong> 도구 버튼을 클릭하여 브러시, 연필, 수채화, 파스텔, 스프레이, 채우기, 텍스트 및 도형 도구에 액세스합니다.</li>
-                        <li><strong>색상 선택:</strong> 색상 선택 버튼을 클릭하여 색상 팔레트를 열고 사용자 정의 색상을 선택하고 투명도를 조정합니다.</li>
-                        <li><strong>브러시 크기:</strong> 왼쪽 하단 모서리의 슬라이더로 브러시 크기를 조정합니다.</li>
-                        <li><strong>확대/축소:</strong> 오른쪽 하단 모서리의 버튼을 사용하여 캔버스를 확대합니다.</li>
-                        <li><strong>템플릿:</strong> 빠르게 시작하려면 미리 만들어진 템플릿에서 선택합니다.</li>
-                        <li><strong>실행 취소/다시 실행:</strong> 캔버스의 왼쪽 상단 모서리에 있는 버튼을 사용하여 작업을 실행 취소하거나 다시 실행합니다.</li>
-                    </ul>
-                    <p>즐기고 예술적인 순간을 즐기세요!</p>
-                `,
-                selectAll: "모두 선택",
-                deleteSelected: "선택 삭제",
-                noDrawingsSelected: "선택된 그림이 없습니다.",
-                templateLoadError: "템플릿 로드 오류. 다른 템플릿을 선택하십시오.",
-                brushSize: "브러시 크기",
-                colorPicker: "색상 선택",
-                transparency: "투명도",
-                tools: "도구",
-                ok: "확인",
-                cancel: "취소",
-                create: "만들기",
-                blankCanvas: "빈 캔버스",
-                gridCanvas: "격자 캔버스",
-                linedCanvas: "줄무늬 캔버스",
-                coloredCanvas: "색상 캔버스",
-                canvasBlankDesc: "흰색 빈 캔버스",
-                canvasGridDesc: "격자지 보기",
-                canvasLinedDesc: "줄무늬지 보기",
-                canvasColoredDesc: "선택한 색상의 캔버스",
-                formatPNG: "PNG 형식",
-                formatJPG: "JPG 형식",
-                formatPDF: "PDF 형식",
-                formatPNGDesc: "고품질 이미지",
-                formatJPGDesc: "더 작은 파일 크기",
-                formatPDFDesc: "벡터 그림",
-                shapeCircle: "원",
-                shapeSquare: "사각형",
-                shapeTriangle: "삼각형",
-                shapeRectangle: "직사각형",
-                shapeStar: "별",
-                shapeHeart: "하트",
-                drawingName: "그림 이름",
-                drawingDate: "저장 날짜",
-                viewDrawing: "그림 보기",
-                welcomeTitle: "ArtCanvas에 오신 것을 환영합니다!",
-                welcomeMessage: "ArtCanvas로 디지털 그림을 즐기세요. 모든 컨트롤은 캔버스에 있습니다. 왼쪽 상단 모서리의 도구를 사용하여 그리기를 시작하세요. 상단 메뉴에서 새 캔버스를 만들고, 이미지를 업로드하고, 템플릿을 사용하고, 그림을 저장하고, 갤러리에서 볼 수 있습니다. 즐기세요!",
-                loading: "로딩 중..."
-            },
             tr: {
                 canvasTitle: "Yeni Tuval",
                 save: "Kaydet",
@@ -3038,895 +2137,8 @@
                 welcomeTitle: "ArtCanvas'a Hoş Geldiniz!",
                 welcomeMessage: "ArtCanvas ile dijital boyama yapmanın keyfini çıkarın. Tüm kontroller tuval üzerindedir. Sol üst köşedeki araçları kullanarak çizim yapmaya başlayın. Üst menüden yeni tuval oluşturabilir, resim yükleyebilir, şablonları kullanabilir, çizimlerinizi kaydedip galeriden görüntüleyebilirsiniz. İyi eğlenceler!",
                 loading: "Yükleniyor..."
-            },
-            ar: {
-                canvasTitle: "لوحة جديدة",
-                save: "حفظ",
-                templates: "قوالب",
-                gallery: "معرض",
-                brush: "فرشاة",
-                pencil: "قلم رصاص",
-                eraser: "ممحاة",
-                watercolor: "ألوان مائية",
-                pastel: "باستيل",
-                spray: "رش",
-                fill: "ملء",
-                shape: "شكل",
-                text: "نص",
-                uploadImage: "تحميل صورة",
-                clear: "مسح",
-                undo: "تراجع",
-                redo: "إعادة",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "لوحة جديدة",
-                download: "تنزيل",
-                share: "مشاركة",
-                savedNotification: "تم حفظ رسمك!",
-                loadedNotification: "تم تحميل القالب!",
-                exportedNotification: "تم تصدير رسمك!",
-                emptyGallery: "ليس لديك أي رسومات محفوظة حتى الآن.",
-                confirmDelete: "هل أنت متأكد أنك تريد حذف هذا الرسم؟",
-                confirmDeleteMultiple: "هل أنت متأكد أنك تريد حذف {count} من الرسومات المحددة؟",
-                newCanvasConfirm: "هل أنت متأكد أنك تريد إنشاء لوحة جديدة؟ لن يتم حفظ عملك الحالي.",
-                clearCanvasConfirm: "هل أنت متأكد أنك تريد مسح اللوحة؟",
-                helpTitle: "دليل مستخدم ArtCanvas",
-                helpContent: `
-                    <h3>مرحبًا بك في ArtCanvas!</h3>
-                    <p>استمتع بالرسم الرقمي مع ArtCanvas. توجد جميع عناصر التحكم على اللوحة والقائمة العلوية.</p>
-                    <ul>
-                        <li><strong>عناصر تحكم اللوحة (الركن العلوي الأيسر):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> تراجع: تراجع عن الإجراء الأخير</li>
-                                <li><i class="fas fa-redo"></i> إعادة: أعد الإجراء الذي تم التراجع عنه</li>
-                                <li><i class="fas fa-eraser"></i> ممحاة: امسح الرسم (يجعله شفافًا)</li>
-                                <li><i class="fas fa-trash-alt"></i> مسح: امسح اللوحة بأكملها</li>
-                                <li><i class="fas fa-palette"></i> اختيار اللون: افتح لوحة الألوان</li>
-                                <li><i class="fas fa-paint-brush"></i> أدوات: افتح أدوات الرسم</li>
-                            </ul>
-                        </li>
-                        <li><strong>القائمة العلوية:</strong>
-                            <ul>
-                                <li>تحميل صورة: حمّل صورة من جهاز الكمبيوتر الخاص بك</li>
-                                <li>لوحة جديدة: أنشئ لوحة فارغة جديدة</li>
-                                <li>حفظ: احفظ رسمك</li>
-                                <li>قوالب: اختر من القوالب الجاهزة</li>
-                                <li>معرض: عرض رسوماتك المحفوظة</li>
-                                <li>تنزيل: حمّل رسمك كـ PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>عناصر تحكم اللوحة الأخرى:</strong>
-                            <ul>
-                                <li>الركن السفلي الأيسر: ضبط حجم الفرشاة</li>
-                                <li>الركن السفلي الأيمن: تكبير/تصغير</li>
-                                <li>الركن العلوي الأيمن: معلومات الأداة واللون الحاليين</li>
-                            </ul>
-                        </li>
-                        <li><strong>أدوات الرسم:</strong> انقر على زر الأدوات للوصول إلى الفرشاة والقلم الرصاص والألوان المائية والباستيل والرش والملء والنص وأدوات الأشكال.</li>
-                        <li><strong>اختيار اللون:</strong> انقر على زر اختيار اللون لفتح لوحة الألوان واختيار ألوان مخصصة وضبط الشفافية.</li>
-                        <li><strong>حجم الفرشاة:</strong> اضبط حجم الفرشاة باستخدام المنزلق في الركن السفلي الأيسر.</li>
-                        <li><strong>تكبير/تصغير:</strong> استخدم الأزرار في الركن السفلي الأيمن لتكبير اللوحة.</li>
-                        <li><strong>القوالب:</strong> اختر من القوالب المعدة مسبقًا لتبدأ بسرعة.</li>
-                        <li><strong>تراجع/إعادة:</strong> استخدم الأزرار في الركن العلوي الأيسر من اللوحة للتراجع عن إجراءاتك أو إعادتها.</li>
-                    </ul>
-                    <p>استمتع وتمتع بلحظات فنية!</p>
-                `,
-                selectAll: "تحديد الكل",
-                deleteSelected: "حذف المحدد",
-                noDrawingsSelected: "لم يتم تحديد أي رسومات.",
-                templateLoadError: "خطأ في تحميل القالب. يرجى تحديد قالب آخر.",
-                brushSize: "حجم الفرشاة",
-                colorPicker: "منتقي الألوان",
-                transparency: "الشفافية",
-                tools: "أدوات",
-                ok: "موافق",
-                cancel: "إلغاء",
-                create: "إنشاء",
-                blankCanvas: "لوحة فارغة",
-                gridCanvas: "لوحة مربعات",
-                linedCanvas: "لوحة خطوط",
-                coloredCanvas: "لوحة ملونة",
-                canvasBlankDesc: "لوحة بيضاء فارغة",
-                canvasGridDesc: "عرض ورق مربعات",
-                canvasLinedDesc: "عرض ورق خطوط",
-                canvasColoredDesc: "لوحة باللون المحدد",
-                formatPNG: "تنسيق PNG",
-                formatJPG: "تنسيق JPG",
-                formatPDF: "تنسيق PDF",
-                formatPNGDesc: "صورة عالية الجودة",
-                formatJPGDesc: "حجم ملف أصغر",
-                formatPDFDesc: "رسم متجه",
-                shapeCircle: "دائرة",
-                shapeSquare: "مربع",
-                shapeTriangle: "مثلث",
-                shapeRectangle: "مستطيل",
-                shapeStar: "نجمة",
-                shapeHeart: "قلب",
-                drawingName: "اسم الرسم",
-                drawingDate: "تاريخ الحفظ",
-                viewDrawing: "عرض الرسم",
-                welcomeTitle: "مرحبًا بك في ArtCanvas!",
-                welcomeMessage: "استمتع بالرسم الرقمي مع ArtCanvas. توجد جميع عناصر التحكم على اللوحة. ابدأ الرسم باستخدام الأدوات في الركن العلوي الأيسر. من القائمة العلوية، يمكنك إنشاء لوحة جديدة، وتحميل الصور، واستخدام القوالب، وحفظ رسوماتك وعرضها من المعرض. استمتع!",
-                loading: "جاري التحميل..."
-            },
-            it: {
-                canvasTitle: "Nuova Tela",
-                save: "Salva",
-                templates: "Modelli",
-                gallery: "Galleria",
-                brush: "Pennello",
-                pencil: "Matita",
-                eraser: "Gomma",
-                watercolor: "Acquerello",
-                pastel: "Pastello",
-                spray: "Spray",
-                fill: "Riempimento",
-                shape: "Forma",
-                text: "Testo",
-                uploadImage: "Carica Immagine",
-                clear: "Pulisci",
-                undo: "Annulla",
-                redo: "Ripristina",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Nuova Tela",
-                download: "Scarica",
-                share: "Condividi",
-                savedNotification: "Il tuo disegno è stato salvato!",
-                loadedNotification: "Modello caricato!",
-                exportedNotification: "Il tuo disegno è stato esportato!",
-                emptyGallery: "Non hai ancora disegni salvati.",
-                confirmDelete: "Sei sicuro di voler eliminare questo disegno?",
-                confirmDeleteMultiple: "Sei sicuro di voler eliminare {count} disegni selezionati?",
-                newCanvasConfirm: "Sei sicuro di voler creare una nuova tela? Il tuo lavoro corrente non verrà salvato.",
-                clearCanvasConfirm: "Sei sicuro di voler pulire la tela?",
-                helpTitle: "Guida Utente ArtCanvas",
-                helpContent: `
-                    <h3>Benvenuto in ArtCanvas!</h3>
-                    <p>Goditi la pittura digitale con ArtCanvas. Tutti i controlli sono sulla tela e nel menu superiore.</p>
-                    <ul>
-                        <li><strong>Controlli della Tela (Angolo in Alto a Sinistra):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Annulla: Annulla l'ultima azione</li>
-                                <li><i class="fas fa-redo"></i> Ripristina: Ripristina l'azione annullata</li>
-                                <li><i class="fas fa-eraser"></i> Gomma: Cancella il disegno (rende trasparente)</li>
-                                <li><i class="fas fa-trash-alt"></i> Pulisci: Pulisci tutta la tela</li>
-                                <li><i class="fas fa-palette"></i> Seleziona Colore: Apri la tavolozza dei colori</li>
-                                <li><i class="fas fa-paint-brush"></i> Strumenti: Apri gli strumenti di disegno</li>
-                            </ul>
-                        </li>
-                        <li><strong>Menu Superiore:</strong>
-                            <ul>
-                                <li>Carica Immagine: Carica immagine dal tuo computer</li>
-                                <li>Nuova Tela: Crea una nuova tela vuota</li>
-                                <li>Salva: Salva il tuo disegno</li>
-                                <li>Modelli: Scegli tra modelli pronti</li>
-                                <li>Galleria: Visualizza i tuoi disegni salvati</li>
-                                <li>Scarica: Scarica il tuo disegno come PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Altri Controlli della Tela:</strong>
-                            <ul>
-                                <li>Angolo in Basso a Sinistra: Regolazione dimensione pennello</li>
-                                <li>Angolo in Basso a Destra: Zoom avanti/indietro</li>
-                                <li>Angolo in Alto a Destra: Informazioni strumento e colore corrente</li>
-                            </ul>
-                        </li>
-                        <li><strong>Strumenti di Disegno:</strong> Clicca sul pulsante strumenti per accedere a pennello, matita, acquerello, pastello, spray, riempimento, testo e strumenti forme.</li>
-                        <li><strong>Selezione Colore:</strong> Clicca sul pulsante selezione colore per aprire la tavolozza dei colori, scegliere colori personalizzati e regolare la trasparenza.</li>
-                        <li><strong>Dimensione Pennello:</strong> Regola la dimensione del pennello con il cursore nell'angolo in basso a sinistra.</li>
-                        <li><strong>Zoom Avanti/Indietro:</strong> Usa i pulsanti nell'angolo in basso a destra per zoomare sulla tela.</li>
-                        <li><strong>Modelli:</strong> Seleziona tra modelli predefiniti per iniziare rapidamente.</li>
-                        <li><strong>Annulla/Ripristina:</strong> Usa i pulsanti nell'angolo in alto a sinistra della tela per annullare o ripristinare le tue azioni.</li>
-                    </ul>
-                    <p>Divertiti e goditi momenti artistici!</p>
-                `,
-                selectAll: "Seleziona Tutto",
-                deleteSelected: "Elimina Selezionati",
-                noDrawingsSelected: "Nessun disegno selezionato.",
-                templateLoadError: "Errore nel caricamento del modello. Seleziona un altro modello.",
-                brushSize: "Dimensione Pennello",
-                colorPicker: "Selettore Colore",
-                transparency: "Trasparenza",
-                tools: "Strumenti",
-                ok: "OK",
-                cancel: "Annulla",
-                create: "Crea",
-                blankCanvas: "Tela Bianca",
-                gridCanvas: "Tela a Griglia",
-                linedCanvas: "Tela Rigata",
-                coloredCanvas: "Tela Colorata",
-                canvasBlankDesc: "Tela bianca vuota",
-                canvasGridDesc: "Visualizzazione carta a quadretti",
-                canvasLinedDesc: "Visualizzazione carta a righe",
-                canvasColoredDesc: "Tela nel colore selezionato",
-                formatPNG: "Formato PNG",
-                formatJPG: "Formato JPG",
-                formatPDF: "Formato PDF",
-                formatPNGDesc: "Immagine alta qualità",
-                formatJPGDesc: "Dimensione file più piccola",
-                formatPDFDesc: "Disegno vettoriale",
-                shapeCircle: "Cerchio",
-                shapeSquare: "Quadrato",
-                shapeTriangle: "Triangolo",
-                shapeRectangle: "Rettangolo",
-                shapeStar: "Stella",
-                shapeHeart: "Cuore",
-                drawingName: "Nome Disegno",
-                drawingDate: "Data Salvataggio",
-                viewDrawing: "Visualizza Disegno",
-                welcomeTitle: "Benvenuto in ArtCanvas!",
-                welcomeMessage: "Goditi la pittura digitale con ArtCanvas. Tutti i controlli sono sulla tela. Inizia a disegnare usando gli strumenti nell'angolo in alto a sinistra. Dal menu superiore, puoi creare una nuova tela, caricare immagini, usare modelli, salvare i tuoi disegni e visualizzarli dalla galleria. Divertiti!",
-                loading: "Caricamento..."
-            },
-            pl: {
-                canvasTitle: "Nowe Płótno",
-                save: "Zapisz",
-                templates: "Szablony",
-                gallery: "Galeria",
-                brush: "Pędzel",
-                pencil: "Ołówek",
-                eraser: "Gumka",
-                watercolor: "Akwarela",
-                pastel: "Pastel",
-                spray: "Spray",
-                fill: "Wypełnienie",
-                shape: "Kształt",
-                text: "Tekst",
-                uploadImage: "Załaduj Obraz",
-                clear: "Wyczyść",
-                undo: "Cofnij",
-                redo: "Przywróć",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Nowe Płótno",
-                download: "Pobierz",
-                share: "Udostępnij",
-                savedNotification: "Twój rysunek został zapisany!",
-                loadedNotification: "Szablon załadowany!",
-                exportedNotification: "Twój rysunek został wyeksportowany!",
-                emptyGallery: "Nie masz jeszcze żadnych zapisanych rysunków.",
-                confirmDelete: "Czy na pewno chcesz usunąć ten rysunek?",
-                confirmDeleteMultiple: "Czy na pewno chcesz usunąć {count} wybranych rysunków?",
-                newCanvasConfirm: "Czy na pewno chcesz utworzyć nowe płótno? Twoja bieżąca praca nie zostanie zapisana.",
-                clearCanvasConfirm: "Czy na pewno chcesz wyczyścić płótno?",
-                helpTitle: "Przewodnik użytkownika ArtCanvas",
-                helpContent: `
-                    <h3>Witamy w ArtCanvas!</h3>
-                    <p>Ciesz się malowaniem cyfrowym z ArtCanvas. Wszystkie kontrolki znajdują się na płótnie i w górnym menu.</p>
-                    <ul>
-                        <li><strong>Kontrolki Płótna (Lewy górny róg):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Cofnij: Cofnij ostatnią akcję</li>
-                                <li><i class="fas fa-redo"></i> Przywróć: Przywróć cofniętą akcję</li>
-                                <li><i class="fas fa-eraser"></i> Gumka: Wymaż rysunek (sprawia, że jest przezroczysty)</li>
-                                <li><i class="fas fa-trash-alt"></i> Wyczyść: Wyczyść całe płótno</li>
-                                <li><i class="fas fa-palette"></i> Wybierz Kolor: Otwórz paletę kolorów</li>
-                                <li><i class="fas fa-paint-brush"></i> Narzędzia: Otwórz narzędzia do rysowania</li>
-                            </ul>
-                        </li>
-                        <li><strong>Górne Menu:</strong>
-                            <ul>
-                                <li>Załaduj Obraz: Załaduj obraz z komputera</li>
-                                <li>Nowe Płótno: Utwórz nowe puste płótno</li>
-                                <li>Zapisz: Zapisz swój rysunek</li>
-                                <li>Szablony: Wybierz z gotowych szablonów</li>
-                                <li>Galeria: Zobacz zapisane rysunki</li>
-                                <li>Pobierz: Pobierz swój rysunek jako PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Inne Kontrolki Płótna:</strong>
-                            <ul>
-                                <li>Lewy dolny róg: Regulacja rozmiaru pędzla</li>
-                                <li>Prawy dolny róg: Powiększanie/pomniejszanie</li>
-                                <li>Prawy górny róg: Informacje o bieżącym narzędziu i kolorze</li>
-                            </ul>
-                        </li>
-                        <li><strong>Narzędzia do Rysowania:</strong> Kliknij przycisk narzędzi, aby uzyskać dostęp do pędzla, ołówka, akwareli, pasteli, sprayu, wypełnienia, tekstu i narzędzi kształtów.</li>
-                        <li><strong>Wybór Koloru:</strong> Kliknij przycisk wyboru koloru, aby otworzyć paletę kolorów, wybrać niestandardowe kolory i dostosować przezroczystość.</li>
-                        <li><strong>Rozmiar Pędzla:</strong> Dostosuj rozmiar pędzla za pomocą suwaka w lewym dolnym rogu.</li>
-                        <li><strong>Powielanie/Pomniejszanie:</strong> Użyj przycisków w prawym dolnym rogu, aby powiększyć płótno.</li>
-                        <li><strong>Szablony:</strong> Wybierz spośród gotowych szablonów, aby szybko zacząć.</li>
-                        <li><strong>Cofnij/Przywracanie:</strong> Użyj przycisków w lewym górnym rogu płótna, aby cofnąć lub przywrócić swoje działania.</li>
-                    </ul>
-                    <p>Baw się dobrze i ciesz się artystycznymi chwilami!</p>
-                `,
-                selectAll: "Zaznacz Wszystko",
-                deleteSelected: "Usuń Zaznaczone",
-                noDrawingsSelected: "Nie wybrano żadnych rysunków.",
-                templateLoadError: "Błąd ładowania szablonu. Wybierz inny szablon.",
-                brushSize: "Rozmiar Pędzla",
-                colorPicker: "Wybór Koloru",
-                transparency: "Przezroczystość",
-                tools: "Narzędzia",
-                ok: "OK",
-                cancel: "Anuluj",
-                create: "Utwórz",
-                blankCanvas: "Puste Płótno",
-                gridCanvas: "Kratkowane Płótno",
-                linedCanvas: "Liniowane Płótno",
-                coloredCanvas: "Kolorowe Płótno",
-                canvasBlankDesc: "Białe puste płótno",
-                canvasGridDesc: "Widok papieru w kratkę",
-                canvasLinedDesc: "Widok papieru liniowanego",
-                canvasColoredDesc: "Płótno w wybranym kolorze",
-                formatPNG: "Format PNG",
-                formatJPG: "Format JPG",
-                formatPDF: "Format PDF",
-                formatPNGDesc: "Obraz wysokiej jakości",
-                formatJPGDesc: "Mniejszy rozmiar pliku",
-                formatPDFDesc: "Rysunek wektorowy",
-                shapeCircle: "Okrąg",
-                shapeSquare: "Kwadrat",
-                shapeTriangle: "Trójkąt",
-                shapeRectangle: "Prostokąt",
-                shapeStar: "Gwiazda",
-                shapeHeart: "Serce",
-                drawingName: "Nazwa Rysunku",
-                drawingDate: "Data Zapisania",
-                viewDrawing: "Zobacz Rysunek",
-                welcomeTitle: "Witamy w ArtCanvas!",
-                welcomeMessage: "Ciesz się malowaniem cyfrowym z ArtCanvas. Wszystkie kontrolki znajdują się na płótnie. Zacznij rysować, używając narzędzi w lewym górnym rogu. Z górnego menu możesz utworzyć nowe płótno, załadować obrazy, używać szablonów, zapisywać swoje rysunki i przeglądać je w galerii. Baw się dobrze!",
-                loading: "Ładowanie..."
-            },
-            th: {
-                canvasTitle: "ผืนผ้าใบใหม่",
-                save: "บันทึก",
-                templates: "เทมเพลต",
-                gallery: "แกลเลอรี",
-                brush: "แปรง",
-                pencil: "ดินสอ",
-                eraser: "ยางลบ",
-                watercolor: "สีน้ำ",
-                pastel: "พาสเทล",
-                spray: "สเปรย์",
-                fill: "เติม",
-                shape: "รูปร่าง",
-                text: "ข้อความ",
-                uploadImage: "อัปโหลดรูปภาพ",
-                clear: "ล้าง",
-                undo: "เลิกทำ",
-                redo: "ทำซ้ำ",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "ผืนผ้าใบใหม่",
-                download: "ดาวน์โหลด",
-                share: "แชร์",
-                savedNotification: "บันทึกภาพวาดของคุณแล้ว!",
-                loadedNotification: "โหลดเทมเพลตแล้ว!",
-                exportedNotification: "ส่งออกภาพวาดของคุณแล้ว!",
-                emptyGallery: "คุณยังไม่มีภาพวาดที่บันทึกไว้",
-                confirmDelete: "คุณแน่ใจหรือไม่ว่าต้องการลบภาพวาดนี้?",
-                confirmDeleteMultiple: "คุณแน่ใจหรือไม่ว่าต้องการลบภาพวาดที่เลือกไว้ {count} รูป?",
-                newCanvasConfirm: "คุณแน่ใจหรือไม่ว่าต้องการสร้างผืนผ้าใบใหม่? งานปัจจุบันของคุณจะไม่ถูกบันทึก",
-                clearCanvasConfirm: "คุณแน่ใจหรือไม่ว่าต้องการล้างผืนผ้าใบ?",
-                helpTitle: "คู่มือผู้ใช้ ArtCanvas",
-                helpContent: `
-                    <h3>ยินดีต้อนรับสู่ ArtCanvas!</h3>
-                    <p>สนุกกับการวาดภาพดิจิทัลด้วย ArtCanvas ตัวควบคุมทั้งหมดอยู่บนผืนผ้าใบและเมนูด้านบน</p>
-                    <ul>
-                        <li><strong>ตัวควบคุมผืนผ้าใบ (มุมซ้ายบน):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> เลิกทำ: เลิกทำการกระทำล่าสุด</li>
-                                <li><i class="fas fa-redo"></i> ทำซ้ำ: ทำซ้ำการกระทำที่เลิกทำ</li>
-                                <li><i class="fas fa-eraser"></i> ยางลบ: ลบภาพวาด (ทำให้โปร่งใส)</li>
-                                <li><i class="fas fa-trash-alt"></i> ล้าง: ล้างผืนผ้าใบทั้งหมด</li>
-                                <li><i class="fas fa-palette"></i> เลือกสี: เปิดแผงสี</li>
-                                <li><i class="fas fa-paint-brush"></i> เครื่องมือ: เปิดเครื่องมือวาดภาพ</li>
-                            </ul>
-                        </li>
-                        <li><strong>เมนูด้านบน:</strong>
-                            <ul>
-                                <li>อัปโหลดรูปภาพ: อัปโหลดรูปภาพจากคอมพิวเตอร์ของคุณ</li>
-                                <li>ผืนผ้าใบใหม่: สร้างผืนผ้าใบเปล่าใหม่</li>
-                                <li>บันทึก: บันทึกภาพวาดของคุณ</li>
-                                <li>เทมเพลต: เลือกจากเทมเพลตสำเร็จรูป</li>
-                                <li>แกลเลอรี: ดูภาพวาดที่บันทึกไว้ของคุณ</li>
-                                <li>ดาวน์โหลด: ดาวน์โหลดภาพวาดของคุณเป็น PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>ตัวควบคุมผืนผ้าใบอื่น ๆ:</strong>
-                            <ul>
-                                <li>มุมซ้ายล่าง: ปรับขนาดแปรง</li>
-                                <li>มุมขวาล่าง: ซูมเข้า/ออก</li>
-                                <li>มุมขวาบน: ข้อมูลเครื่องมือและสีปัจจุบัน</li>
-                            </ul>
-                        </li>
-                        <li><strong>เครื่องมือวาดภาพ:</strong> คลิกปุ่มเครื่องมือเพื่อเข้าถึงแปรง, ดินสอ, สีน้ำ, พาสเทล, สเปรย์, การเติม, ข้อความ และเครื่องมือรูปทรง</li>
-                        <li><strong>การเลือกสี:</strong> คลิกปุ่มเลือกสีเพื่อเปิดแผงสี, เลือกสีที่กำหนดเองและปรับความโปร่งใส</li>
-                        <li><strong>ขนาดแปรง:</strong> ปรับขนาดแปรงด้วยแถบเลื่อนที่มุมซ้ายล่าง</li>
-                        <li><strong>ซูมเข้า/ออก:</strong> ใช้ปุ่มที่มุมขวาล่างเพื่อซูมผืนผ้าใบ</li>
-                        <li><strong>เทมเพลต:</strong> เลือกจากเทมเพลตที่ทำไว้ล่วงหน้าเพื่อเริ่มต้นอย่างรวดเร็ว</li>
-                        <li><strong>เลิกทำ/ทำซ้ำ:</strong> ใช้ปุ่มที่มุมซ้ายบนของผืนผ้าใบเพื่อเลิกทำหรือทำซ้ำการกระทำของคุณ</li>
-                    </ul>
-                    <p>สนุกสนานและเพลิดเพลินกับช่วงเวลาศิลปะ!</p>
-                `,
-                selectAll: "เลือกทั้งหมด",
-                deleteSelected: "ลบที่เลือก",
-                noDrawingsSelected: "ไม่ได้เลือกภาพวาด",
-                templateLoadError: "ข้อผิดพลาดในการโหลดเทมเพลต โปรดเลือกเทมเพลตอื่น",
-                brushSize: "ขนาดแปรง",
-                colorPicker: "ตัวเลือกสี",
-                transparency: "ความโปร่งใส",
-                tools: "เครื่องมือ",
-                ok: "ตกลง",
-                cancel: "ยกเลิก",
-                create: "สร้าง",
-                blankCanvas: "ผืนผ้าใบว่าง",
-                gridCanvas: "ผืนผ้าใบตาราง",
-                linedCanvas: "ผืนผ้าใบเส้น",
-                coloredCanvas: "ผืนผ้าใบสี",
-                canvasBlankDesc: "ผืนผ้าใบสีขาวว่าง",
-                canvasGridDesc: "มุมมองกระดาษตาราง",
-                canvasLinedDesc: "มุมมองกระดาษเส้น",
-                canvasColoredDesc: "ผืนผ้าใบในสีที่เลือก",
-                formatPNG: "รูปแบบ PNG",
-                formatJPG: "รูปแบบ JPG",
-                formatPDF: "รูปแบบ PDF",
-                formatPNGDesc: "ภาพคุณภาพสูง",
-                formatJPGDesc: "ขนาดไฟล์เล็กกว่า",
-                formatPDFDesc: "ภาพวาดเวกเตอร์",
-                shapeCircle: "วงกลม",
-                shapeSquare: "สี่เหลี่ยม",
-                shapeTriangle: "สามเหลี่ยม",
-                shapeRectangle: "สี่เหลี่ยมผืนผ้า",
-                shapeStar: "ดาว",
-                shapeHeart: "หัวใจ",
-                drawingName: "ชื่อภาพวาด",
-                drawingDate: "วันที่บันทึก",
-                viewDrawing: "ดูภาพวาด",
-                welcomeTitle: "ยินดีต้อนรับสู่ ArtCanvas!",
-                welcomeMessage: "สนุกกับการวาดภาพดิจิทัลด้วย ArtCanvas ตัวควบคุมทั้งหมดอยู่บนผืนผ้าใบ เริ่มวาดภาพโดยใช้เครื่องมือที่มุมซ้ายบน จากเมนูด้านบน คุณสามารถสร้างผืนผ้าใบใหม่, อัปโหลดรูปภาพ, ใช้เทมเพลต, บันทึกภาพวาดของคุณและดูจากแกลเลอรี สนุกสนาน!",
-                loading: "กำลังโหลด..."
-            },
-            vi: {
-                canvasTitle: "Bảng vẽ mới",
-                save: "Lưu",
-                templates: "Mẫu",
-                gallery: "Thư viện",
-                brush: "Cọ",
-                pencil: "Bút chì",
-                eraser: "Tẩy",
-                watercolor: "Màu nước",
-                pastel: "Pastel",
-                spray: "Phun",
-                fill: "Tô",
-                shape: "Hình dạng",
-                text: "Văn bản",
-                uploadImage: "Tải ảnh lên",
-                clear: "Xóa",
-                undo: "Hoàn tác",
-                redo: "Làm lại",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Bảng vẽ mới",
-                download: "Tải xuống",
-                share: "Chia sẻ",
-                savedNotification: "Bản vẽ của bạn đã được lưu!",
-                loadedNotification: "Đã tải mẫu!",
-                exportedNotification: "Bản vẽ của bạn đã được xuất!",
-                emptyGallery: "Bạn chưa có bản vẽ nào được lưu.",
-                confirmDelete: "Bạn có chắc chắn muốn xóa bản vẽ này không?",
-                confirmDeleteMultiple: "Bạn có chắc chắn muốn xóa {count} bản vẽ đã chọn không?",
-                newCanvasConfirm: "Bạn có chắc chắn muốn tạo bảng vẽ mới không? Công việc hiện tại của bạn sẽ không được lưu.",
-                clearCanvasConfirm: "Bạn có chắc chắn muốn xóa bảng vẽ không?",
-                helpTitle: "Hướng dẫn sử dụng ArtCanvas",
-                helpContent: `
-                    <h3>Chào mừng đến với ArtCanvas!</h3>
-                    <p>Tận hưởng vẽ tranh kỹ thuật số với ArtCanvas. Tất cả các điều khiển đều ở trên bảng vẽ và menu trên cùng.</p>
-                    <ul>
-                        <li><strong>Điều khiển Bảng vẽ (Góc trên bên trái):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Hoàn tác: Hoàn tác hành động cuối cùng</li>
-                                <li><i class="fas fa-redo"></i> Làm lại: Làm lại hành động đã hoàn tác</li>
-                                <li><i class="fas fa-eraser"></i> Tẩy: Xóa bản vẽ (làm trong suốt)</li>
-                                <li><i class="fas fa-trash-alt"></i> Xóa: Xóa toàn bộ bảng vẽ</li>
-                                <li><i class="fas fa-palette"></i> Chọn Màu: Mở bảng màu</li>
-                                <li><i class="fas fa-paint-brush"></i> Công cụ: Mở công cụ vẽ</li>
-                            </ul>
-                        </li>
-                        <li><strong>Menu Trên cùng:</strong>
-                            <ul>
-                                <li>Tải ảnh lên: Tải ảnh từ máy tính của bạn</li>
-                                <li>Bảng vẽ mới: Tạo bảng vẽ trống mới</li>
-                                <li>Lưu: Lưu bản vẽ của bạn</li>
-                                <li>Mẫu: Chọn từ các mẫu có sẵn</li>
-                                <li>Thư viện: Xem bản vẽ đã lưu của bạn</li>
-                                <li>Tải xuống: Tải bản vẽ của bạn dưới dạng PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Các Điều khiển Bảng vẽ Khác:</strong>
-                            <ul>
-                                <li>Góc dưới bên trái: Điều chỉnh kích thước cọ</li>
-                                <li>Góc dưới bên phải: Thu phóng vào/ra</li>
-                                <li>Góc trên bên phải: Thông tin công cụ và màu hiện tại</li>
-                            </ul>
-                        </li>
-                        <li><strong>Công cụ Vẽ:</strong> Nhấp vào nút công cụ để truy cập cọ, bút chì, màu nước, pastel, phun, tô, văn bản và công cụ hình dạng.</li>
-                        <li><strong>Chọn Màu:</strong> Nhấp vào nút chọn màu để mở bảng màu, chọn màu tùy chỉnh và điều chỉnh độ trong suốt.</li>
-                        <li><strong>Kích thước Cọ:</strong> Điều chỉnh kích thước cọ bằng thanh trượt ở góc dưới bên trái.</li>
-                        <li><strong>Thu phóng Vào/Ra:</strong> Sử dụng các nút ở góc dưới bên phải để thu phóng bảng vẽ.</li>
-                        <li><strong>Mẫu:</strong> Chọn từ các mẫu đã tạo sẵn để bắt đầu nhanh chóng.</li>
-                        <li><strong>Hoàn tác/Làm lại:</strong> Sử dụng các nút ở góc trên bên trái của bảng vẽ để hoàn tác hoặc làm lại hành động của bạn.</li>
-                    </ul>
-                    <p>Vui vẻ và tận hưởng những khoảnh khắc nghệ thuật!</p>
-                `,
-                selectAll: "Chọn Tất cả",
-                deleteSelected: "Xóa Đã chọn",
-                noDrawingsSelected: "Không có bản vẽ nào được chọn.",
-                templateLoadError: "Lỗi tải mẫu. Vui lòng chọn mẫu khác.",
-                brushSize: "Kích thước Cọ",
-                colorPicker: "Chọn Màu",
-                transparency: "Độ trong suốt",
-                tools: "Công cụ",
-                ok: "OK",
-                cancel: "Hủy",
-                create: "Tạo",
-                blankCanvas: "Bảng vẽ Trống",
-                gridCanvas: "Bảng vẽ Lưới",
-                linedCanvas: "Bảng vẽ Kẻ",
-                coloredCanvas: "Bảng vẽ Màu",
-                canvasBlankDesc: "Bảng vẽ trắng trống",
-                canvasGridDesc: "Xem giấy lưới",
-                canvasLinedDesc: "Xem giấy kẻ",
-                canvasColoredDesc: "Bảng vẽ với màu đã chọn",
-                formatPNG: "Định dạng PNG",
-                formatJPG: "Định dạng JPG",
-                formatPDF: "Định dạng PDF",
-                formatPNGDesc: "Hình ảnh chất lượng cao",
-                formatJPGDesc: "Kích thước tệp nhỏ hơn",
-                formatPDFDesc: "Bản vẽ vector",
-                shapeCircle: "Hình tròn",
-                shapeSquare: "Hình vuông",
-                shapeTriangle: "Tam giác",
-                shapeRectangle: "Hình chữ nhật",
-                shapeStar: "Ngôi sao",
-                shapeHeart: "Trái tim",
-                drawingName: "Tên Bản vẽ",
-                drawingDate: "Ngày Lưu",
-                viewDrawing: "Xem Bản vẽ",
-                welcomeTitle: "Chào mừng đến với ArtCanvas!",
-                welcomeMessage: "Tận hưởng vẽ tranh kỹ thuật số với ArtCanvas. Tất cả các điều khiển đều ở trên bảng vẽ. Bắt đầu vẽ bằng cách sử dụng các công cụ ở góc trên bên trái. Từ menu trên cùng, bạn có thể tạo bảng vẽ mới, tải ảnh lên, sử dụng mẫu, lưu bản vẽ của bạn và xem chúng từ thư viện. Vui vẻ!",
-                loading: "Đang tải..."
-            },
-            zh: {
-                canvasTitle: "新画布",
-                save: "保存",
-                templates: "模板",
-                gallery: "画廊",
-                brush: "画笔",
-                pencil: "铅笔",
-                eraser: "橡皮",
-                watercolor: "水彩",
-                pastel: "粉彩",
-                spray: "喷枪",
-                fill: "填充",
-                shape: "形状",
-                text: "文字",
-                uploadImage: "上传图片",
-                clear: "清除",
-                undo: "撤销",
-                redo: "重做",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "新画布",
-                download: "下载",
-                share: "分享",
-                savedNotification: "您的绘图已保存！",
-                loadedNotification: "模板已加载！",
-                exportedNotification: "您的绘图已导出！",
-                emptyGallery: "您还没有保存的绘图。",
-                confirmDelete: "您确定要删除此绘图吗？",
-                confirmDeleteMultiple: "您确定要删除{count}个选定的绘图吗？",
-                newCanvasConfirm: "您确定要创建新画布吗？您当前的工作将不会被保存。",
-                clearCanvasConfirm: "您确定要清除画布吗？",
-                helpTitle: "ArtCanvas 用户指南",
-                helpContent: `
-                    <h3>欢迎来到 ArtCanvas！</h3>
-                    <p>使用 ArtCanvas 享受数字绘画的乐趣。所有控件都在画布和顶部菜单上。</p>
-                    <ul>
-                        <li><strong>画布控件（左上角）：</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> 撤销：撤销最后一个操作</li>
-                                <li><i class="fas fa-redo"></i> 重做：重做已撤销的操作</li>
-                                <li><i class="fas fa-eraser"></i> 橡皮擦：擦除绘图（使其透明）</li>
-                                <li><i class="fas fa-trash-alt"></i> 清除：清除整个画布</li>
-                                <li><i class="fas fa-palette"></i> 选择颜色：打开颜色调色板</li>
-                                <li><i class="fas fa-paint-brush"></i> 工具：打开绘图工具</li>
-                            </ul>
-                        </li>
-                        <li><strong>顶部菜单：</strong>
-                            <ul>
-                                <li>上传图片：从计算机上传图片</li>
-                                <li>新画布：创建新的空白画布</li>
-                                <li>保存：保存您的绘图</li>
-                                <li>模板：从现成模板中选择</li>
-                                <li>画廊：查看您保存的绘图</li>
-                                <li>下载：将您的绘图下载为 PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>其他画布控件：</strong>
-                            <ul>
-                                <li>左下角：画笔大小调整</li>
-                                <li>右下角：放大/缩小</li>
-                                <li>右上角：当前工具和颜色信息</li>
-                            </ul>
-                        </li>
-                        <li><strong>绘图工具：</strong> 点击工具按钮访问画笔、铅笔、水彩、粉彩、喷枪、填充、文字和形状工具。</li>
-                        <li><strong>颜色选择：</strong> 点击颜色选择按钮打开颜色调色板，选择自定义颜色并调整透明度。</li>
-                        <li><strong>画笔大小：</strong> 使用左下角的滑块调整画笔大小。</li>
-                        <li><strong>放大/缩小：</strong> 使用右下角的按钮缩放画布。</li>
-                        <li><strong>模板：</strong> 从预先制作的模板中选择以快速开始。</li>
-                        <li><strong>撤销/重做：</strong> 使用画布左上角的按钮撤销或重做您的操作。</li>
-                    </ul>
-                    <p>玩得开心，享受艺术时刻！</p>
-                `,
-                selectAll: "全选",
-                deleteSelected: "删除所选",
-                noDrawingsSelected: "未选择任何绘图。",
-                templateLoadError: "加载模板出错。请选择另一个模板。",
-                brushSize: "画笔大小",
-                colorPicker: "颜色选择器",
-                transparency: "透明度",
-                tools: "工具",
-                ok: "确定",
-                cancel: "取消",
-                create: "创建",
-                blankCanvas: "空白画布",
-                gridCanvas: "网格画布",
-                linedCanvas: "线条画布",
-                coloredCanvas: "彩色画布",
-                canvasBlankDesc: "白色空白画布",
-                canvasGridDesc: "网格纸视图",
-                canvasLinedDesc: "线条纸视图",
-                canvasColoredDesc: "选定颜色的画布",
-                formatPNG: "PNG格式",
-                formatJPG: "JPG格式",
-                formatPDF: "PDF格式",
-                formatPNGDesc: "高质量图像",
-                formatJPGDesc: "较小文件大小",
-                formatPDFDesc: "矢量绘图",
-                shapeCircle: "圆形",
-                shapeSquare: "正方形",
-                shapeTriangle: "三角形",
-                shapeRectangle: "矩形",
-                shapeStar: "星形",
-                shapeHeart: "心形",
-                drawingName: "绘图名称",
-                drawingDate: "保存日期",
-                viewDrawing: "查看绘图",
-                welcomeTitle: "欢迎来到 ArtCanvas！",
-                welcomeMessage: "使用 ArtCanvas 享受数字绘画的乐趣。所有控件都在画布上。使用左上角的工具开始绘图。从顶部菜单，您可以创建新画布、上传图片、使用模板、保存您的绘图并从画廊查看它们。玩得开心！",
-                loading: "加载中..."
-            },
-            nl: {
-                canvasTitle: "Nieuw Canvas",
-                save: "Opslaan",
-                templates: "Sjablonen",
-                gallery: "Galerij",
-                brush: "Penseel",
-                pencil: "Potlood",
-                eraser: "Gum",
-                watercolor: "Waterverf",
-                pastel: "Pastel",
-                spray: "Spray",
-                fill: "Vullen",
-                shape: "Vorm",
-                text: "Tekst",
-                uploadImage: "Afbeelding Uploaden",
-                clear: "Wissen",
-                undo: "Ongedaan Maken",
-                redo: "Opnieuw",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Nieuw Canvas",
-                download: "Downloaden",
-                share: "Delen",
-                savedNotification: "Je tekening is opgeslagen!",
-                loadedNotification: "Sjabloon geladen!",
-                exportedNotification: "Je tekening is geëxporteerd!",
-                emptyGallery: "Je hebt nog geen opgeslagen tekeningen.",
-                confirmDelete: "Weet je zeker dat je deze tekening wilt verwijderen?",
-                confirmDeleteMultiple: "Weet je zeker dat je {count} geselecteerde tekeningen wilt verwijderen?",
-                newCanvasConfirm: "Weet je zeker dat je een nieuw canvas wilt maken? Je huidige werk wordt niet opgeslagen.",
-                clearCanvasConfirm: "Weet je zeker dat je het canvas wilt wissen?",
-                helpTitle: "ArtCanvas Gebruikershandleiding",
-                helpContent: `
-                    <h3>Welkom bij ArtCanvas!</h3>
-                    <p>Geniet van digitaal schilderen met ArtCanvas. Alle bedieningselementen bevinden zich op het canvas en het bovenste menu.</p>
-                    <ul>
-                        <li><strong>Canvasbedieningselementen (Linksboven):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Ongedaan Maken: Maak laatste actie ongedaan</li>
-                                <li><i class="fas fa-redo"></i> Opnieuw: Voer ongedaan gemaakte actie opnieuw uit</li>
-                                <li><i class="fas fa-eraser"></i> Gum: Wis tekening (maakt transparant)</li>
-                                <li><i class="fas fa-trash-alt"></i> Wissen: Wis volledige canvas</li>
-                                <li><i class="fas fa-palette"></i> Kleur Selecteren: Open kleurenpalet</li>
-                                <li><i class="fas fa-paint-brush"></i> Gereedschappen: Open teken gereedschappen</li>
-                            </ul>
-                        </li>
-                        <li><strong>Bovenste Menu:</strong>
-                            <ul>
-                                <li>Afbeelding Uploaden: Upload afbeelding vanaf je computer</li>
-                                <li>Nieuw Canvas: Maak nieuw leeg canvas</li>
-                                <li>Opslaan: Sla je tekening op</li>
-                                <li>Sjablonen: Kies uit kant-en-klare sjablonen</li>
-                                <li>Galerij: Bekijk je opgeslagen tekeningen</li>
-                                <li>Downloaden: Download je tekening als PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Andere Canvasbedieningselementen:</strong>
-                            <ul>
-                                <li>Linksonder: Penselgrootte aanpassing</li>
-                                <li>Rechtsonder: Zoom in/uit</li>
-                                <li>Rechtsboven: Huidig gereedschap en kleurinformatie</li>
-                            </ul>
-                        </li>
-                        <li><strong>Teken Gereedschappen:</strong> Klik op de gereedschappenknop om toegang te krijgen tot penseel, potlood, waterverf, pastel, spray, vullen, tekst en vormgereedschappen.</li>
-                        <li><strong>Kleurselectie:</strong> Klik op de kleurselectieknop om het kleurenpalet te openen, aangepaste kleuren te kiezen en transparantie aan te passen.</li>
-                        <li><strong>Penselgrootte:</strong> Pas de penselgrootte aan met de schuifregelaar linksonder.</li>
-                        <li><strong>Zoom In/Uit:</strong> Gebruik de knoppen rechtsonder om in te zoomen op het canvas.</li>
-                        <li><strong>Sjablonen:</strong> Selecteer uit vooraf gemaakte sjablonen om snel te beginnen.</li>
-                        <li><strong>Ongedaan Maken/Opnieuw:</strong> Gebruik de knoppen linksboven op het canvas om je acties ongedaan te maken of opnieuw uit te voeren.</li>
-                    </ul>
-                    <p>Veel plezier en geniet van artistieke momenten!</p>
-                `,
-                selectAll: "Alles Selecteren",
-                deleteSelected: "Geselecteerde Verwijderen",
-                noDrawingsSelected: "Geen tekeningen geselecteerd.",
-                templateLoadError: "Fout bij laden sjabloon. Selecteer een ander sjabloon.",
-                brushSize: "Penselgrootte",
-                colorPicker: "Kleurkiezer",
-                transparency: "Transparantie",
-                tools: "Gereedschappen",
-                ok: "OK",
-                cancel: "Annuleren",
-                create: "Creëren",
-                blankCanvas: "Leeg Canvas",
-                gridCanvas: "Raster Canvas",
-                linedCanvas: "Gelijnd Canvas",
-                coloredCanvas: "Gekleurd Canvas",
-                canvasBlankDesc: "Wit leeg canvas",
-                canvasGridDesc: "Ruitjespapier weergave",
-                canvasLinedDesc: "Gelijnd papier weergave",
-                canvasColoredDesc: "Canvas in geselecteerde kleur",
-                formatPNG: "PNG Formaat",
-                formatJPG: "JPG Formaat",
-                formatPDF: "PDF Formaat",
-                formatPNGDesc: "Hoogwaardige afbeelding",
-                formatJPGDesc: "Kleinere bestandsgrootte",
-                formatPDFDesc: "Vector tekening",
-                shapeCircle: "Cirkel",
-                shapeSquare: "Vierkant",
-                shapeTriangle: "Driehoek",
-                shapeRectangle: "Rechthoek",
-                shapeStar: "Ster",
-                shapeHeart: "Hart",
-                drawingName: "Tekening Naam",
-                drawingDate: "Opslagdatum",
-                viewDrawing: "Tekening Bekijken",
-                welcomeTitle: "Welkom bij ArtCanvas!",
-                welcomeMessage: "Geniet van digitaal schilderen met ArtCanvas. Alle bedieningselementen bevinden zich op het canvas. Begin met tekenen met behulp van de gereedschappen linksboven. Vanuit het bovenste menu kun je een nieuw canvas maken, afbeeldingen uploaden, sjablonen gebruiken, je tekeningen opslaan en ze bekijken vanuit de galerij. Veel plezier!",
-                loading: "Laden..."
-            },
-            uk: {
-                canvasTitle: "Новий Холст",
-                save: "Зберегти",
-                templates: "Шаблони",
-                gallery: "Галерея",
-                brush: "Пензель",
-                pencil: "Олівець",
-                eraser: "Гумка",
-                watercolor: "Акварель",
-                pastel: "Пастель",
-                spray: "Спрей",
-                fill: "Заливка",
-                shape: "Форма",
-                text: "Текст",
-                uploadImage: "Завантажити Зображення",
-                clear: "Очистити",
-                undo: "Скасувати",
-                redo: "Повторити",
-                exportPNG: "PNG",
-                exportJPG: "JPG",
-                exportPDF: "PDF",
-                newCanvas: "Новий Холст",
-                download: "Завантажити",
-                share: "Поділитися",
-                savedNotification: "Ваш малюнок збережено!",
-                loadedNotification: "Шаблон завантажено!",
-                exportedNotification: "Ваш малюнок експортовано!",
-                emptyGallery: "У вас ще немає збережених малюнків.",
-                confirmDelete: "Ви впевнені, що хочете видалити цей малюнок?",
-                confirmDeleteMultiple: "Ви впевнені, що хочете видалити {count} вибраних малюнків?",
-                newCanvasConfirm: "Ви впевнені, що хочете створити новий холст? Ваша поточна робота не буде збережена.",
-                clearCanvasConfirm: "Ви впевнені, що хочете очистити холст?",
-                helpTitle: "Користувацький посібник ArtCanvas",
-                helpContent: `
-                    <h3>Ласкаво просимо до ArtCanvas!</h3>
-                    <p>Насолоджуйтесь цифровим живописом з ArtCanvas. Усі елементи керування знаходяться на полотні та у верхньому меню.</p>
-                    <ul>
-                        <li><strong>Елементи керування полотном (Верхній лівий кут):</strong>
-                            <ul>
-                                <li><i class="fas fa-undo"></i> Скасувати: Скасувати останню дію</li>
-                                <li><i class="fas fa-redo"></i> Повторити: Повторити скасовану дію</li>
-                                <li><i class="fas fa-eraser"></i> Гумка: Видалити малюнок (робить прозорим)</li>
-                                <li><i class="fas fa-trash-alt"></i> Очистити: Очистити весь холст</li>
-                                <li><i class="fas fa-palette"></i> Вибрати Колір: Відкрити палітру кольорів</li>
-                                <li><i class="fas fa-paint-brush"></i> Інструменти: Відкрити інструменти малювання</li>
-                            </ul>
-                        </li>
-                        <li><strong>Верхнє меню:</strong>
-                            <ul>
-                                <li>Завантажити Зображення: Завантажити зображення з комп'ютера</li>
-                                <li>Новий Холст: Створити новий порожній холст</li>
-                                <li>Зберегти: Зберегти ваш малюнок</li>
-                                <li>Шаблони: Вибрати з готових шаблонів</li>
-                                <li>Галерея: Переглянути збережені малюнки</li>
-                                <li>Завантажити: Завантажити ваш малюнок як PNG/JPG/PDF</li>
-                            </ul>
-                        </li>
-                        <li><strong>Інші елементи керування полотном:</strong>
-                            <ul>
-                                <li>Нижній лівий кут: Регулювання розміру пензля</li>
-                                <li>Нижній правий кут: Збільшення/Зменшення</li>
-                                <li>Верхній правий кут: Інформація про поточний інструмент та колір</li>
-                            </ul>
-                        </li>
-                        <li><strong>Інструменти малювання:</strong> Натисніть кнопку інструментів для доступу до пензля, олівця, акварелі, пастелі, спрею, заливки, тексту та інструментів фігур.</li>
-                        <li><strong>Вибір кольору:</strong> Натисніть кнопку вибору кольору, щоб відкрити палітру кольорів, вибрати власні кольори та налаштувати прозорість.</li>
-                        <li><strong>Розмір пензля:</strong> Налаштуйте розмір пензля за допомогою повзунка в нижньому лівому куті.</li>
-                        <li><strong>Збільшення/Зменшення:</strong> Використовуйте кнопки в нижньому правому куті для збільшення полотна.</li>
-                        <li><strong>Шаблони:</strong> Виберіть з попередньо створених шаблонів, щоб швидко почати.</li>
-                        <li><strong>Скасувати/Повторити:</strong> Використовуйте кнопки у верхньому лівому куті полотна, щоб скасувати або повторити ваші дії.</li>
-                    </ul>
-                    <p>Насолоджуйтесь і отримуйте задоволення від художніх моментів!</p>
-                `,
-                selectAll: "Вибрати Все",
-                deleteSelected: "Видалити Обрані",
-                noDrawingsSelected: "Жодного малюнка не вибрано.",
-                templateLoadError: "Помилка завантаження шаблону. Будь ласка, виберіть інший шаблон.",
-                brushSize: "Розмір Пензля",
-                colorPicker: "Вибір Кольору",
-                transparency: "Прозорість",
-                tools: "Інструменти",
-                ok: "OK",
-                cancel: "Скасувати",
-                create: "Створити",
-                blankCanvas: "Порожній Холст",
-                gridCanvas: "Клітковий Холст",
-                linedCanvas: "Лінований Холст",
-                coloredCanvas: "Кольоровий Холст",
-                canvasBlankDesc: "Білий порожній холст",
-                canvasGridDesc: "Вигляд кліткового паперу",
-                canvasLinedDesc: "Вигляд лінованого паперу",
-                canvasColoredDesc: "Холст обраного кольору",
-                formatPNG: "Формат PNG",
-                formatJPG: "Формат JPG",
-                formatPDF: "Формат PDF",
-                formatPNGDesc: "Високоякісне зображення",
-                formatJPGDesc: "Менший розмір файлу",
-                formatPDFDesc: "Векторний малюнок",
-                shapeCircle: "Коло",
-                shapeSquare: "Квадрат",
-                shapeTriangle: "Трикутник",
-                shapeRectangle: "Прямокутник",
-                shapeStar: "Зірка",
-                shapeHeart: "Серце",
-                drawingName: "Назва Малюнка",
-                drawingDate: "Дата Збереження",
-                viewDrawing: "Переглянути Малюнок",
-                welcomeTitle: "Ласкаво просимо до ArtCanvas!",
-                welcomeMessage: "Насолоджуйтесь цифровим живописом з ArtCanvas. Усі елементи керування знаходяться на полотні. Почніть малювати, використовуючи інструменти у верхньому лівому куті. З верхнього меню ви можете створити новий холст, завантажити зображення, використовувати шаблони, зберігати свої малюнки та переглядати їх з галереї. Насолоджуйтесь!",
-                loading: "Завантаження..."
             }
+            // Diğer dillerin çevirileri buraya eklenebilir...
         };
         
         // Uygulama durumu
@@ -4050,6 +2262,10 @@
         const currentColorPreview = document.getElementById('currentColorPreview');
         const selectAllBtn = document.getElementById('selectAllBtn');
         const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+        const helpModal = document.getElementById('helpModal');
+        const closeHelpModal = document.getElementById('closeHelpModal');
+        const helpModalTitle = document.getElementById('helpModalTitle');
+        const helpModalContent = document.getElementById('helpModalContent');
         
         // Renk paleti
         const colors = [
@@ -4377,7 +2593,6 @@
                 
                 templateElement.innerHTML = `
                     <img class="template-img" src="${template.url}" alt="Template ${template.id}" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"150\"><rect width=\"100%\" height=\"100%\" fill=\"%23f5f5f5\"/></svg>">
-                    
                 `;
                 
                 templateElement.addEventListener('click', function() {
@@ -5235,6 +3450,13 @@
             document.body.style.overflow = 'auto';
         }
         
+        // Yardım modal'ını aç
+        function openHelpModal() {
+            helpModalTitle.textContent = translations[appState.currentLanguage].helpTitle;
+            helpModalContent.innerHTML = translations[appState.currentLanguage].helpContent;
+            openModal(helpModal);
+        }
+        
         // Mesaj göster
         function showMessage(title, text, type = 'info') {
             const iconMap = {
@@ -5643,10 +3865,14 @@
                 updateToolButtons();
             });
             
+            closeHelpModal.addEventListener('click', () => closeModal(helpModal));
+            
             messageModalOkBtn.addEventListener('click', () => closeModal(messageModal));
             
             selectAllBtn.addEventListener('click', selectAllDrawings);
             deleteSelectedBtn.addEventListener('click', deleteSelectedDrawings);
+            
+            helpGuide.addEventListener('click', openHelpModal);
             
             window.addEventListener('click', function(e) {
                 if (e.target === templatesModal) closeModal(templatesModal);
@@ -5671,6 +3897,7 @@
                 if (e.target === drawingViewModal) closeModal(drawingViewModal);
                 if (e.target === messageModal) closeModal(messageModal);
                 if (e.target === confirmModal) closeModal(confirmModal);
+                if (e.target === helpModal) closeModal(helpModal);
             });
             
             undoOverlayBtn.addEventListener('click', undo);
@@ -5694,14 +3921,6 @@
             zoomInBtn.addEventListener('click', zoomIn);
             zoomOutBtn.addEventListener('click', zoomOut);
             resetZoomBtn.addEventListener('click', resetZoom);
-            
-            helpGuide.addEventListener('click', function() {
-                showMessage(
-                    translations[appState.currentLanguage].helpTitle,
-                    translations[appState.currentLanguage].helpContent,
-                    'info'
-                );
-            });
             
             window.addEventListener('resize', resizeCanvas);
             
